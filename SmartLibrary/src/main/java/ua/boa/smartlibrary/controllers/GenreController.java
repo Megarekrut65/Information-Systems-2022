@@ -4,21 +4,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ua.boa.smartlibrary.dataclasses.Genre;
 import ua.boa.smartlibrary.db.repositories.GenreRepository;
+import ua.boa.smartlibrary.services.GenreService;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class GenreController {
     @Autowired
-    private GenreRepository repository;
+    private GenreService service;
 
     @RequestMapping(value = "/genre", method = RequestMethod.POST)
     public Genre create(@RequestParam("name")String name){
-        return repository.save(new Genre(name));
+        return service.create(name);
+    }
+    @RequestMapping(value = "/genre", method = RequestMethod.PUT)
+    public Genre update(@RequestParam("id")String id, @RequestParam("name")String name){
+        return service.update(Integer.parseInt(id), name);
     }
     @GetMapping("/genre")
     public List<Genre> getAll(){
-        return repository.findAll();
+        return service.getAll();
     }
 }
