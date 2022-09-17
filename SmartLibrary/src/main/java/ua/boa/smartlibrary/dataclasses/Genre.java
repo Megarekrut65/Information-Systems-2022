@@ -12,7 +12,8 @@ import javax.persistence.*;
 @ToString
 public class Genre {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genre_id_generator")
+    @SequenceGenerator(name="genre_id_generator", sequenceName = "genre_id_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Integer id;
     @Column(name="name", nullable = false)

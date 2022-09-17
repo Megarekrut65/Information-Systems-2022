@@ -21,8 +21,12 @@ public class GenreController {
     public Genre update(@RequestParam("id")String id, @RequestParam("name")String name){
         return service.update(Integer.parseInt(id), name);
     }
-    @GetMapping("/genre")
+    @GetMapping("/genres")
     public List<Genre> getAll(){
         return service.getAll();
+    }
+    @RequestMapping(value = "/genre", method = RequestMethod.DELETE)
+    public void remove(@RequestParam("id")String id){
+        service.remove(Integer.parseInt(id));
     }
 }

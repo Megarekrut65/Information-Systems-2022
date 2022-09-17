@@ -5,7 +5,11 @@
     <title>Smart Library</title>
     <link rel="shortcut icon" href="../Images/library.png" type="image/png">
     <link rel="stylesheet" type="text/css" href="../CSS/styles.css">
-    <script src="../code.js"></script>
+    <script src="../JS/data.js"></script>
+    <script src="../JS/httpFunctions.js"></script>
+    <script src="../JS/genreFunctions.js"></script>
+    <script src="../JS/authorFunctions.js"></script>
+    <script src="../JS/code.js"></script>
 </head>
 
 <body>
@@ -13,9 +17,11 @@
         Smart Library
     </div>
     <div class="content">
-        <input type="button" value="click" onclick="post(); return false;">
-        <input type="button" value="all" onclick="getAll(); return false;">
-        <input type="button" value="update" onclick="update(); return false;">
+        <input type="button" value="create" onclick="createObject(); return false;">
+        <input type="button" value="get all" onclick="getAllObjects(); return false;">
+        <input type="button" value="update" onclick="updateObject(); return false;">
+        <input type="button" value="remove" onclick="removeObject(); return false;">
+        <input type="button" value="find" onclick="find(); return false;">
     </div>
 </body>
 

@@ -21,10 +21,17 @@ public class GenreService {
         return repository.findAll();
     }
     public Genre update(Integer id, String name){
-        Optional<Genre> genreOptional = repository.findById(id);
-        if(genreOptional.isEmpty()) throw new GenreNotFoundException(id);
-        Genre genre = genreOptional.get();
+        Genre genre = getGenre(id);
         genre.setName(name);
         return repository.save(genre);
+    }
+    public void remove(Integer id){
+        Genre genre = getGenre(id);
+        repository.delete(genre);
+    }
+    private Genre getGenre(Integer id){
+        Optional<Genre> optional = repository.findById(id);
+        if(optional.isEmpty()) throw new GenreNotFoundException(id);
+        return optional.get();
     }
 }
