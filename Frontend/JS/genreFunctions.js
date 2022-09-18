@@ -13,3 +13,7 @@ function updateGenre(obj) {
 function removeGenre(id) {
     return remove(SERVER_URL + "/genre", id)
 }
+
+function getGenre(id) {
+    return get(SERVER_URL + "/genre", { "id": id })
+}

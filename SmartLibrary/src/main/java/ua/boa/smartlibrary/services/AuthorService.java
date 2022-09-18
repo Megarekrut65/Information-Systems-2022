@@ -22,20 +22,20 @@ public class AuthorService {
         return repository.findAll();
     }
     public Author update(Integer id, String name, Date dateOfBirth, Date dateOfDeath){
-        Author author = getAuthor(id);
+        Author author = get(id);
         author.setName(name);
         author.setDateOfBirth(dateOfBirth);
         author.setDateOfDeath(dateOfDeath);
         return repository.save(author);
     }
     public void remove(Integer id){
-        Author author = getAuthor(id);
+        Author author = get(id);
         repository.delete(author);
     }
     public List<Author> findByName(String name){
         return repository.findAuthorByNameAdvanced(name);
     }
-    private Author getAuthor(Integer id){
+    public Author get(Integer id){
         Optional<Author> optional = repository.findById(id);
         if(optional.isEmpty()) throw new AuthorNotFoundException(id);
         return optional.get();

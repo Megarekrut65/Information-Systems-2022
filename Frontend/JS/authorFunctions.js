@@ -14,6 +14,10 @@ function removeAuthor(id) {
     return remove(SERVER_URL + "/author", id)
 }
 
-function findAuthorByName(name) {
-    return get(SERVER_URL + "/author", { "name": name })
+function findAuthorsByName(name) {
+    return get(SERVER_URL + "/authors/by-name", { "name": name })
+}
+
+function getAuthor(id) {
+    return get(SERVER_URL + "/author", { "id": id })
 }

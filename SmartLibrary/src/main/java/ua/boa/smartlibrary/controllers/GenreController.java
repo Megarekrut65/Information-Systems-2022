@@ -1,9 +1,11 @@
 package ua.boa.smartlibrary.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import ua.boa.smartlibrary.dataclasses.Genre;
-import ua.boa.smartlibrary.db.repositories.GenreRepository;
 import ua.boa.smartlibrary.services.GenreService;
 
 import java.util.List;
@@ -21,9 +23,13 @@ public class GenreController {
     public Genre update(@RequestParam("id")String id, @RequestParam("name")String name){
         return service.update(Integer.parseInt(id), name);
     }
-    @GetMapping("/genres")
+    @RequestMapping(value = "/genres", method = RequestMethod.GET)
     public List<Genre> getAll(){
         return service.getAll();
+    }
+    @RequestMapping(value = "/genre", method = RequestMethod.GET)
+    public Genre get(@RequestParam("id")String id){
+        return service.get(Integer.parseInt(id));
     }
     @RequestMapping(value = "/genre", method = RequestMethod.DELETE)
     public void remove(@RequestParam("id")String id){

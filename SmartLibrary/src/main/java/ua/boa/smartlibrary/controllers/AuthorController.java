@@ -1,12 +1,14 @@
 package ua.boa.smartlibrary.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import ua.boa.smartlibrary.Utilities;
 import ua.boa.smartlibrary.dataclasses.Author;
 import ua.boa.smartlibrary.services.AuthorService;
 
-import java.sql.Date;
 import java.util.List;
 
 @RestController
@@ -32,8 +34,12 @@ public class AuthorController {
     public void remove(@RequestParam("id")String id){
         service.remove(Integer.parseInt(id));
     }
-    @RequestMapping(value = "/author", method = RequestMethod.GET)
+    @RequestMapping(value = "/authors/by-name", method = RequestMethod.GET)
     public List<Author> search(@RequestParam("name")String name){
         return service.findByName(name);
+    }
+    @RequestMapping(value = "/author", method = RequestMethod.GET)
+    public Author get(@RequestParam("id")String id){
+        return service.get(Integer.parseInt(id));
     }
 }

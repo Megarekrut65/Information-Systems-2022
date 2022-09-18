@@ -1,19 +1,23 @@
 function getAllObjects() {
-    console.log(getAllGenres())
+    console.log(getAllPublishingHouses())
 }
 
 function createObject() {
-    console.log(createGenre({ "name": "Fantasy" }))
+    console.log(createPublishingHouse({ "name": "Ranok", "address": "Kiev" }))
 }
 
 function updateObject() {
-    console.log(updateGenre({ "id": 1, "name": "Western" }))
+    console.log(updatePublishingHouse({ "id": 1, "name": "Avers", "address": "Lviv" }))
 }
 
 function removeObject() {
-    console.log(removeGenre(5))
+    console.log(removePublishingHouse(5))
 }
 
-function find() {
-    console.log(findAuthorByName("Marko"))
+function findObject() {
+    console.log(findPublishingHousesByName("Ranok"))
+}
+
+function getObject() {
+    console.log(getPublishingHouse(1))
 }
