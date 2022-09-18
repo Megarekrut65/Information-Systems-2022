@@ -17,13 +17,14 @@ public class AuthorController {
     private AuthorService service;
 
     @RequestMapping(value = "/author", method = RequestMethod.POST)
-    public Author create(@RequestParam("name")String name, @RequestParam("dateOfBirth") String dateOfBirth,
-                         @RequestParam("dateOfDeath") String dateOfDeath){
+    public Author create(@RequestParam("name")String name, @RequestParam("date-of-birth") String dateOfBirth,
+                         @RequestParam("date-of-death") String dateOfDeath){
         return service.create(name, Utilities.getDate(dateOfBirth), Utilities.getDate(dateOfDeath));
     }
     @RequestMapping(value = "/author", method = RequestMethod.PUT)
     public Author update(@RequestParam("id")String id, @RequestParam("name")String name,
-                         @RequestParam("dateOfBirth") String dateOfBirth, @RequestParam("dateOfDeath") String dateOfDeath){
+                         @RequestParam("date-of-birth") String dateOfBirth,
+                         @RequestParam("date-of-death") String dateOfDeath){
         return service.update(Integer.parseInt(id), name, Utilities.getDate(dateOfBirth), Utilities.getDate(dateOfDeath));
     }
     @RequestMapping(value = "/authors", method = RequestMethod.GET)

@@ -1,23 +1,24 @@
 function getAllObjects() {
-    console.log(getAllPublishingHouses())
+    console.log(getAllBooks())
 }
 
 function createObject() {
-    console.log(createPublishingHouse({ "name": "Ranok", "address": "Kiev" }))
+    console.log(createBook({ "title": "Math", "publishing-house-id": 1, "publish-year": 2002, "comment": "" }))
 }
 
 function updateObject() {
-    console.log(updatePublishingHouse({ "id": 1, "name": "Avers", "address": "Lviv" }))
+    console.log(updateBook({ "id": 3, "title": "Biology", "publishing-house-id": 2, "publish-year": 2006, "comment": "Bio bio" }))
 }
 
 function removeObject() {
-    console.log(removePublishingHouse(5))
+    console.log(removeBook(2))
 }
 
 function findObject() {
-    console.log(findPublishingHousesByName("Ranok"))
+    console.log(findBooksByTitle("Math"))
+    console.log(findBooksByPublishingHouse(2))
 }
 
 function getObject() {
-    console.log(getPublishingHouse(1))
+    console.log(getBook(1))
 }
