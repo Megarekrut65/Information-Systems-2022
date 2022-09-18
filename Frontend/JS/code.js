@@ -11,7 +11,7 @@ function updateObject() {
 }
 
 function removeObject() {
-    console.log(removeBook(2))
+    console.log(removePublishingHouse(4))
 }
 
 function findObject() {

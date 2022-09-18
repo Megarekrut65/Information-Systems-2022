@@ -10,5 +10,5 @@ import java.util.List;
 public interface AuthorRepository extends JpaRepository<Author, Integer> {
     @Query(value = "SELECT * FROM author WHERE author.name LIKE CONCAT('%', CONCAT(:name, '%')) OR :name LIKE CONCAT('%', CONCAT(author.name, '%'))",
             nativeQuery = true)
-    List<Author> findAuthorByNameAdvanced(@Param("name") String name);
+    List<Author> findAuthorsByNameAdvanced(@Param("name") String name);
 }

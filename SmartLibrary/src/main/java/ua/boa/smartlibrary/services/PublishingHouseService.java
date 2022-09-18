@@ -30,7 +30,7 @@ public class PublishingHouseService {
         repository.delete(publishingHouse);
     }
     public List<PublishingHouse> findByName(String name){
-        return repository.findPublishingHouseByNameAdvanced(name);
+        return repository.findPublishingHousesByNameAdvanced(name);
     }
     public PublishingHouse get(Integer id){
         Optional<PublishingHouse> optional = repository.findById(id);

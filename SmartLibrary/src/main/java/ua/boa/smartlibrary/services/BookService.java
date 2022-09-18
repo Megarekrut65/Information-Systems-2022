@@ -38,7 +38,7 @@ public class BookService {
         repository.delete(book);
     }
     public List<Book> findByTitle(String title){
-        return repository.findBookByTitleAdvanced(title);
+        return repository.findBooksByTitleAdvanced(title);
     }
     public List<Book> findByPublishingHouse(Integer publishingHouseId){
         PublishingHouse publishingHouse = publishingHouseService.get(publishingHouseId);

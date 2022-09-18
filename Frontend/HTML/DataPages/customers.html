@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <title>Smart Library</title>
+    <link rel="shortcut icon" href="../../Images/library.png" type="image/png">
+    <link rel="stylesheet" type="text/css" href="../../CSS/styles.css">
+    <script src="../../JS/data.js"></script>
+    <script src="../../JS/httpFunctions.js"></script>
+    <script src="../../JS/DataFunctions/customerFunction.js"></script>
+</head>
+
+<body>
+    <div class="header">
+        Smart Library
+    </div>
+    <div class="content">
+        <input type="button" value="create" onclick="console.log(createCustomer({'name':'Maik Willams', 'date-of-birth':null,'phone-number':'+380875423145', 'address':'Kiev','email':'karkas@gmail.com'})); return false;">
+        <input type="button" value="get all" onclick="console.log(getAllCustomers()); return false;">
+        <input type="button" value="update" onclick="console.log(updateCustomer({'id':'2','name':'Monika Beluchy', 'date-of-birth':null,'phone-number':'+380335411145', 'address':'Odessa','email':'monika@gmail.com'})); return false;">
+        <input type="button" value="remove" onclick="console.log(removeCustomer(3)); return false;">
+        <input type="button" value="findByName" onclick="console.log(findCustomersByName('ka Be')); return false;">
+        <input type="button" value="findByPhoneNumber" onclick="console.log(findCustomersByPhoneNumber('145')); return false;">
+        <input type="button" value="findByEmail" onclick="console.log(findCustomersByEmail('kark')); return false;">
+        <input type="button" value="get" onclick="console.log(getCustomer(1)); return false;">
+    </div>
+</body>
+
+</html>

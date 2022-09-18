@@ -33,7 +33,7 @@ public class AuthorService {
         repository.delete(author);
     }
     public List<Author> findByName(String name){
-        return repository.findAuthorByNameAdvanced(name);
+        return repository.findAuthorsByNameAdvanced(name);
     }
     public Author get(Integer id){
         Optional<Author> optional = repository.findById(id);

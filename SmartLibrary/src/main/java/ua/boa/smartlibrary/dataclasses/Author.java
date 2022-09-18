@@ -24,12 +24,6 @@ public class Author {
     @Column(name = "date_of_death")
     private Date dateOfDeath;
 
-    public Author(String name) {
-        this.name = name;
-        dateOfBirth = null;
-        dateOfDeath = null;
-    }
-
     public Author(String name, Date dateOfBirth, Date dateOfDeath) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
