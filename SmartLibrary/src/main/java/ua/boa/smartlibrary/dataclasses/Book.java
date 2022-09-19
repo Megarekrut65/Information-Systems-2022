@@ -19,17 +19,21 @@ public class Book {
     @Column(name="title", nullable = false)
     private String title;
     @ManyToOne
-    @JoinColumn(name="publishing_house_id")
+    @JoinColumn(name="publishing_house_id", nullable = false)
     private PublishingHouse publishingHouse;
     @Column(name="publish_year", nullable = false)
     private Integer publishYear;
     @Column(name = "comment", nullable = false)
     private String comment;
+    @OneToOne
+    @JoinColumn(name = "book_info_id", nullable = false)
+    private BookInfo bookInfo;
 
-    public Book(String title, PublishingHouse publishingHouse, Integer publishYear, String comment) {
+    public Book(String title, PublishingHouse publishingHouse, Integer publishYear, String comment, BookInfo bookInfo) {
         this.title = title;
         this.publishingHouse = publishingHouse;
         this.publishYear = publishYear;
         this.comment = comment;
+        this.bookInfo = bookInfo;
     }
 }

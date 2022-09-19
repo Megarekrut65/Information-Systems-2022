@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <title>Smart Library</title>
+    <link rel="shortcut icon" href="../../Images/library.png" type="image/png">
+    <link rel="stylesheet" type="text/css" href="../../CSS/styles.css">
+    <script src="../../JS/data.js"></script>
+    <script src="../../JS/httpFunctions.js"></script>
+    <script src="../../JS/DataFunctions/bookFunctions.js"></script>
+</head>
+
+<body>
+    <div class="header">
+        Smart Library
+    </div>
+    <div class="content">
+        <input type="button" value="create" onclick='console.log(createBook({ "title": "39 keys", "publishing-house-id": 1, "publish-year": 2012, "comment": "The best book" })); return false;' '>
+        <input type="button" value="get all" onclick="console.log(getAllBooks()); return false;">
+        <input type="button" value="update" onclick='console.log(updateBook({ "id": 8, "title": "It", "publishing-house-id": 2, "publish-year": 2018, "comment": "" })); return false; '>
+        <input type="button" value="remove" onclick="console.log(removeBook(6)); return false;">
+        <input type="button" value="findByTitle" onclick="console.log(findBooksByTitle('ke ')); return false;">
+        <input type="button" value="findByPubHouse" onclick="console.log(findBooksByPublishingHouse(2)); return false;">
+        <input type="button" value="get" onclick="console.log(getBook(7)); return false;">
+    </div>
+</body>
+
+</html>

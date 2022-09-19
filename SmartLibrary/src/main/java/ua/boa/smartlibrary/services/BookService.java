@@ -3,7 +3,9 @@ package ua.boa.smartlibrary.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.boa.smartlibrary.dataclasses.Book;
+import ua.boa.smartlibrary.dataclasses.BookInfo;
 import ua.boa.smartlibrary.dataclasses.PublishingHouse;
+import ua.boa.smartlibrary.db.repositories.BookInfoRepository;
 import ua.boa.smartlibrary.db.repositories.BookRepository;
 import ua.boa.smartlibrary.exceptions.BookNotFoundException;
 
@@ -15,11 +17,13 @@ public class BookService {
     @Autowired
     private BookRepository repository;
     @Autowired
+    private BookInfoRepository bookInfoRepository;
+    @Autowired
     private PublishingHouseService publishingHouseService;
 
     public Book create(String title, Integer publishingHouseId, Integer publishYear, String comment){
         PublishingHouse publishingHouse = publishingHouseService.get(publishingHouseId);
-        return repository.save(new Book(title, publishingHouse, publishYear, comment));
+        return repository.save(new Book(title, publishingHouse, publishYear, comment, bookInfoRepository.save(new BookInfo())));
     }
     public List<Book> getAll(){
         return repository.findAll();

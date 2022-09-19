@@ -10,5 +10,5 @@ public class ApplicationConfigs implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**").allowedOrigins(FRONTEND_URL).allowedMethods("GET", "POST", "PUT", "DELETE");
     }
-    private final static String FRONTEND_URL = "http://127.0.0.1:5500";
+    private final static String FRONTEND_URL = "http://127.0.0.1:5501";
 }
