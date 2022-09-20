@@ -3,14 +3,14 @@ package ua.boa.smartlibrary.db.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import ua.boa.smartlibrary.dataclasses.Genre;
+import ua.boa.smartlibrary.dataclasses.Tag;
 
 import java.util.List;
 
-public interface GenreRepository extends JpaRepository<Genre, Integer> {
-    @Query(value = "SELECT * FROM genre WHERE genre.name " +
+public interface TagRepository extends JpaRepository<Tag, Integer> {
+    @Query(value = "SELECT * FROM tag WHERE tag.name " +
             "LIKE CONCAT('%', CONCAT(:name, '%')) OR :name " +
-            "LIKE CONCAT('%', CONCAT(genre.name, '%'))",
+            "LIKE CONCAT('%', CONCAT(tag.name, '%'))",
             nativeQuery = true)
-    List<Genre> findGenresByNameAdvanced(@Param("name") String name);
+    List<Tag> findTagsByNameAdvanced(@Param("name") String name);
 }

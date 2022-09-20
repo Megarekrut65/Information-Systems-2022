@@ -35,4 +35,8 @@ public class GenreController {
     public void remove(@RequestParam("id")String id){
         service.remove(Integer.parseInt(id));
     }
+    @RequestMapping(value = "/genres/by-name", method = RequestMethod.GET)
+    public List<Genre> searchByName(@RequestParam("name")String name){
+        return service.findByName(name);
+    }
 }

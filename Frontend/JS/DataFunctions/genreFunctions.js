@@ -17,3 +17,7 @@ function removeGenre(id) {
 function getGenre(id) {
     return get(SERVER_URL + "/genre", { "id": id })
 }
+
+function findGenresByName(name) {
+    return get(SERVER_URL + "/genres/by-name", { "name": name })
+}

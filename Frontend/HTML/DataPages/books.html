@@ -8,6 +8,8 @@
     <script src="../../JS/data.js"></script>
     <script src="../../JS/httpFunctions.js"></script>
     <script src="../../JS/DataFunctions/bookFunctions.js"></script>
+    <script src="../../JS/DataFunctions/genreFunctions.js"></script>
+    <script src="../../JS/DataFunctions/tagFunctions.js"></script>
 </head>
 
 <body>
@@ -15,13 +17,29 @@
         Smart Library
     </div>
     <div class="content">
-        <input type="button" value="create" onclick='console.log(createBook({ "title": "39 keys", "publishing-house-id": 1, "publish-year": 2012, "comment": "The best book" })); return false;' '>
+        <p>Book</p>
+        <input type="button" value="create" onclick='console.log(createBook({ "title": "Karl IV", "publishing-house-id": 1, "publish-year": 2002, "comment": "" })); return false;' '>
         <input type="button" value="get all" onclick="console.log(getAllBooks()); return false;">
         <input type="button" value="update" onclick='console.log(updateBook({ "id": 8, "title": "It", "publishing-house-id": 2, "publish-year": 2018, "comment": "" })); return false; '>
-        <input type="button" value="remove" onclick="console.log(removeBook(6)); return false;">
+        <input type="button" value="remove" onclick="console.log(removeBook(10)); return false;">
         <input type="button" value="findByTitle" onclick="console.log(findBooksByTitle('ke ')); return false;">
         <input type="button" value="findByPubHouse" onclick="console.log(findBooksByPublishingHouse(2)); return false;">
+        <input type="button" value="findByPubYear" onclick="console.log(findBooksByPublishYearPeriod(2005, 2005)); return false;">
         <input type="button" value="get" onclick="console.log(getBook(7)); return false;">
+        <p>Genre</p>
+        <input type="button" value="create" onclick='console.log(createGenre({ "name": "Comedy"})); return false; '>
+        <input type="button" value="get all" onclick="console.log(getAllGenres()); return false;">
+        <input type="button" value="update" onclick='console.log(updateGenre({ "id": 10, "name": "Fighting"})); return false; '>
+        <input type="button" value="remove" onclick="console.log(removeGenre(8)); return false;">
+        <input type="button" value="findByTitle" onclick="console.log(findGenresByName('ing ')); return false;">
+        <input type="button" value="get" onclick="console.log(getGenre(9)); return false;">
+        <p>Tag</p>
+        <input type="button" value="create" onclick='console.log(createTag({ "name": "For children"})); return false; '>
+        <input type="button" value="get all" onclick="console.log(getAllTags()); return false;">
+        <input type="button" value="update" onclick='console.log(updateTag({ "id": 2, "name": "18+"})); return false; '>
+        <input type="button" value="remove" onclick="console.log(removeTag(4)); return false;">
+        <input type="button" value="findByTitle" onclick="console.log(findTagsByName('ild ')); return false;">
+        <input type="button" value="get" onclick="console.log(getTag(3)); return false;">
     </div>
 </body>
 

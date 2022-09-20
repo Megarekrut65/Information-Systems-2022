@@ -13,4 +13,5 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
             nativeQuery = true)
     List<Book> findBooksByTitleAdvanced(@Param("title") String title);
     List<Book> findBooksByPublishingHouse(PublishingHouse publishingHouse);
+    List<Book> findBooksByPublishYearBetween(Integer publishYearMin, Integer publishYearMax);
 }

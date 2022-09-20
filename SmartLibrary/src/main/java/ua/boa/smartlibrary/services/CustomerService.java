@@ -2,7 +2,6 @@ package ua.boa.smartlibrary.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.boa.smartlibrary.dataclasses.Author;
 import ua.boa.smartlibrary.dataclasses.Customer;
 import ua.boa.smartlibrary.db.repositories.CustomerRepository;
 import ua.boa.smartlibrary.exceptions.AuthorNotFoundException;

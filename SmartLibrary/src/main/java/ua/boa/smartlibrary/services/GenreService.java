@@ -34,4 +34,7 @@ public class GenreService {
         if(optional.isEmpty()) throw new GenreNotFoundException(id);
         return optional.get();
     }
+    public List<Genre> findByName(String name){
+        return repository.findGenresByNameAdvanced(name);
+    }
 }

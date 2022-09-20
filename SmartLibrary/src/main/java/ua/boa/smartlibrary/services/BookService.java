@@ -40,6 +40,7 @@ public class BookService {
     public void remove(Integer id){
         Book book = get(id);
         repository.delete(book);
+        bookInfoRepository.delete(book.getBookInfo());
     }
     public List<Book> findByTitle(String title){
         return repository.findBooksByTitleAdvanced(title);
@@ -47,6 +48,9 @@ public class BookService {
     public List<Book> findByPublishingHouse(Integer publishingHouseId){
         PublishingHouse publishingHouse = publishingHouseService.get(publishingHouseId);
         return repository.findBooksByPublishingHouse(publishingHouse);
+    }
+    public List<Book> findByPublishYearPeriod(Integer publishYearMin, Integer publishYearMax){
+        return repository.findBooksByPublishYearBetween(publishYearMin, publishYearMax);
     }
     public Book get(Integer id){
         Optional<Book> optional = repository.findById(id);

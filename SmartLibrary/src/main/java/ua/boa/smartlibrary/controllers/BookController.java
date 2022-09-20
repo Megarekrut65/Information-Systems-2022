@@ -46,6 +46,11 @@ public class BookController {
     public List<Book> searchByPublishingHouse(@RequestParam("publishing-house-id")String publishingHouseId){
         return service.findByPublishingHouse(Integer.parseInt(publishingHouseId));
     }
+    @RequestMapping(value = "/books/by-publish-year-period", method = RequestMethod.GET)
+    public List<Book> searchByPublishYearPeriod(@RequestParam("publish-year-min")String publishYearMin,
+                                                @RequestParam("publish-year-max")String publishYearMax){
+        return service.findByPublishYearPeriod(Integer.parseInt(publishYearMin),Integer.parseInt(publishYearMax));
+    }
     @RequestMapping(value = "/book", method = RequestMethod.GET)
     public Book get(@RequestParam("id")String id){
         return service.get(Integer.parseInt(id));

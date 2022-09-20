@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ua.boa.smartlibrary.Utilities;
-import ua.boa.smartlibrary.dataclasses.Author;
 import ua.boa.smartlibrary.dataclasses.Customer;
 import ua.boa.smartlibrary.services.CustomerService;
 
