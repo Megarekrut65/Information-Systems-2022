@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <title>Smart Library</title>
+    <link rel="shortcut icon" href="../../Images/library.png" type="image/png">
+    <link rel="stylesheet" type="text/css" href="../../CSS/styles.css">
+    <script src="../../JS/data.js"></script>
+    <script src="../../JS/httpFunctions.js"></script>
+    <script src="../../JS/DataFunctions/bookFunctions.js"></script>
+    <script src="../../JS/DataFunctions/distributorFunctions.js"></script>
+    <script src="../../JS/DataFunctions/deliveryFunctions.js"></script>
+</head>
+
+<body>
+    <div class="header">
+        Smart Library
+    </div>
+    <div class="content">
+        <p>Distributor</p>
+        <input type="button" value="create" onclick="console.log(createDistributor({'name':'Trend-Box', 'phone-number':'%2B380111111117', 'address':'Kiev'})); return false;">
+        <input type="button" value="get all" onclick="console.log(getAllDistributors()); return false;">
+        <input type="button" value="update" onclick="console.log(updateDistributor({'id':'2','name':'MIXOPTMARKET','phone-number':'%2B380335411145', 'address':'Odessa'})); return false;">
+        <input type="button" value="remove" onclick="console.log(removeDistributor(3)); return false;">
+        <input type="button" value="findByName" onclick="console.log(findDistributorsByName('MIXOPTMARKET Trend-Box')); return false;">
+        <input type="button" value="get" onclick="console.log(getDistributor(1)); return false;">
+        <p>Delivery</p>
+        <input type="button" value="create" onclick="console.log(createDelivery({'date-of-delivery':'2022-08-15', 'distributor-id':'7'})); return false;">
+        <input type="button" value="get all" onclick="console.log(getAllDeliveries()); return false;">
+        <input type="button" value="update" onclick="console.log(updateDelivery({'id':'2','date-of-delivery':'2022-09-03', 'distributor-id':'2'})); return false;">
+        <input type="button" value="remove" onclick="console.log(removeDelivery(4)); return false;">
+        <input type="button" value="findByDistributor" onclick="console.log(findDeliveriesByDistributor('1')); return false;">
+        <input type="button" value="findByDate" onclick="console.log(findDeliveriesByDatePeriod('2022-06-01', '2022-09-05')); return false;">
+        <input type="button" value="get" onclick="console.log(getDelivery(1)); return false;">
+    </div>
+</body>
+
+</html>

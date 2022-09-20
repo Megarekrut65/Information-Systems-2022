@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ua.boa.smartlibrary.dataclasses.Customer;
 import ua.boa.smartlibrary.db.repositories.CustomerRepository;
 import ua.boa.smartlibrary.exceptions.AuthorNotFoundException;
+import ua.boa.smartlibrary.exceptions.CustomerNotFoundException;
 
 import java.sql.Date;
 import java.util.List;
@@ -45,7 +46,7 @@ public class CustomerService {
     }
     public Customer get(Integer id){
         Optional<Customer> optional = repository.findById(id);
-        if(optional.isEmpty()) throw new AuthorNotFoundException(id);
+        if(optional.isEmpty()) throw new CustomerNotFoundException(id);
         return optional.get();
     }
 }

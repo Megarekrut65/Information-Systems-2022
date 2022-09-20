@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ua.boa.smartlibrary.dataclasses.Tag;
 import ua.boa.smartlibrary.db.repositories.TagRepository;
 import ua.boa.smartlibrary.exceptions.GenreNotFoundException;
+import ua.boa.smartlibrary.exceptions.TagNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +32,7 @@ public class TagService {
     }
     public Tag get(Integer id){
         Optional<Tag> optional = repository.findById(id);
-        if(optional.isEmpty()) throw new GenreNotFoundException(id);
+        if(optional.isEmpty()) throw new TagNotFoundException(id);
         return optional.get();
     }
     public List<Tag> findByName(String name){

@@ -4,5 +4,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import ua.boa.smartlibrary.dataclasses.BookInfo;
 
 public interface BookInfoRepository extends JpaRepository<BookInfo, Integer> {
-    BookInfo findBookInfoById(Integer id);
 }
