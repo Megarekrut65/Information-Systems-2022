@@ -3,9 +3,7 @@ package ua.boa.smartlibrary.services.bookmanagement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.boa.smartlibrary.dataclasses.bookmanagement.Book;
-import ua.boa.smartlibrary.dataclasses.bookmanagement.BookInfo;
 import ua.boa.smartlibrary.dataclasses.bookmanagement.PublishingHouse;
-import ua.boa.smartlibrary.db.repositories.bookmanagement.BookInfoRepository;
 import ua.boa.smartlibrary.db.repositories.bookmanagement.BookRepository;
 import ua.boa.smartlibrary.exceptions.bookmanagement.BookNotFoundException;
 
@@ -17,13 +15,13 @@ public class BookService {
     @Autowired
     private BookRepository repository;
     @Autowired
-    private BookInfoRepository bookInfoRepository;
+    private BookInfoService bookInfoService;
     @Autowired
     private PublishingHouseService publishingHouseService;
 
     public Book create(String title, Integer publishingHouseId, Integer publishYear, String comment){
         PublishingHouse publishingHouse = publishingHouseService.get(publishingHouseId);
-        return repository.save(new Book(title, publishingHouse, publishYear, comment, bookInfoRepository.save(new BookInfo())));
+        return repository.save(new Book(title, publishingHouse, publishYear, comment, bookInfoService.create()));
     }
     public List<Book> getAll(){
         return repository.findAll();
@@ -40,7 +38,7 @@ public class BookService {
     public void remove(Integer id){
         Book book = get(id);
         repository.delete(book);
-        bookInfoRepository.delete(book.getBookInfo());
+        bookInfoService.remove(book.getBookInfo().getId());
     }
     public List<Book> findByTitle(String title){
         return repository.findBooksByTitleAdvanced(title);

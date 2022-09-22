@@ -32,4 +32,35 @@ public class MonthStatistic {
     private Integer booksLostCount;
     @Column(name="books_borrowing_count", nullable = false)
     private Integer booksBorrowingCount;
+
+    public MonthStatistic(Date monthDate, Integer booksCurrentCount,
+                          Integer booksAvailableCount, Integer booksPurchasingCount,
+                          Integer booksWriteOffCount, Integer booksLostCount, Integer booksBorrowingCount) {
+        this.monthDate = monthDate;
+        this.booksCurrentCount = booksCurrentCount;
+        this.booksAvailableCount = booksAvailableCount;
+        this.booksPurchasingCount = booksPurchasingCount;
+        this.booksWriteOffCount = booksWriteOffCount;
+        this.booksLostCount = booksLostCount;
+        this.booksBorrowingCount = booksBorrowingCount;
+    }
+
+    public MonthStatistic(Date monthDate) {
+        this.monthDate = monthDate;
+        this.booksCurrentCount = 0;
+        this.booksAvailableCount = 0;
+        this.booksPurchasingCount = 0;
+        this.booksWriteOffCount = 0;
+        this.booksLostCount = 0;
+        this.booksBorrowingCount = 0;
+    }
+    public MonthStatistic(Date monthDate, MonthStatistic monthStatistic){
+        this.monthDate = monthDate;
+        this.booksCurrentCount = monthStatistic.getBooksCurrentCount();
+        this.booksAvailableCount = monthStatistic.getBooksAvailableCount();
+        this.booksPurchasingCount = monthStatistic.getBooksPurchasingCount();
+        this.booksWriteOffCount = monthStatistic.getBooksWriteOffCount();
+        this.booksLostCount = monthStatistic.getBooksLostCount();
+        this.booksBorrowingCount = monthStatistic.getBooksBorrowingCount();
+    }
 }
