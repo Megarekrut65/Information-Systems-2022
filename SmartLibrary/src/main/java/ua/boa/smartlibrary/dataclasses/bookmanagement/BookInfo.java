@@ -19,8 +19,8 @@ public class BookInfo {
     @SequenceGenerator(name="book_info_id_generator", sequenceName = "book_info_id_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Integer id;
-    @Column(name = "current_count", nullable = false)
-    private Integer currentCount;
+    @Column(name = "total_count", nullable = false)
+    private Integer totalCount;
     @Column(name = "available_count", nullable = false)
     private Integer availableCount;
     @Column(name = "purchasing_count", nullable = false)
@@ -33,7 +33,7 @@ public class BookInfo {
     private Integer borrowingCount;
 
     public BookInfo() {
-        this.currentCount = 0;
+        this.totalCount = 0;
         this.availableCount = 0;
         this.purchasingCount = 0;
         this.writeOffCount = 0;

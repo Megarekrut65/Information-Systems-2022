@@ -12,14 +12,14 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Table(name = "book_write-off")
+@Table(name = "book_write_off")
 public class BookWriteOff {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_write-off_id_generator")
-    @SequenceGenerator(name="book_write-off_id_generator", sequenceName = "book_write-off_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_write_off_id_generator")
+    @SequenceGenerator(name="book_write_off_id_generator", sequenceName = "book_write_off_id_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Integer id;
-    @Column(name = "date_of_write-off")
+    @Column(name = "date_of_write_off")
     private Date dateOfWriteOff;
     @ManyToOne
     @JoinColumn(name="book_id", nullable = false)

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <title>Smart Library</title>
+    <link rel="shortcut icon" href="../../Images/library.png" type="image/png">
+    <link rel="stylesheet" type="text/css" href="../../CSS/styles.css">
+    <script src="../../JS/data.js"></script>
+    <script src="../../JS/httpFunctions.js"></script>
+    <script src="../../JS/DataFunctions/bookDeliveryFunctions.js"></script>
+    <script src="../../JS/DataFunctions/monthStatisticFunctions.js"></script>
+</head>
+
+<body>
+    <div class="header">
+        Smart Library
+    </div>
+    <div class="content">
+        <p>Month Statistic</p>
+        <input type="button" value="get all" onclick="console.log(getAllMonthStatistics()); return false;">
+        <input type="button" value="findByMonthDate" onclick="console.log(findMonthStatisticsByMonthDatePeriod('2022-07-11', '2022-09-01')); return false;">
+        <input type="button" value="get" onclick="console.log(getMonthStatistic(1)); return false;">
+        <p>Book Delivery</p>
+        <input type="button" value="create" onclick="console.log(createBookDelivery({'delivery-id':'6', 'book-id':'5', 'book-count':'10', 'book-price':'200'})); return false;">
+        <input type="button" value="get all" onclick="console.log(getAllBookDeliveries()); return false;">
+        <input type="button" value="update" onclick="console.log(updateBookDelivery({'id':'9','delivery-id':'1', 'book-id':'11', 'book-count':'12', 'book-price':'110'})); return false;">
+        <input type="button" value="remove" onclick="console.log(removeBookDelivery(8)); return false;">
+        <input type="button" value="findByDelivery" onclick="console.log(findBookDeliveriesByDelivery('1')); return false;">
+        <input type="button" value="findByBook" onclick="console.log(findBookDeliveriesByBook('5')); return false;">
+        <input type="button" value="get" onclick="console.log(getBookDelivery(4)); return false;">
+    </div>
+</body>
+
+</html>

@@ -20,24 +20,24 @@ public class MonthStatistic {
     private Integer id;
     @Column(name="month_date", nullable = false)
     private Date monthDate;
-    @Column(name="books_current_count", nullable = false)
-    private Integer booksCurrentCount;
+    @Column(name="books_total_count", nullable = false)
+    private Integer booksTotalCount;
     @Column(name="books_available_count", nullable = false)
     private Integer booksAvailableCount;
     @Column(name="books_purchasing_count", nullable = false)
     private Integer booksPurchasingCount;
-    @Column(name="books_write-off_count", nullable = false)
+    @Column(name="books_write_off_count", nullable = false)
     private Integer booksWriteOffCount;
     @Column(name="books_lost_count", nullable = false)
     private Integer booksLostCount;
     @Column(name="books_borrowing_count", nullable = false)
     private Integer booksBorrowingCount;
 
-    public MonthStatistic(Date monthDate, Integer booksCurrentCount,
+    public MonthStatistic(Date monthDate, Integer booksTotalCount,
                           Integer booksAvailableCount, Integer booksPurchasingCount,
                           Integer booksWriteOffCount, Integer booksLostCount, Integer booksBorrowingCount) {
         this.monthDate = monthDate;
-        this.booksCurrentCount = booksCurrentCount;
+        this.booksTotalCount = booksTotalCount;
         this.booksAvailableCount = booksAvailableCount;
         this.booksPurchasingCount = booksPurchasingCount;
         this.booksWriteOffCount = booksWriteOffCount;
@@ -47,7 +47,7 @@ public class MonthStatistic {
 
     public MonthStatistic(Date monthDate) {
         this.monthDate = monthDate;
-        this.booksCurrentCount = 0;
+        this.booksTotalCount = 0;
         this.booksAvailableCount = 0;
         this.booksPurchasingCount = 0;
         this.booksWriteOffCount = 0;
@@ -56,7 +56,7 @@ public class MonthStatistic {
     }
     public MonthStatistic(Date monthDate, MonthStatistic monthStatistic){
         this.monthDate = monthDate;
-        this.booksCurrentCount = monthStatistic.getBooksCurrentCount();
+        this.booksTotalCount = monthStatistic.getBooksTotalCount();
         this.booksAvailableCount = monthStatistic.getBooksAvailableCount();
         this.booksPurchasingCount = monthStatistic.getBooksPurchasingCount();
         this.booksWriteOffCount = monthStatistic.getBooksWriteOffCount();

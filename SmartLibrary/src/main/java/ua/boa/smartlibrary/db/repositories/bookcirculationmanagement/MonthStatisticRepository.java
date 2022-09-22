@@ -10,9 +10,10 @@ import java.util.List;
 
 public interface MonthStatisticRepository extends JpaRepository<MonthStatistic, Integer> {
     List<MonthStatistic> findMonthStatisticsByMonthDateBetween(Date monthDateMin, Date monthDateMax);
-    @Query(value = "SELECT TOP 1 * FROM month_statistic " +
-            "WHERE EXTRACT(YEAR FROM month_statistic.month_date) <= EXTRACT(YEAR FROM date) " +
-            "ORDER BY ABS(DATEDIFF(day, month_statistic.month_date, date));", nativeQuery = true)
+    @Query(value = "SELECT * FROM month_statistic " +
+            "WHERE DATE_PART('year', CAST(month_statistic.month_date AS DATE)) <= DATE_PART('year', CAST(:date AS DATE)) " +
+            "ORDER BY ABS(CAST(month_statistic.month_date AS DATE) - " +
+            "CAST(:date AS DATE)) LIMIT 1;", nativeQuery = true)
     List<MonthStatistic> findClosestMonthStatistics(@Param("date")Date date);
     List<MonthStatistic> findMonthStatisticsByMonthDateGreaterThan(Date date);
 }

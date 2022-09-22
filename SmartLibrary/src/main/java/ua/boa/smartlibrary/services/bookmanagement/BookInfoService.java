@@ -6,6 +6,7 @@ import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.BookDelivery;
 import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.BookLost;
 import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.BookWriteOff;
 import ua.boa.smartlibrary.dataclasses.bookmanagement.BookInfo;
+import ua.boa.smartlibrary.dataclasses.customermanagement.BookBorrowing;
 import ua.boa.smartlibrary.db.repositories.bookmanagement.BookInfoRepository;
 import ua.boa.smartlibrary.exceptions.bookmanagement.BookInfoNotFoundException;
 
@@ -28,25 +29,69 @@ public class BookInfoService {
         if(optional.isEmpty()) throw new BookInfoNotFoundException(id);
         return optional.get();
     }
-    public BookInfo addBookDelivery(Integer id, BookDelivery bookDelivery){
-        BookInfo bookInfo = get(id);
-        bookInfo.setCurrentCount(bookInfo.getCurrentCount() + bookDelivery.getBookCount());
-        bookInfo.setAvailableCount(bookInfo.getAvailableCount() + bookDelivery.getBookCount());
-        bookInfo.setPurchasingCount(bookInfo.getPurchasingCount() + bookDelivery.getBookCount());
+    public BookInfo addBookDelivery(BookDelivery bookDelivery){
+        BookInfo bookInfo = get(bookDelivery.getBook().getBookInfo().getId());
+        int count = bookDelivery.getBookCount();
+        int newTotal = bookInfo.getTotalCount() + count;
+        if(newTotal < 0) throw new IllegalStateException("Can't change delivery date " +
+                "because total book count will be < 0");
+        bookInfo.setTotalCount(newTotal);
+        int newAvailable = bookInfo.getAvailableCount() + count;
+        if(newAvailable < 0) throw new IllegalStateException("Can't change delivery date " +
+                "because available book count will be < 0");
+        bookInfo.setAvailableCount(newAvailable);
+        bookInfo.setPurchasingCount(bookInfo.getPurchasingCount() + count);
         return repository.save(bookInfo);
     }
-    public BookInfo addBookWriteOff(Integer id, BookWriteOff bookWriteOff){
-        BookInfo bookInfo = get(id);
-        bookInfo.setCurrentCount(bookInfo.getCurrentCount() - bookWriteOff.getBookCount());
-        bookInfo.setAvailableCount(bookInfo.getAvailableCount() - bookWriteOff.getBookCount());
-        bookInfo.setWriteOffCount(bookInfo.getWriteOffCount() + bookWriteOff.getBookCount());
+    public BookInfo addBookWriteOff(BookWriteOff bookWriteOff){
+        BookInfo bookInfo = get(bookWriteOff.getBook().getBookInfo().getId());
+        int count = bookWriteOff.getBookCount();
+        int newTotal = bookInfo.getTotalCount() - count;
+        if(newTotal < 0) throw new IllegalStateException("Can't write-off books " +
+                "because there is not enough total count!");
+        bookInfo.setTotalCount(newTotal);
+        int newAvailable = bookInfo.getAvailableCount() - count;
+        if(newAvailable < 0) throw new IllegalStateException("Can't write-off books because there is " +
+                "not enough available count! Some books are borrowed.");
+        bookInfo.setAvailableCount(newAvailable);
+        bookInfo.setWriteOffCount(bookInfo.getWriteOffCount() + count);
         return repository.save(bookInfo);
     }
-    public BookInfo addBookLost(Integer id, BookLost bookLost){
-        BookInfo bookInfo = get(id);
-        bookInfo.setCurrentCount(bookInfo.getCurrentCount() - bookLost.getBookCount());
-        bookInfo.setAvailableCount(bookInfo.getAvailableCount() - bookLost.getBookCount());
-        bookInfo.setLostCount(bookInfo.getLostCount() + bookLost.getBookCount());
+    public BookInfo addBookLost(BookLost bookLost, boolean wasReturned){
+        BookInfo bookInfo = get(bookLost.getBook().getBookInfo().getId());
+        int count = bookLost.getBookCount();
+        int newTotal = bookInfo.getTotalCount() - count;
+        if(newTotal < 0) throw new IllegalStateException("Can't add books as lost" +
+                "because there is not enough total count!");
+        bookInfo.setTotalCount(newTotal);
+        if(wasReturned) {
+            int newAvailable = bookInfo.getAvailableCount() - count;
+            if (newAvailable < 0) throw new IllegalStateException("Can't add books as lost because there is " +
+                    "not enough available count! Some books are borrowed.");
+            bookInfo.setAvailableCount(newAvailable);
+        }else{
+            int newBorrowing = bookInfo.getBorrowingCount() - count;
+            if(newBorrowing < 0) throw new IllegalStateException("Can't add books as lost because there is " +
+                    "not enough available count! Some books are returned.");
+            bookInfo.setBorrowingCount(newBorrowing);
+        }
+        bookInfo.setLostCount(bookInfo.getLostCount() + count);
+        return repository.save(bookInfo);
+    }
+    public BookInfo startBookBorrowing(BookBorrowing bookBorrowing){
+        BookInfo bookInfo = get(bookBorrowing.getBook().getBookInfo().getId());
+        int available = bookInfo.getAvailableCount();
+        if(available == 0) throw new IllegalStateException("Can't borrow book because there is not any book!");
+        bookInfo.setAvailableCount(available - 1);
+        bookInfo.setBorrowingCount(bookInfo.getBorrowingCount() + 1);
+        return repository.save(bookInfo);
+    }
+    public BookInfo finishBookBorrowing(BookBorrowing bookBorrowing){
+        BookInfo bookInfo = get(bookBorrowing.getBook().getBookInfo().getId());
+        int borrowing = bookInfo.getBorrowingCount();
+        if(borrowing == 0) throw new IllegalStateException("Can't return book because there is not any borrowed book!");
+        bookInfo.setAvailableCount(bookInfo.getAvailableCount() + 1);
+        bookInfo.setBorrowingCount(borrowing - 1);
         return repository.save(bookInfo);
     }
 }
