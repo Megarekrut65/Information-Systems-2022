@@ -8,6 +8,7 @@ import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.BookWriteOff;
 import ua.boa.smartlibrary.dataclasses.bookmanagement.BookInfo;
 import ua.boa.smartlibrary.dataclasses.customermanagement.BookBorrowing;
 import ua.boa.smartlibrary.db.repositories.bookmanagement.BookInfoRepository;
+import ua.boa.smartlibrary.exceptions.BadDatabaseOperationException;
 import ua.boa.smartlibrary.exceptions.bookmanagement.BookInfoNotFoundException;
 
 import java.util.Optional;
@@ -36,11 +37,11 @@ public class BookInfoService {
         BookInfo bookInfo = get(bookDelivery.getBook().getBookInfo().getId());
         int count = bookDelivery.getBookCount();
         int newTotal = bookInfo.getTotalCount() + count;
-        if (newTotal < 0) throw new IllegalStateException("Can't change delivery date " +
+        if (newTotal < 0) throw new BadDatabaseOperationException("Can't change delivery date " +
                 "because total book count will be < 0");
         bookInfo.setTotalCount(newTotal);
         int newAvailable = bookInfo.getAvailableCount() + count;
-        if (newAvailable < 0) throw new IllegalStateException("Can't change delivery date " +
+        if (newAvailable < 0) throw new BadDatabaseOperationException("Can't change delivery date " +
                 "because available book count will be < 0");
         bookInfo.setAvailableCount(newAvailable);
         bookInfo.setPurchasingCount(bookInfo.getPurchasingCount() + count);
@@ -51,14 +52,17 @@ public class BookInfoService {
         BookInfo bookInfo = get(bookWriteOff.getBook().getBookInfo().getId());
         int count = bookWriteOff.getBookCount();
         int newTotal = bookInfo.getTotalCount() - count;
-        if (newTotal < 0) throw new IllegalStateException("Can't write-off books " +
+        if (newTotal < 0) throw new BadDatabaseOperationException("Can't write-off books " +
                 "because there is not enough total count!");
         bookInfo.setTotalCount(newTotal);
         int newAvailable = bookInfo.getAvailableCount() - count;
-        if (newAvailable < 0) throw new IllegalStateException("Can't write-off books because there is " +
+        if (newAvailable < 0) throw new BadDatabaseOperationException("Can't write-off books because there is " +
                 "not enough available count! Some books are borrowed.");
         bookInfo.setAvailableCount(newAvailable);
-        bookInfo.setWriteOffCount(bookInfo.getWriteOffCount() + count);
+        int newWriteOff = bookInfo.getWriteOffCount() + count;
+        if (newWriteOff < 0) throw new BadDatabaseOperationException("Can't undo write-off books because there is " +
+                "not enough write-off count!");
+        bookInfo.setWriteOffCount(newWriteOff);
         return repository.save(bookInfo);
     }
 
@@ -66,28 +70,31 @@ public class BookInfoService {
         BookInfo bookInfo = get(bookLost.getBook().getBookInfo().getId());
         int count = bookLost.getBookCount();
         int newTotal = bookInfo.getTotalCount() - count;
-        if (newTotal < 0) throw new IllegalStateException("Can't add books as lost" +
+        if (newTotal < 0) throw new BadDatabaseOperationException("Can't add books as lost" +
                 "because there is not enough total count!");
         bookInfo.setTotalCount(newTotal);
         if (wasReturned) {
             int newAvailable = bookInfo.getAvailableCount() - count;
-            if (newAvailable < 0) throw new IllegalStateException("Can't add books as lost because there is " +
+            if (newAvailable < 0) throw new BadDatabaseOperationException("Can't add books as lost because there is " +
                     "not enough available count! Some books are borrowed.");
             bookInfo.setAvailableCount(newAvailable);
         } else {
             int newBorrowing = bookInfo.getBorrowingCount() - count;
-            if (newBorrowing < 0) throw new IllegalStateException("Can't add books as lost because there is " +
+            if (newBorrowing < 0) throw new BadDatabaseOperationException("Can't add books as lost because there is " +
                     "not enough available count! Some books are returned.");
             bookInfo.setBorrowingCount(newBorrowing);
         }
-        bookInfo.setLostCount(bookInfo.getLostCount() + count);
+        int newLost = bookInfo.getLostCount() + count;
+        if (newLost < 0) throw new BadDatabaseOperationException("Can't undo loss books because there is " +
+                "not enough loss count!");
+        bookInfo.setLostCount(newLost);
         return repository.save(bookInfo);
     }
 
     public BookInfo startBookBorrowing(BookBorrowing bookBorrowing) {
         BookInfo bookInfo = get(bookBorrowing.getBook().getBookInfo().getId());
         int available = bookInfo.getAvailableCount();
-        if (available == 0) throw new IllegalStateException("Can't borrow book because there is not any book!");
+        if (available == 0) throw new BadDatabaseOperationException("Can't borrow book because there is not any book!");
         bookInfo.setAvailableCount(available - 1);
         bookInfo.setBorrowingCount(bookInfo.getBorrowingCount() + 1);
         return repository.save(bookInfo);
@@ -97,7 +104,7 @@ public class BookInfoService {
         BookInfo bookInfo = get(bookBorrowing.getBook().getBookInfo().getId());
         int borrowing = bookInfo.getBorrowingCount();
         if (borrowing == 0)
-            throw new IllegalStateException("Can't return book because there is not any borrowed book!");
+            throw new BadDatabaseOperationException("Can't return book because there is not any borrowed book!");
         bookInfo.setAvailableCount(bookInfo.getAvailableCount() + 1);
         bookInfo.setBorrowingCount(borrowing - 1);
         return repository.save(bookInfo);

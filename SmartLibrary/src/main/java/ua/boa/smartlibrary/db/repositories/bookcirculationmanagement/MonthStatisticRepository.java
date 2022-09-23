@@ -12,10 +12,12 @@ public interface MonthStatisticRepository extends JpaRepository<MonthStatistic, 
     List<MonthStatistic> findMonthStatisticsByMonthDateBetween(Date monthDateMin, Date monthDateMax);
 
     @Query(value = "SELECT * FROM month_statistic " +
-            "WHERE DATE_PART('year', CAST(month_statistic.month_date AS DATE)) <= DATE_PART('year', CAST(:date AS DATE)) " +
+            "WHERE CAST(month_statistic.month_date AS DATE) <= CAST(:date AS DATE) " +
             "ORDER BY ABS(CAST(month_statistic.month_date AS DATE) - " +
             "CAST(:date AS DATE)) LIMIT 1;", nativeQuery = true)
     List<MonthStatistic> findClosestMonthStatistics(@Param("date") Date date);
 
     List<MonthStatistic> findMonthStatisticsByMonthDateGreaterThan(Date date);
+    @Query(value = "SELECT * FROM month_statistic ORDER BY month_statistic.month_date DESC;", nativeQuery = true)
+    List<MonthStatistic> getAllOrdered();
 }

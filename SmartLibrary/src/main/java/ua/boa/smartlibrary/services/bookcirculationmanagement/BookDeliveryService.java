@@ -2,17 +2,21 @@ package ua.boa.smartlibrary.services.bookcirculationmanagement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.BookDelivery;
 import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.Delivery;
 import ua.boa.smartlibrary.dataclasses.bookmanagement.Book;
 import ua.boa.smartlibrary.db.repositories.bookcirculationmanagement.BookDeliveryRepository;
+import ua.boa.smartlibrary.exceptions.BadDatabaseOperationException;
 import ua.boa.smartlibrary.exceptions.bookcirculationmanagement.BookDeliveryNotFoundException;
 import ua.boa.smartlibrary.services.bookmanagement.BookService;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class BookDeliveryService {
     @Autowired
     private BookDeliveryRepository repository;
@@ -23,6 +27,7 @@ public class BookDeliveryService {
     @Autowired
     private StatisticService statisticService;
 
+    @Transactional
     public BookDelivery create(Integer deliveryId, Integer bookId, Integer bookCount, Integer bookPrice) {
         Delivery delivery = deliveryService.get(deliveryId);
         Book book = bookService.get(bookId);
@@ -30,7 +35,9 @@ public class BookDeliveryService {
         try {
             statisticService.addBookDelivery(bookDelivery);
             return repository.save(bookDelivery);
-        } catch (IllegalStateException ignored) {
+        } catch (BadDatabaseOperationException e) {
+            e.printStackTrace();
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         }
         return null;
     }
@@ -38,7 +45,7 @@ public class BookDeliveryService {
     public List<BookDelivery> getAll() {
         return repository.findAll();
     }
-
+    @Transactional
     public BookDelivery update(Integer id, Integer deliveryId, Integer bookId, Integer bookCount, Integer bookPrice) {
         Delivery delivery = deliveryService.get(deliveryId);
         Book book = bookService.get(bookId);
@@ -51,8 +58,10 @@ public class BookDeliveryService {
             bookDelivery.setBookCount(-1 * bookDelivery.getBookCount());
             try {
                 statisticService.addBookDelivery(bookDelivery);
-            } catch (IllegalStateException ignored) {
-                return get(id);
+            } catch (BadDatabaseOperationException e) {
+                e.printStackTrace();
+                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                return null;
             }
         }
         bookDelivery.setDelivery(delivery);
@@ -62,20 +71,24 @@ public class BookDeliveryService {
         if (needAddAgain) {
             try {
                 statisticService.addBookDelivery(bookDelivery);
-            } catch (IllegalStateException ignored) {
-                return get(id);
+            } catch (BadDatabaseOperationException e) {
+                e.printStackTrace();
+                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                return null;
             }
         }
         return repository.save(bookDelivery);
     }
-
+    @Transactional
     public void remove(Integer id) {
         BookDelivery bookDelivery = get(id);
         bookDelivery.setBookCount(-1 * bookDelivery.getBookCount());
         try {
             statisticService.addBookDelivery(bookDelivery);
             repository.delete(bookDelivery);
-        } catch (IllegalStateException ignored) {
+        } catch (BadDatabaseOperationException e) {
+            e.printStackTrace();
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         }
     }
 

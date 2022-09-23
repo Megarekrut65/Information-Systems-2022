@@ -7,6 +7,7 @@ import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.Delivery;
 import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.Distributor;
 import ua.boa.smartlibrary.db.repositories.bookcirculationmanagement.BookDeliveryRepository;
 import ua.boa.smartlibrary.db.repositories.bookcirculationmanagement.DeliveryRepository;
+import ua.boa.smartlibrary.exceptions.BadDatabaseOperationException;
 import ua.boa.smartlibrary.exceptions.bookcirculationmanagement.DeliveryNotFoundException;
 
 import java.sql.Date;
@@ -49,7 +50,8 @@ public class DeliveryService {
                     delivery.setDateOfDelivery(dateOfDelivery);
                     bookDelivery.setBookCount(sum);
                     monthStatisticService.addBookDelivery(bookDelivery);
-                } catch (IllegalStateException ignored) {
+                } catch (BadDatabaseOperationException e) {
+                    e.printStackTrace();
                     return get(id);
                 }
             }

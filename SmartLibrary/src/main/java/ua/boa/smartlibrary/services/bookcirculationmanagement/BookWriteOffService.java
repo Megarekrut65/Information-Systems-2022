@@ -2,17 +2,21 @@ package ua.boa.smartlibrary.services.bookcirculationmanagement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.BookWriteOff;
 import ua.boa.smartlibrary.dataclasses.bookmanagement.Book;
 import ua.boa.smartlibrary.db.repositories.bookcirculationmanagement.BookWriteOffRepository;
+import ua.boa.smartlibrary.exceptions.BadDatabaseOperationException;
 import ua.boa.smartlibrary.exceptions.bookcirculationmanagement.BookWriteOffNotFoundException;
 import ua.boa.smartlibrary.services.bookmanagement.BookService;
 
+import javax.transaction.Transactional;
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class BookWriteOffService {
     @Autowired
     private BookWriteOffRepository repository;
@@ -21,13 +25,16 @@ public class BookWriteOffService {
     @Autowired
     private StatisticService statisticService;
 
+    @Transactional
     public BookWriteOff create(Date dateOfWriteOff, Integer bookId, Integer bookCount) {
         Book book = bookService.get(bookId);
         BookWriteOff bookWriteOff = new BookWriteOff(dateOfWriteOff, book, bookCount);
         try {
             statisticService.addBookWriteOff(bookWriteOff);
             return repository.save(bookWriteOff);
-        } catch (IllegalStateException ignored) {
+        } catch (BadDatabaseOperationException e) {
+            e.printStackTrace();
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         }
         return null;
     }
@@ -35,34 +42,39 @@ public class BookWriteOffService {
     public List<BookWriteOff> getAll() {
         return repository.findAll();
     }
-
+    @Transactional
     public BookWriteOff update(Integer id, Date dateOfWriteOff, Integer bookId, Integer bookCount) {
         Book book = bookService.get(bookId);
         BookWriteOff bookWriteOff = get(id);
         bookWriteOff.setBookCount(-1 * bookWriteOff.getBookCount());
         try {
             statisticService.addBookWriteOff(bookWriteOff);
-        } catch (IllegalStateException ignored) {
-            return get(id);
+        } catch (BadDatabaseOperationException e) {
+            e.printStackTrace();
+            return null;
         }
         bookWriteOff.setDateOfWriteOff(dateOfWriteOff);
         bookWriteOff.setBook(book);
         bookWriteOff.setBookCount(bookCount);
         try {
             statisticService.addBookWriteOff(bookWriteOff);
-        } catch (IllegalStateException ignored) {
-            return get(id);
+        } catch (BadDatabaseOperationException e) {
+            e.printStackTrace();
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return null;
         }
         return repository.save(bookWriteOff);
     }
-
+    @Transactional
     public void remove(Integer id) {
         BookWriteOff bookWriteOff = get(id);
         bookWriteOff.setBookCount(-1 * bookWriteOff.getBookCount());
         try {
             statisticService.addBookWriteOff(bookWriteOff);
             repository.delete(bookWriteOff);
-        } catch (IllegalStateException ignored) {
+        } catch (BadDatabaseOperationException e) {
+            e.printStackTrace();
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         }
     }
 
