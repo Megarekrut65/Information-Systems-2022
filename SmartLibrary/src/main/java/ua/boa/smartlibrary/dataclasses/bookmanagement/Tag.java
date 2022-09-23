@@ -13,10 +13,10 @@ import javax.persistence.*;
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tag_id_generator")
-    @SequenceGenerator(name="tag_id_generator", sequenceName = "tag_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "tag_id_generator", sequenceName = "tag_id_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Integer id;
-    @Column(name="name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
     public Tag(String name) {

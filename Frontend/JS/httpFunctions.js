@@ -37,7 +37,7 @@ function makeParametersUrl(url, obj) {
     for (let i in keys) {
         res += keys[i] + "=" + obj[keys[i]] + "&"
     }
-    return res.slice(0, -1);
+    return res.slice(0, -1)
 }
 
 function normalize(str) {

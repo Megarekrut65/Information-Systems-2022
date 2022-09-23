@@ -17,16 +17,18 @@ public class MonthStatisticController {
     private MonthStatisticService service;
 
     @RequestMapping(value = "/month-statistics", method = RequestMethod.GET)
-    public List<MonthStatistic> getAll(){
+    public List<MonthStatistic> getAll() {
         return service.getAll();
     }
+
     @RequestMapping(value = "/month-statistics/by-month-date-period", method = RequestMethod.GET)
-    public List<MonthStatistic> searchByPublishYearPeriod(@RequestParam("month-date-min")String monthDateMin,
-                                                @RequestParam("month-date-max")String monthDateMax){
-        return service.findByMonthDatePeriod(Utilities.getDate(monthDateMin),Utilities.getDate(monthDateMax));
+    public List<MonthStatistic> searchByPublishYearPeriod(@RequestParam("month-date-min") String monthDateMin,
+                                                          @RequestParam("month-date-max") String monthDateMax) {
+        return service.findByMonthDatePeriod(Utilities.getDate(monthDateMin), Utilities.getDate(monthDateMax));
     }
+
     @RequestMapping(value = "/month-statistic", method = RequestMethod.GET)
-    public MonthStatistic get(@RequestParam("id")String id){
+    public MonthStatistic get(@RequestParam("id") String id) {
         return service.get(Integer.parseInt(id));
     }
 }

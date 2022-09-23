@@ -14,10 +14,10 @@ import java.sql.Date;
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "author_id_generator")
-    @SequenceGenerator(name="author_id_generator", sequenceName = "author_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "author_id_generator", sequenceName = "author_id_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Integer id;
-    @Column(name="name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
     @Column(name = "date_of_birth")
     private Date dateOfBirth;

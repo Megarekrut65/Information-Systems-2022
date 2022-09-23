@@ -16,16 +16,16 @@ import java.sql.Date;
 public class BookBorrowing {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_borrowing_id_generator")
-    @SequenceGenerator(name="book_borrowing_id_generator", sequenceName = "book_borrowing_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "book_borrowing_id_generator", sequenceName = "book_borrowing_id_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Integer id;
     @Column(name = "date_of_borrowing", nullable = false)
     private Date dateOfBorrowing;
     @ManyToOne
-    @JoinColumn(name="customer_id", nullable = false)
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
     @ManyToOne
-    @JoinColumn(name="book_id", nullable = false)
+    @JoinColumn(name = "book_id", nullable = false)
     private Book book;
     @Column(name = "estimated_date_of_return", nullable = false)
     private Date estimatedDateOfReturn;

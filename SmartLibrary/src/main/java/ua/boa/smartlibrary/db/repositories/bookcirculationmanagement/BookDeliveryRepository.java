@@ -9,5 +9,6 @@ import java.util.List;
 
 public interface BookDeliveryRepository extends JpaRepository<BookDelivery, Integer> {
     List<BookDelivery> findBookDeliveriesByDelivery(Delivery delivery);
+
     List<BookDelivery> findBookDeliveriesByBook(Book book);
 }

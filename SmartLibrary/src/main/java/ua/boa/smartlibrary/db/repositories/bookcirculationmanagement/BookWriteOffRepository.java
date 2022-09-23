@@ -9,5 +9,6 @@ import java.util.List;
 
 public interface BookWriteOffRepository extends JpaRepository<BookWriteOff, Integer> {
     List<BookWriteOff> findBookWriteOffsByDateOfWriteOffBetween(Date dateOfWriteOffMin, Date dateOfWriteOffMax);
+
     List<BookWriteOff> findBookWriteOffsByBook(Book book);
 }

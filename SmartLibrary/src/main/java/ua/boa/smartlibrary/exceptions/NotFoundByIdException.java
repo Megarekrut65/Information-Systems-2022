@@ -1,6 +1,6 @@
 package ua.boa.smartlibrary.exceptions;
 
-public class NotFoundByIdException extends RuntimeException{
+public class NotFoundByIdException extends RuntimeException {
     private final Integer id;
     private final String object;
 
@@ -8,8 +8,9 @@ public class NotFoundByIdException extends RuntimeException{
         this.id = id;
         this.object = object;
     }
+
     @Override
     public String getMessage() {
-        return object+" with id=" + id + " not found!";
+        return object + " with id=" + id + " not found!";
     }
 }

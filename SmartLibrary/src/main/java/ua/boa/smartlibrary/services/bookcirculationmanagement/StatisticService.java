@@ -15,23 +15,27 @@ public class StatisticService {
     @Autowired
     private MonthStatisticService monthStatisticService;
 
-    public void addBookDelivery(BookDelivery bookDelivery){
+    public void addBookDelivery(BookDelivery bookDelivery) {
         bookInfoService.addBookDelivery(bookDelivery);
         monthStatisticService.addBookDelivery(bookDelivery);
     }
-    public void addBookWriteOff(BookWriteOff bookWriteOff){
+
+    public void addBookWriteOff(BookWriteOff bookWriteOff) {
         bookInfoService.addBookWriteOff(bookWriteOff);
         monthStatisticService.addBookWriteOff(bookWriteOff);
     }
-    public void addBookLost(BookLost bookLost, boolean wasReturned){
+
+    public void addBookLost(BookLost bookLost, boolean wasReturned) {
         bookInfoService.addBookLost(bookLost, wasReturned);
         monthStatisticService.addBookLost(bookLost, wasReturned);
     }
-    public void startBorrowing(BookBorrowing bookBorrowing){
+
+    public void startBorrowing(BookBorrowing bookBorrowing) {
         bookInfoService.startBookBorrowing(bookBorrowing);
         monthStatisticService.startBookBorrowing(bookBorrowing);
     }
-    public void finishBorrowing(BookBorrowing bookBorrowing){
+
+    public void finishBorrowing(BookBorrowing bookBorrowing) {
         bookInfoService.finishBookBorrowing(bookBorrowing);
         monthStatisticService.finishBookBorrowing(bookBorrowing);
     }

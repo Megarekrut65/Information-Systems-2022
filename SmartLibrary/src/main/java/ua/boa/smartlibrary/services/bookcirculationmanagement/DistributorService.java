@@ -14,29 +14,34 @@ public class DistributorService {
     @Autowired
     private DistributorRepository repository;
 
-    public Distributor create(String name, String phoneNumber, String address){
+    public Distributor create(String name, String phoneNumber, String address) {
         return repository.save(new Distributor(name, phoneNumber, address));
     }
-    public List<Distributor> getAll(){
+
+    public List<Distributor> getAll() {
         return repository.findAll();
     }
-    public Distributor update(Integer id, String name, String phoneNumber, String address){
+
+    public Distributor update(Integer id, String name, String phoneNumber, String address) {
         Distributor distributor = get(id);
         distributor.setName(name);
         distributor.setPhoneNumber(phoneNumber);
         distributor.setAddress(address);
         return repository.save(distributor);
     }
-    public void remove(Integer id){
+
+    public void remove(Integer id) {
         Distributor distributor = get(id);
         repository.delete(distributor);
     }
-    public List<Distributor> findByName(String name){
+
+    public List<Distributor> findByName(String name) {
         return repository.findDistributorsByNameAdvanced(name);
     }
-    public Distributor get(Integer id){
+
+    public Distributor get(Integer id) {
         Optional<Distributor> optional = repository.findById(id);
-        if(optional.isEmpty()) throw new DistributorNotFoundException(id);
+        if (optional.isEmpty()) throw new DistributorNotFoundException(id);
         return optional.get();
     }
 }

@@ -13,15 +13,15 @@ import javax.persistence.*;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_id_generator")
-    @SequenceGenerator(name="book_id_generator", sequenceName = "book_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "book_id_generator", sequenceName = "book_id_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Integer id;
-    @Column(name="title", nullable = false)
+    @Column(name = "title", nullable = false)
     private String title;
     @ManyToOne
-    @JoinColumn(name="publishing_house_id", nullable = false)
+    @JoinColumn(name = "publishing_house_id", nullable = false)
     private PublishingHouse publishingHouse;
-    @Column(name="publish_year", nullable = false)
+    @Column(name = "publish_year", nullable = false)
     private Integer publishYear;
     @Column(name = "comment", nullable = false)
     private String comment;

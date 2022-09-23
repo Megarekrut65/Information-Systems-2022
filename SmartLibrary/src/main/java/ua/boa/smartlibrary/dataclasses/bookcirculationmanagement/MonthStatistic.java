@@ -11,26 +11,26 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Table(name="month_statistic")
+@Table(name = "month_statistic")
 public class MonthStatistic {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "month_statistic_id_generator")
-    @SequenceGenerator(name="month_statistic_id_generator", sequenceName = "month_statistic_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "month_statistic_id_generator", sequenceName = "month_statistic_id_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Integer id;
-    @Column(name="month_date", nullable = false)
+    @Column(name = "month_date", nullable = false)
     private Date monthDate;
-    @Column(name="books_total_count", nullable = false)
+    @Column(name = "books_total_count", nullable = false)
     private Integer booksTotalCount;
-    @Column(name="books_available_count", nullable = false)
+    @Column(name = "books_available_count", nullable = false)
     private Integer booksAvailableCount;
-    @Column(name="books_purchasing_count", nullable = false)
+    @Column(name = "books_purchasing_count", nullable = false)
     private Integer booksPurchasingCount;
-    @Column(name="books_write_off_count", nullable = false)
+    @Column(name = "books_write_off_count", nullable = false)
     private Integer booksWriteOffCount;
-    @Column(name="books_lost_count", nullable = false)
+    @Column(name = "books_lost_count", nullable = false)
     private Integer booksLostCount;
-    @Column(name="books_borrowing_count", nullable = false)
+    @Column(name = "books_borrowing_count", nullable = false)
     private Integer booksBorrowingCount;
 
     public MonthStatistic(Date monthDate, Integer booksTotalCount,
@@ -54,7 +54,8 @@ public class MonthStatistic {
         this.booksLostCount = 0;
         this.booksBorrowingCount = 0;
     }
-    public MonthStatistic(Date monthDate, MonthStatistic monthStatistic){
+
+    public MonthStatistic(Date monthDate, MonthStatistic monthStatistic) {
         this.monthDate = monthDate;
         this.booksTotalCount = monthStatistic.getBooksTotalCount();
         this.booksAvailableCount = monthStatistic.getBooksAvailableCount();

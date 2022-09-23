@@ -16,15 +16,15 @@ import java.sql.Date;
 public class BookWriteOff {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_write_off_id_generator")
-    @SequenceGenerator(name="book_write_off_id_generator", sequenceName = "book_write_off_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "book_write_off_id_generator", sequenceName = "book_write_off_id_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Integer id;
     @Column(name = "date_of_write_off")
     private Date dateOfWriteOff;
     @ManyToOne
-    @JoinColumn(name="book_id", nullable = false)
+    @JoinColumn(name = "book_id", nullable = false)
     private Book book;
-    @Column(name="book_count", nullable = false)
+    @Column(name = "book_count", nullable = false)
     private Integer bookCount;
 
     public BookWriteOff(Date dateOfWriteOff, Book book, Integer bookCount) {

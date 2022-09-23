@@ -19,14 +19,16 @@ public class BookService {
     @Autowired
     private PublishingHouseService publishingHouseService;
 
-    public Book create(String title, Integer publishingHouseId, Integer publishYear, String comment){
+    public Book create(String title, Integer publishingHouseId, Integer publishYear, String comment) {
         PublishingHouse publishingHouse = publishingHouseService.get(publishingHouseId);
         return repository.save(new Book(title, publishingHouse, publishYear, comment, bookInfoService.create()));
     }
-    public List<Book> getAll(){
+
+    public List<Book> getAll() {
         return repository.findAll();
     }
-    public Book update(Integer id, String title, Integer publishingHouseId, Integer publishYear, String comment){
+
+    public Book update(Integer id, String title, Integer publishingHouseId, Integer publishYear, String comment) {
         PublishingHouse publishingHouse = publishingHouseService.get(publishingHouseId);
         Book book = get(id);
         book.setTitle(title);
@@ -35,24 +37,29 @@ public class BookService {
         book.setComment(comment);
         return repository.save(book);
     }
-    public void remove(Integer id){
+
+    public void remove(Integer id) {
         Book book = get(id);
         repository.delete(book);
         bookInfoService.remove(book.getBookInfo().getId());
     }
-    public List<Book> findByTitle(String title){
+
+    public List<Book> findByTitle(String title) {
         return repository.findBooksByTitleAdvanced(title);
     }
-    public List<Book> findByPublishingHouse(Integer publishingHouseId){
+
+    public List<Book> findByPublishingHouse(Integer publishingHouseId) {
         PublishingHouse publishingHouse = publishingHouseService.get(publishingHouseId);
         return repository.findBooksByPublishingHouse(publishingHouse);
     }
-    public List<Book> findByPublishYearPeriod(Integer publishYearMin, Integer publishYearMax){
+
+    public List<Book> findByPublishYearPeriod(Integer publishYearMin, Integer publishYearMax) {
         return repository.findBooksByPublishYearBetween(publishYearMin, publishYearMax);
     }
-    public Book get(Integer id){
+
+    public Book get(Integer id) {
         Optional<Book> optional = repository.findById(id);
-        if(optional.isEmpty()) throw new BookNotFoundException(id);
+        if (optional.isEmpty()) throw new BookNotFoundException(id);
         return optional.get();
     }
 }

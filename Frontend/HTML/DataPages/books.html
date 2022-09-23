@@ -6,6 +6,7 @@
     <link rel="shortcut icon" href="../../Images/library.png" type="image/png">
     <link rel="stylesheet" type="text/css" href="../../CSS/styles.css">
     <script src="../../JS/data.js"></script>
+    <script src="../../JS/code.js"></script>
     <script src="../../JS/httpFunctions.js"></script>
     <script src="../../JS/DataFunctions/bookFunctions.js"></script>
     <script src="../../JS/DataFunctions/genreFunctions.js"></script>
@@ -40,6 +41,13 @@
         <input type="button" value="remove" onclick="console.log(removeTag(4)); return false;">
         <input type="button" value="findByTitle" onclick="console.log(findTagsByName('ild ')); return false;">
         <input type="button" value="get" onclick="console.log(getTag(3)); return false;">
+        <p>Tables</p>
+        <input type="button" value="book" onclick='addTableToPage( "box", getAllBooks()); return false; '>
+        <input type="button" value="genre" onclick='addTableToPage( "box", getAllGenres()); return false; '>
+        <input type="button" value="tag" onclick='addTableToPage( "box", getAllTags()); return false; '>
+        <div id="box">
+
+        </div>
     </div>
 </body>
 

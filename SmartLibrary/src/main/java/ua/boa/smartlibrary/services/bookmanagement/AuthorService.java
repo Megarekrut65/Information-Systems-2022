@@ -15,29 +15,34 @@ public class AuthorService {
     @Autowired
     private AuthorRepository repository;
 
-    public Author create(String name, Date dateOfBirth, Date dateOfDeath){
+    public Author create(String name, Date dateOfBirth, Date dateOfDeath) {
         return repository.save(new Author(name, dateOfBirth, dateOfDeath));
     }
-    public List<Author> getAll(){
+
+    public List<Author> getAll() {
         return repository.findAll();
     }
-    public Author update(Integer id, String name, Date dateOfBirth, Date dateOfDeath){
+
+    public Author update(Integer id, String name, Date dateOfBirth, Date dateOfDeath) {
         Author author = get(id);
         author.setName(name);
         author.setDateOfBirth(dateOfBirth);
         author.setDateOfDeath(dateOfDeath);
         return repository.save(author);
     }
-    public void remove(Integer id){
+
+    public void remove(Integer id) {
         Author author = get(id);
         repository.delete(author);
     }
-    public List<Author> findByName(String name){
+
+    public List<Author> findByName(String name) {
         return repository.findAuthorsByNameAdvanced(name);
     }
-    public Author get(Integer id){
+
+    public Author get(Integer id) {
         Optional<Author> optional = repository.findById(id);
-        if(optional.isEmpty()) throw new AuthorNotFoundException(id);
+        if (optional.isEmpty()) throw new AuthorNotFoundException(id);
         return optional.get();
     }
 }

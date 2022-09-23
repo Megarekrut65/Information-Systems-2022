@@ -17,30 +17,35 @@ public class AuthorController {
     private AuthorService service;
 
     @RequestMapping(value = "/author", method = RequestMethod.POST)
-    public Author create(@RequestParam("name")String name, @RequestParam("date-of-birth") String dateOfBirth,
-                         @RequestParam("date-of-death") String dateOfDeath){
+    public Author create(@RequestParam("name") String name, @RequestParam("date-of-birth") String dateOfBirth,
+                         @RequestParam("date-of-death") String dateOfDeath) {
         return service.create(name, Utilities.getDate(dateOfBirth), Utilities.getDate(dateOfDeath));
     }
+
     @RequestMapping(value = "/author", method = RequestMethod.PUT)
-    public Author update(@RequestParam("id")String id, @RequestParam("name")String name,
+    public Author update(@RequestParam("id") String id, @RequestParam("name") String name,
                          @RequestParam("date-of-birth") String dateOfBirth,
-                         @RequestParam("date-of-death") String dateOfDeath){
+                         @RequestParam("date-of-death") String dateOfDeath) {
         return service.update(Integer.parseInt(id), name, Utilities.getDate(dateOfBirth), Utilities.getDate(dateOfDeath));
     }
+
     @RequestMapping(value = "/authors", method = RequestMethod.GET)
-    public List<Author> getAll(){
+    public List<Author> getAll() {
         return service.getAll();
     }
+
     @RequestMapping(value = "/author", method = RequestMethod.DELETE)
-    public void remove(@RequestParam("id")String id){
+    public void remove(@RequestParam("id") String id) {
         service.remove(Integer.parseInt(id));
     }
+
     @RequestMapping(value = "/authors/by-name", method = RequestMethod.GET)
-    public List<Author> search(@RequestParam("name")String name){
+    public List<Author> search(@RequestParam("name") String name) {
         return service.findByName(name);
     }
+
     @RequestMapping(value = "/author", method = RequestMethod.GET)
-    public Author get(@RequestParam("id")String id){
+    public Author get(@RequestParam("id") String id) {
         return service.get(Integer.parseInt(id));
     }
 }

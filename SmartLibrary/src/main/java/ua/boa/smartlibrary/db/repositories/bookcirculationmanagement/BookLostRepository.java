@@ -9,5 +9,6 @@ import java.util.List;
 
 public interface BookLostRepository extends JpaRepository<BookLost, Integer> {
     List<BookLost> findBooksLostByDateOfLossBetween(Date dateOfLossMin, Date dateOfLossMax);
+
     List<BookLost> findBooksLostByBook(Book book);
 }

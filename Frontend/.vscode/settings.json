@@ -1,4 +1,6 @@
 {
     "liveServer.settings.port": 5501,
-    "liveServer.settings.multiRootWorkspaceName": "Frontend"
+    "liveServer.settings.multiRootWorkspaceName": "Frontend",
+    "prettier.bracketSpacing": false,
+    "prettier.htmlWhitespaceSensitivity": "ignore"
 }

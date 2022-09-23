@@ -16,27 +16,32 @@ public class GenreController {
     private GenreService service;
 
     @RequestMapping(value = "/genre", method = RequestMethod.POST)
-    public Genre create(@RequestParam("name")String name){
+    public Genre create(@RequestParam("name") String name) {
         return service.create(name);
     }
+
     @RequestMapping(value = "/genre", method = RequestMethod.PUT)
-    public Genre update(@RequestParam("id")String id, @RequestParam("name")String name){
+    public Genre update(@RequestParam("id") String id, @RequestParam("name") String name) {
         return service.update(Integer.parseInt(id), name);
     }
+
     @RequestMapping(value = "/genres", method = RequestMethod.GET)
-    public List<Genre> getAll(){
+    public List<Genre> getAll() {
         return service.getAll();
     }
+
     @RequestMapping(value = "/genre", method = RequestMethod.GET)
-    public Genre get(@RequestParam("id")String id){
+    public Genre get(@RequestParam("id") String id) {
         return service.get(Integer.parseInt(id));
     }
+
     @RequestMapping(value = "/genre", method = RequestMethod.DELETE)
-    public void remove(@RequestParam("id")String id){
+    public void remove(@RequestParam("id") String id) {
         service.remove(Integer.parseInt(id));
     }
+
     @RequestMapping(value = "/genres/by-name", method = RequestMethod.GET)
-    public List<Genre> searchByName(@RequestParam("name")String name){
+    public List<Genre> searchByName(@RequestParam("name") String name) {
         return service.findByName(name);
     }
 }

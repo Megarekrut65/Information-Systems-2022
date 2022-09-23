@@ -10,6 +10,8 @@ import java.util.List;
 
 public interface BookBorrowingRepository extends JpaRepository<BookBorrowing, Integer> {
     List<BookBorrowing> findBookBorrowingByBook(Book book);
+
     List<BookBorrowing> findBookBorrowingByCustomer(Customer customer);
+
     List<BookBorrowing> findBookBorrowingByDateOfBorrowingBetween(Date dateOfBorrowingMin, Date dateOfBorrowingMax);
 }

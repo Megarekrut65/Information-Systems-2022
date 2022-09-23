@@ -9,5 +9,6 @@ import java.util.List;
 
 public interface DeliveryRepository extends JpaRepository<Delivery, Integer> {
     List<Delivery> findDeliveriesByDateOfDeliveryBetween(Date dateOfDeliveryMin, Date dateOfDeliveryMax);
+
     List<Delivery> findDeliveriesByDistributor(Distributor distributor);
 }
