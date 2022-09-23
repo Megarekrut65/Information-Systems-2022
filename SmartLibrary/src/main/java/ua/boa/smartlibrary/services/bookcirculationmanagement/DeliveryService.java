@@ -2,6 +2,8 @@ package ua.boa.smartlibrary.services.bookcirculationmanagement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.BookDelivery;
 import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.Delivery;
 import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.Distributor;
@@ -16,6 +18,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
+@Transactional
 public class DeliveryService {
     @Autowired
     private DeliveryRepository repository;
@@ -35,6 +38,7 @@ public class DeliveryService {
         return repository.findAll();
     }
 
+    @Transactional
     public Delivery update(Integer id, Date dateOfDelivery, Integer distributorId) {
         Distributor distributor = distributorService.get(distributorId);
         Delivery delivery = get(id);
@@ -52,7 +56,8 @@ public class DeliveryService {
                     monthStatisticService.addBookDelivery(bookDelivery);
                 } catch (BadDatabaseOperationException e) {
                     e.printStackTrace();
-                    return get(id);
+                    TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                    throw new BadDatabaseOperationException(e.getMessage());
                 }
             }
             delivery.setDateOfDelivery(dateOfDelivery);

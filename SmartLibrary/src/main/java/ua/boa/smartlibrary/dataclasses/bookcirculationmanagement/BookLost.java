@@ -28,11 +28,13 @@ public class BookLost {
     private String causeOfLoss;
     @Column(name = "date_of_loss")
     private Date dateOfLoss;
-
-    public BookLost(Integer bookCount, Book book, String causeOfLoss, Date dateOfLoss) {
+    @Column(name = "was_returned")
+    private Boolean wasReturned;
+    public BookLost(Integer bookCount, Book book, String causeOfLoss, Date dateOfLoss, Boolean wasReturned) {
         this.bookCount = bookCount;
         this.book = book;
         this.causeOfLoss = causeOfLoss;
         this.dateOfLoss = dateOfLoss;
+        this.wasReturned = wasReturned;
     }
 }

@@ -2,6 +2,7 @@ package ua.boa.smartlibrary.services.bookcirculationmanagement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.BookWriteOff;
 import ua.boa.smartlibrary.dataclasses.bookmanagement.Book;
@@ -10,7 +11,6 @@ import ua.boa.smartlibrary.exceptions.BadDatabaseOperationException;
 import ua.boa.smartlibrary.exceptions.bookcirculationmanagement.BookWriteOffNotFoundException;
 import ua.boa.smartlibrary.services.bookmanagement.BookService;
 
-import javax.transaction.Transactional;
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
@@ -35,8 +35,8 @@ public class BookWriteOffService {
         } catch (BadDatabaseOperationException e) {
             e.printStackTrace();
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            throw new BadDatabaseOperationException(e.getMessage());
         }
-        return null;
     }
 
     public List<BookWriteOff> getAll() {
@@ -51,7 +51,8 @@ public class BookWriteOffService {
             statisticService.addBookWriteOff(bookWriteOff);
         } catch (BadDatabaseOperationException e) {
             e.printStackTrace();
-            return null;
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            throw new BadDatabaseOperationException(e.getMessage());
         }
         bookWriteOff.setDateOfWriteOff(dateOfWriteOff);
         bookWriteOff.setBook(book);
@@ -61,7 +62,7 @@ public class BookWriteOffService {
         } catch (BadDatabaseOperationException e) {
             e.printStackTrace();
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-            return null;
+            throw new BadDatabaseOperationException(e.getMessage());
         }
         return repository.save(bookWriteOff);
     }
@@ -75,6 +76,7 @@ public class BookWriteOffService {
         } catch (BadDatabaseOperationException e) {
             e.printStackTrace();
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            throw new BadDatabaseOperationException(e.getMessage());
         }
     }
 

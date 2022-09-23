@@ -66,15 +66,15 @@ public class MonthStatisticService {
         return toChange.get(0);
     }
 
-    public MonthStatistic addBookLost(BookLost bookLost, boolean wasReturned) {
+    public MonthStatistic addBookLost(BookLost bookLost) {
         List<MonthStatistic> toChange = getMonthStatisticsToChangeByDate(bookLost.getDateOfLoss());
         int count = bookLost.getBookCount();
         for (MonthStatistic statistic : toChange) {
             int newTotal = statistic.getBooksTotalCount() - count;
-            if (newTotal < 0) throw new BadDatabaseOperationException("Can't add books as lost" +
+            if (newTotal < 0) throw new BadDatabaseOperationException("Can't add books as lost " +
                     "because there is not enough total count!");
             statistic.setBooksTotalCount(newTotal);
-            if (wasReturned) {
+            if (bookLost.getWasReturned()) {
                 int newAvailable = statistic.getBooksAvailableCount() - count;
                 if (newAvailable < 0) throw new BadDatabaseOperationException("Can't add books as lost because there is " +
                         "not enough available count! Some books are borrowed.");

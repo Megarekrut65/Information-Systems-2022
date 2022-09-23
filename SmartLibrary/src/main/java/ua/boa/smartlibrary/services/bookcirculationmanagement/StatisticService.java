@@ -25,9 +25,9 @@ public class StatisticService {
         monthStatisticService.addBookWriteOff(bookWriteOff);
     }
 
-    public void addBookLost(BookLost bookLost, boolean wasReturned) {
-        bookInfoService.addBookLost(bookLost, wasReturned);
-        monthStatisticService.addBookLost(bookLost, wasReturned);
+    public void addBookLost(BookLost bookLost) {
+        bookInfoService.addBookLost(bookLost);
+        monthStatisticService.addBookLost(bookLost);
     }
 
     public void startBorrowing(BookBorrowing bookBorrowing) {

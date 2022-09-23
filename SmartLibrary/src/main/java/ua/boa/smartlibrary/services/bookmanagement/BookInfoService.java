@@ -66,14 +66,14 @@ public class BookInfoService {
         return repository.save(bookInfo);
     }
 
-    public BookInfo addBookLost(BookLost bookLost, boolean wasReturned) {
+    public BookInfo addBookLost(BookLost bookLost) {
         BookInfo bookInfo = get(bookLost.getBook().getBookInfo().getId());
         int count = bookLost.getBookCount();
         int newTotal = bookInfo.getTotalCount() - count;
         if (newTotal < 0) throw new BadDatabaseOperationException("Can't add books as lost" +
                 "because there is not enough total count!");
         bookInfo.setTotalCount(newTotal);
-        if (wasReturned) {
+        if (bookLost.getWasReturned()) {
             int newAvailable = bookInfo.getAvailableCount() - count;
             if (newAvailable < 0) throw new BadDatabaseOperationException("Can't add books as lost because there is " +
                     "not enough available count! Some books are borrowed.");

@@ -2,6 +2,7 @@ package ua.boa.smartlibrary.services.bookcirculationmanagement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.BookDelivery;
 import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.Delivery;
@@ -11,7 +12,6 @@ import ua.boa.smartlibrary.exceptions.BadDatabaseOperationException;
 import ua.boa.smartlibrary.exceptions.bookcirculationmanagement.BookDeliveryNotFoundException;
 import ua.boa.smartlibrary.services.bookmanagement.BookService;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,8 +38,8 @@ public class BookDeliveryService {
         } catch (BadDatabaseOperationException e) {
             e.printStackTrace();
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            throw new BadDatabaseOperationException(e.getMessage());
         }
-        return null;
     }
 
     public List<BookDelivery> getAll() {
@@ -61,7 +61,7 @@ public class BookDeliveryService {
             } catch (BadDatabaseOperationException e) {
                 e.printStackTrace();
                 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-                return null;
+                throw new BadDatabaseOperationException(e.getMessage());
             }
         }
         bookDelivery.setDelivery(delivery);
@@ -74,7 +74,7 @@ public class BookDeliveryService {
             } catch (BadDatabaseOperationException e) {
                 e.printStackTrace();
                 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-                return null;
+                throw new BadDatabaseOperationException(e.getMessage());
             }
         }
         return repository.save(bookDelivery);
@@ -89,6 +89,7 @@ public class BookDeliveryService {
         } catch (BadDatabaseOperationException e) {
             e.printStackTrace();
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            throw new BadDatabaseOperationException(e.getMessage());
         }
     }
 

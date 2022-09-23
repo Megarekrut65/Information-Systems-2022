@@ -52,7 +52,6 @@ public class BookWriteOffController {
     public List<BookWriteOff> searchByPublishYearPeriod(@RequestParam("book-id") String bookId) {
         return service.findByBook(Integer.parseInt(bookId));
     }
-
     @RequestMapping(value = "/book-write-off", method = RequestMethod.GET)
     public BookWriteOff get(@RequestParam("id") String id) {
         return service.get(Integer.parseInt(id));

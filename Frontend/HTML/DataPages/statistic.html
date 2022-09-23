@@ -10,6 +10,7 @@
     <script src="../../JS/DataFunctions/bookDeliveryFunctions.js"></script>
     <script src="../../JS/DataFunctions/monthStatisticFunctions.js"></script>
     <script src="../../JS/DataFunctions/bookWriteOffFunctions.js"></script>
+    <script src="../../JS/DataFunctions/bookLostFunctions.js"></script>
 </head>
 
 <body>
@@ -37,6 +38,14 @@
         <input type="button" value="findByDelivery" onclick='console.log(findBookWriteOffsByDatePeriod( { "date-of-write-off-min": "2022-08-01", "date-of-write-off-max": "2022-09-01" })); return false;'>
         <input type="button" value="findByBook" onclick="console.log(findBookWriteOffsByBook(5)); return false;">
         <input type="button" value="get" onclick="console.log(getBookWriteOff(1)); return false;">
+        <p>Book Lost</p>
+        <input type="button" value="create" onclick="console.log(createBookLost({'date-of-loss':'2022-02-20', 'book-id':'11', 'book-count':'1', 'cause-of-loss':'-', 'was-returned':'true'})); return false;">
+        <input type="button" value="get all" onclick="console.log(getAllBookLosts()); return false;">
+        <input type="button" value="update" onclick="console.log(updateBookLost({'id':'2','date-of-loss':'2022-06-29', 'book-id':'5', 'book-count':'4', 'cause-of-loss':'-', 'was-returned':'true'})); return false;">
+        <input type="button" value="remove" onclick="console.log(removeBookLost(2)); return false;">
+        <input type="button" value="findByDelivery" onclick='console.log(findBookLostsByDatePeriod( "2022-05-01", "2022-09-01")); return false;'>
+        <input type="button" value="findByBook" onclick="console.log(findBookLostsByBook(11)); return false;">
+        <input type="button" value="get" onclick="console.log(getBookLost(1)); return false;">
     </div>
 </body>
 
