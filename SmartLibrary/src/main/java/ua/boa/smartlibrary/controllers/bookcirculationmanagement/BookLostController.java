@@ -46,14 +46,14 @@ public class BookLostController {
     }
 
     @RequestMapping(value = "/book-losts/by-date-of-loss-period", method = RequestMethod.GET)
-    public List<BookLost> searchByDelivery(@RequestParam("date-of-loss-min") String dateOfLossMin,
+    public List<BookLost> searchByDatePeriod(@RequestParam("date-of-loss-min") String dateOfLossMin,
                                                @RequestParam("date-of-loss-max") String dateOfLossMax) {
         return service.findByDateOfLossPeriod(Utilities.getDate(dateOfLossMin),
                 Utilities.getDate(dateOfLossMax));
     }
 
     @RequestMapping(value = "/book-losts/by-book-id", method = RequestMethod.GET)
-    public List<BookLost> searchByPublishYearPeriod(@RequestParam("book-id") String bookId) {
+    public List<BookLost> searchByBook(@RequestParam("book-id") String bookId) {
         return service.findByBook(Integer.parseInt(bookId));
     }
 

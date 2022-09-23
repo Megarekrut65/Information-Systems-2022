@@ -42,14 +42,14 @@ public class BookWriteOffController {
     }
 
     @RequestMapping(value = "/book-write-offs/by-date-of-write-off-period", method = RequestMethod.GET)
-    public List<BookWriteOff> searchByDelivery(@RequestParam("date-of-write-off-min") String dateOfWriteOffMin,
+    public List<BookWriteOff> searchByDatePeriod(@RequestParam("date-of-write-off-min") String dateOfWriteOffMin,
                                                @RequestParam("date-of-write-off-max") String dateOfWriteOffMax) {
         return service.findByDateOfWriteOffPeriod(Utilities.getDate(dateOfWriteOffMin),
                 Utilities.getDate(dateOfWriteOffMax));
     }
 
     @RequestMapping(value = "/book-write-offs/by-book-id", method = RequestMethod.GET)
-    public List<BookWriteOff> searchByPublishYearPeriod(@RequestParam("book-id") String bookId) {
+    public List<BookWriteOff> searchByBook(@RequestParam("book-id") String bookId) {
         return service.findByBook(Integer.parseInt(bookId));
     }
     @RequestMapping(value = "/book-write-off", method = RequestMethod.GET)

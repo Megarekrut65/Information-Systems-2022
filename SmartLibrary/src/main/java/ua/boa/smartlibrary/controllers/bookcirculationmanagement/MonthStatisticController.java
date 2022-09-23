@@ -22,7 +22,7 @@ public class MonthStatisticController {
     }
 
     @RequestMapping(value = "/month-statistics/by-month-date-period", method = RequestMethod.GET)
-    public List<MonthStatistic> searchByPublishYearPeriod(@RequestParam("month-date-min") String monthDateMin,
+    public List<MonthStatistic> searchByDatePeriod(@RequestParam("month-date-min") String monthDateMin,
                                                           @RequestParam("month-date-max") String monthDateMax) {
         return service.findByMonthDatePeriod(Utilities.getDate(monthDateMin), Utilities.getDate(monthDateMax));
     }
