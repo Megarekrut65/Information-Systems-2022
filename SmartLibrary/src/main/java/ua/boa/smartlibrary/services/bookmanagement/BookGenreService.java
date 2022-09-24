@@ -2,9 +2,10 @@ package ua.boa.smartlibrary.services.bookmanagement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.boa.smartlibrary.dataclasses.bookmanagement.*;
+import ua.boa.smartlibrary.dataclasses.bookmanagement.Book;
+import ua.boa.smartlibrary.dataclasses.bookmanagement.BookGenre;
+import ua.boa.smartlibrary.dataclasses.bookmanagement.Genre;
 import ua.boa.smartlibrary.db.repositories.bookmanagement.BookGenreRepository;
-import ua.boa.smartlibrary.exceptions.bookmanagement.AuthorshipNotFoundException;
 import ua.boa.smartlibrary.exceptions.bookmanagement.BookGenreNotFoundException;
 
 import java.util.List;

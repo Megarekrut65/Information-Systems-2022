@@ -5,10 +5,8 @@ import org.springframework.stereotype.Service;
 import ua.boa.smartlibrary.dataclasses.bookmanagement.Author;
 import ua.boa.smartlibrary.dataclasses.bookmanagement.Authorship;
 import ua.boa.smartlibrary.dataclasses.bookmanagement.Book;
-import ua.boa.smartlibrary.dataclasses.bookmanagement.PublishingHouse;
 import ua.boa.smartlibrary.db.repositories.bookmanagement.AuthorshipRepository;
 import ua.boa.smartlibrary.exceptions.bookmanagement.AuthorshipNotFoundException;
-import ua.boa.smartlibrary.exceptions.bookmanagement.BookNotFoundException;
 
 import java.util.List;
 import java.util.Optional;

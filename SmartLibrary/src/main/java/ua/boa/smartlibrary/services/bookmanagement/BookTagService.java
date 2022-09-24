@@ -2,9 +2,10 @@ package ua.boa.smartlibrary.services.bookmanagement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.boa.smartlibrary.dataclasses.bookmanagement.*;
+import ua.boa.smartlibrary.dataclasses.bookmanagement.Book;
+import ua.boa.smartlibrary.dataclasses.bookmanagement.BookTag;
+import ua.boa.smartlibrary.dataclasses.bookmanagement.Tag;
 import ua.boa.smartlibrary.db.repositories.bookmanagement.BookTagRepository;
-import ua.boa.smartlibrary.exceptions.bookmanagement.BookGenreNotFoundException;
 import ua.boa.smartlibrary.exceptions.bookmanagement.BookTagNotFoundException;
 
 import java.util.List;

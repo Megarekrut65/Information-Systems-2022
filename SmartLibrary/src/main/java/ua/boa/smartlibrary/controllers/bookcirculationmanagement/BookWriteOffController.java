@@ -43,7 +43,7 @@ public class BookWriteOffController {
 
     @RequestMapping(value = "/book-write-offs/by-date-of-write-off-period", method = RequestMethod.GET)
     public List<BookWriteOff> searchByDatePeriod(@RequestParam("date-of-write-off-min") String dateOfWriteOffMin,
-                                               @RequestParam("date-of-write-off-max") String dateOfWriteOffMax) {
+                                                 @RequestParam("date-of-write-off-max") String dateOfWriteOffMax) {
         return service.findByDateOfWriteOffPeriod(Utilities.getDate(dateOfWriteOffMin),
                 Utilities.getDate(dateOfWriteOffMax));
     }
@@ -52,6 +52,7 @@ public class BookWriteOffController {
     public List<BookWriteOff> searchByBook(@RequestParam("book-id") String bookId) {
         return service.findByBook(Integer.parseInt(bookId));
     }
+
     @RequestMapping(value = "/book-write-off", method = RequestMethod.GET)
     public BookWriteOff get(@RequestParam("id") String id) {
         return service.get(Integer.parseInt(id));

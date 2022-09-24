@@ -5,12 +5,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.BookLost;
-import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.BookWriteOff;
 import ua.boa.smartlibrary.dataclasses.bookmanagement.Book;
 import ua.boa.smartlibrary.db.repositories.bookcirculationmanagement.BookLostRepository;
 import ua.boa.smartlibrary.exceptions.BadDatabaseOperationException;
 import ua.boa.smartlibrary.exceptions.bookcirculationmanagement.BookLostNotFoundException;
-import ua.boa.smartlibrary.exceptions.bookcirculationmanagement.BookWriteOffNotFoundException;
 import ua.boa.smartlibrary.services.bookmanagement.BookService;
 
 import java.sql.Date;
@@ -45,16 +43,17 @@ public class BookLostService {
     public List<BookLost> getAll() {
         return repository.findAll();
     }
+
     @Transactional
     public BookLost update(Integer id, Integer bookCount, Integer bookId, String causeOfLoss,
                            Date dateOfLoss, Boolean wasReturned) {
         Book book = bookService.get(bookId);
         BookLost bookLost = get(id);
         boolean needAddAgain = false;
-        if(!bookLost.getBookCount().equals(bookCount)
-            ||!bookLost.getBook().equals(book)
-            ||!bookLost.getDateOfLoss().equals(dateOfLoss)
-            ||!bookLost.getWasReturned().equals(wasReturned)){
+        if (!bookLost.getBookCount().equals(bookCount)
+                || !bookLost.getBook().equals(book)
+                || !bookLost.getDateOfLoss().equals(dateOfLoss)
+                || !bookLost.getWasReturned().equals(wasReturned)) {
             needAddAgain = true;
             bookLost.setBookCount(-1 * bookLost.getBookCount());
             try {
@@ -70,7 +69,7 @@ public class BookLostService {
         bookLost.setCauseOfLoss(causeOfLoss);
         bookLost.setDateOfLoss(dateOfLoss);
         bookLost.setWasReturned(wasReturned);
-        if(needAddAgain){
+        if (needAddAgain) {
             try {
                 statisticService.addBookLost(bookLost);
             } catch (BadDatabaseOperationException e) {
@@ -81,6 +80,7 @@ public class BookLostService {
         }
         return repository.save(bookLost);
     }
+
     @Transactional
     public void remove(Integer id) {
         BookLost bookLost = get(id);

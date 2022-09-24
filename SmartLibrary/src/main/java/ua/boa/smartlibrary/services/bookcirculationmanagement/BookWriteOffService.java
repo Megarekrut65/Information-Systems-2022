@@ -42,6 +42,7 @@ public class BookWriteOffService {
     public List<BookWriteOff> getAll() {
         return repository.findAll();
     }
+
     @Transactional
     public BookWriteOff update(Integer id, Date dateOfWriteOff, Integer bookId, Integer bookCount) {
         Book book = bookService.get(bookId);
@@ -66,6 +67,7 @@ public class BookWriteOffService {
         }
         return repository.save(bookWriteOff);
     }
+
     @Transactional
     public void remove(Integer id) {
         BookWriteOff bookWriteOff = get(id);

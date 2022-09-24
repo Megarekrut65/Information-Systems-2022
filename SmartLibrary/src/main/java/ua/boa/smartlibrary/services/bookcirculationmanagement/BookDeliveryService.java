@@ -45,6 +45,7 @@ public class BookDeliveryService {
     public List<BookDelivery> getAll() {
         return repository.findAll();
     }
+
     @Transactional
     public BookDelivery update(Integer id, Integer deliveryId, Integer bookId, Integer bookCount, Integer bookPrice) {
         Delivery delivery = deliveryService.get(deliveryId);
@@ -79,6 +80,7 @@ public class BookDeliveryService {
         }
         return repository.save(bookDelivery);
     }
+
     @Transactional
     public void remove(Integer id) {
         BookDelivery bookDelivery = get(id);

@@ -18,19 +18,19 @@ public class BookLostController {
 
     @RequestMapping(value = "/book-lost", method = RequestMethod.POST)
     public BookLost create(@RequestParam("book-count") String bookCount, @RequestParam("book-id") String bookId,
-                               @RequestParam("cause-of-loss") String causeOfLoss,
-                               @RequestParam("date-of-loss") String dateOfLoss,
-                               @RequestParam("was-returned") String wasReturned) {
+                           @RequestParam("cause-of-loss") String causeOfLoss,
+                           @RequestParam("date-of-loss") String dateOfLoss,
+                           @RequestParam("was-returned") String wasReturned) {
         return service.create(Integer.parseInt(bookCount), Integer.parseInt(bookId),
                 causeOfLoss, Utilities.getDate(dateOfLoss), Boolean.parseBoolean(wasReturned));
     }
 
     @RequestMapping(value = "/book-lost", method = RequestMethod.PUT)
     public BookLost update(@RequestParam("id") String id, @RequestParam("book-count") String bookCount,
-                               @RequestParam("book-id") String bookId,
-                               @RequestParam("cause-of-loss") String causeOfLoss,
-                               @RequestParam("date-of-loss") String dateOfLoss,
-                               @RequestParam("was-returned") String wasReturned) {
+                           @RequestParam("book-id") String bookId,
+                           @RequestParam("cause-of-loss") String causeOfLoss,
+                           @RequestParam("date-of-loss") String dateOfLoss,
+                           @RequestParam("was-returned") String wasReturned) {
         return service.update(Integer.parseInt(id), Integer.parseInt(bookCount), Integer.parseInt(bookId),
                 causeOfLoss, Utilities.getDate(dateOfLoss), Boolean.parseBoolean(wasReturned));
     }
@@ -47,7 +47,7 @@ public class BookLostController {
 
     @RequestMapping(value = "/book-losts/by-date-of-loss-period", method = RequestMethod.GET)
     public List<BookLost> searchByDatePeriod(@RequestParam("date-of-loss-min") String dateOfLossMin,
-                                               @RequestParam("date-of-loss-max") String dateOfLossMax) {
+                                             @RequestParam("date-of-loss-max") String dateOfLossMax) {
         return service.findByDateOfLossPeriod(Utilities.getDate(dateOfLossMin),
                 Utilities.getDate(dateOfLossMax));
     }

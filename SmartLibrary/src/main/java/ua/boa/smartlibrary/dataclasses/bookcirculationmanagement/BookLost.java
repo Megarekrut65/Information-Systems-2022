@@ -30,6 +30,7 @@ public class BookLost {
     private Date dateOfLoss;
     @Column(name = "was_returned")
     private Boolean wasReturned;
+
     public BookLost(Integer bookCount, Book book, String causeOfLoss, Date dateOfLoss, Boolean wasReturned) {
         this.bookCount = bookCount;
         this.book = book;

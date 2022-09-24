@@ -9,5 +9,6 @@ import java.util.List;
 
 public interface AuthorshipRepository extends JpaRepository<Authorship, Integer> {
     List<Authorship> findAuthorshipsByBook(Book book);
+
     List<Authorship> findAuthorshipsByAuthor(Author author);
 }

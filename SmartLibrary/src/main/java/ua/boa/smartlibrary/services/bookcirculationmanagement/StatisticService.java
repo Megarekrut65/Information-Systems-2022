@@ -39,9 +39,11 @@ public class StatisticService {
         bookInfoService.finishBookBorrowing(bookBorrowing);
         monthStatisticService.finishBookBorrowing(bookBorrowing);
     }
-    public void finishBorrowingStatisticOnly(BookBorrowing bookBorrowing){
+
+    public void finishBorrowingStatisticOnly(BookBorrowing bookBorrowing) {
         monthStatisticService.finishBookBorrowing(bookBorrowing);
     }
+
     public void startBorrowingStatisticOnly(BookBorrowing bookBorrowing) {
         monthStatisticService.startBookBorrowing(bookBorrowing);
     }
