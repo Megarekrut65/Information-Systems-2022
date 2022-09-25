@@ -1,17 +1,17 @@
 function getAllBooks() {
-    return getAll(SERVER_URL + "/books")
+    return getAll(URLS.books)
 }
 
 function createBook(obj) {
-    return create(SERVER_URL + "/book", obj)
+    return create(URLS.book, obj)
 }
 
 function updateBook(obj) {
-    return update(SERVER_URL + "/book", obj)
+    return update(URLS.book, obj)
 }
 
 function removeBook(id) {
-    return remove(SERVER_URL + "/book", id)
+    return remove(URLS.book, id)
 }
 
 function findBooksByTitle(title) {
@@ -27,10 +27,10 @@ function findBooksByPublishYearPeriod(publishYearMin, publishYearMax) {
 }
 
 function getBook(id) {
-    return get(SERVER_URL + "/book", { "id": id })
+    return get(URLS.book, { "id": id })
 }
 
-function createBookForm(title, bookObj, action) {
+function createBookForm(title, obj, action) {
     const titleKey = "title",
         publishingHouseIdKey = "publishing-house-id",
         publishYearKey = "publish-year",
@@ -43,13 +43,13 @@ function createBookForm(title, bookObj, action) {
             [titleKey]: {
                 "type": "text",
                 "name": "Book title",
-                "value": titleKey in bookObj ? bookObj[titleKey] : "",
+                "value": titleKey in obj ? obj[titleKey] : "",
                 "required": true
             },
             [publishingHouseIdKey]: {
                 "type": "list",
                 "name": "Publishing House",
-                "value": publishingHouseKey in bookObj ? bookObj[publishingHouseKey]["id"] : "",
+                "value": publishingHouseKey in obj ? obj[publishingHouseKey]["id"] : "",
                 "required": true,
                 "list": getAll(URLS.publishingHouses).map(item => {
                     return { "name": item.name, "id": item.id }
@@ -62,14 +62,14 @@ function createBookForm(title, bookObj, action) {
             },
             [publishYearKey]: {
                 "type": "number",
-                "value": publishYearBookKey in bookObj ? bookObj[publishYearBookKey] : "",
+                "value": publishYearBookKey in obj ? obj[publishYearBookKey] : "",
                 "required": true,
                 "name": "Publish year"
             },
             [commentKey]: {
                 "type": "text",
                 "name": "Comment",
-                "value": commentKey in bookObj ? bookObj[commentKey] : ""
+                "value": commentKey in obj ? obj[commentKey] : ""
             },
 
         },
@@ -79,16 +79,12 @@ function createBookForm(title, bookObj, action) {
             let publishingHouseIdList = document.getElementById(publishingHouseIdKey + "-datalist")
             let publishYear = document.getElementById(publishYearKey)
             let comment = document.getElementById(commentKey)
-            let id = 0
-            for (let i in publishingHouseIdList.options) {
-                if (publishingHouseIdList.options[i].value === publishingHouseId.value)
-                    id = publishingHouseIdList.options[i].getAttribute("meta-data")
-            }
+            let id = getMetaDataFromDatalist(publishingHouseIdList, publishingHouseId.value)
             action({
-                [titleKey]: title.value,
+                [titleKey]: formatText(title.value),
                 [publishingHouseIdKey]: id,
                 [publishYearKey]: publishYear.value,
-                [commentKey]: comment.value
+                [commentKey]: formatText(comment.value)
             })
         }
     })
@@ -98,9 +94,9 @@ function createBookFormCrate() {
     return createBookForm("Create new book", {}, (obj) => create(URLS.book, obj))
 }
 
-function createBookFormUpdate() {
-    return createBookForm("Update the book", getBook(13), (obj) => {
-        obj["id"] = 13
+function createBookFormUpdate(id) {
+    return createBookForm("Update the book", get(URLS.book, { "id": id }), (obj) => {
+        obj["id"] = id
         update(URLS.book, obj)
     })
 }

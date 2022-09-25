@@ -1,5 +1,4 @@
 function createForm(properties) {
-    console.log(properties)
     let formBox = document.createElement("div")
     formBox.className = "form-box"
     let title = document.createElement("div")
@@ -71,25 +70,7 @@ function createInput(id, inputProperties, parent) {
     let type = inputProperties.type
     switch (type) {
         case "list":
-            {
-                let datalist = document.createElement("datalist")
-                datalist.id = id + "-datalist"
-                input.setAttribute('list', datalist.id);
-                for (let i in inputProperties.list) {
-                    let item = inputProperties.list[i]
-                    let option = document.createElement("option")
-                    option.value = item.id + " - " + item.name
-                    option.setAttribute('meta-data', item.id);
-                    datalist.appendChild(option)
-                    if ("value" in inputProperties && inputProperties.value === item.id) input.value = option.value
-                }
-                parent.appendChild(datalist)
-                let plus = document.createElement("input")
-                plus.type = "button"
-                plus.value = "+"
-                plus.onclick = inputProperties.plus
-                parent.appendChild(plus)
-            }
+            createInputList(input, id, inputProperties, parent)
             break;
         case "number":
             {
@@ -103,4 +84,27 @@ function createInput(id, inputProperties, parent) {
             }
     }
 
+}
+
+function createInputList(input, id, inputProperties, parent) {
+    input.autocomplete = "off"
+    let datalist = document.createElement("datalist")
+    datalist.id = id + "-datalist"
+    input.setAttribute('list', datalist.id);
+    for (let i in inputProperties.list) {
+        let item = inputProperties.list[i]
+        let option = document.createElement("option")
+        option.value = item.id + " - " + item.name
+        option.setAttribute('meta-data', item.id);
+        datalist.appendChild(option)
+        if ("value" in inputProperties && inputProperties.value === item.id) input.value = option.value
+    }
+    parent.appendChild(datalist)
+    if ("plus" in inputProperties) {
+        let plus = document.createElement("input")
+        plus.type = "button"
+        plus.value = "+"
+        plus.onclick = inputProperties.plus
+        parent.appendChild(plus)
+    }
 }

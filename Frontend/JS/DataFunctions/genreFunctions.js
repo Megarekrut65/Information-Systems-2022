@@ -1,23 +1,55 @@
 function getAllGenres() {
-    return getAll(SERVER_URL + "/genres")
+    return getAll(URLS.genres)
 }
 
 function createGenre(obj) {
-    return create(SERVER_URL + "/genre", obj)
+    return create(URLS.genre, obj)
 }
 
 function updateGenre(obj) {
-    return update(SERVER_URL + "/genre", obj)
+    return update(URLS.genre, obj)
 }
 
 function removeGenre(id) {
-    return remove(SERVER_URL + "/genre", id)
+    return remove(URLS.genre, id)
 }
 
 function getGenre(id) {
-    return get(SERVER_URL + "/genre", { "id": id })
+    return get(URLS.genre, { "id": id })
 }
 
 function findGenresByName(name) {
     return get(SERVER_URL + "/genres/by-name", { "name": name })
+}
+
+function createGenreForm(title, obj, action) {
+    const nameKey = "name"
+    return createForm(commandList = {
+        "title": title,
+        "inputs": {
+            [nameKey]: {
+                "type": "text",
+                "name": "Genre name",
+                "value": nameKey in obj ? obj[nameKey] : "",
+                "required": true
+            }
+        },
+        "ok": () => {
+            let name = document.getElementById(nameKey)
+            action({
+                [nameKey]: formatText(name.value)
+            })
+        }
+    })
+}
+
+function createGenreFormCrate() {
+    return createGenreForm("Create new genre", {}, (obj) => create(URLS.genre, obj))
+}
+
+function createGenreFormUpdate(id) {
+    return createGenreForm("Update the genre", get(URLS.genre, { "id": id }), (obj) => {
+        obj["id"] = id
+        update(URLS.genre, obj)
+    })
 }

@@ -6,5 +6,10 @@ const URLS = {
     tags: SERVER_URL + "/tag",
     book: SERVER_URL + "/book",
     books: SERVER_URL + "/books",
-    publishingHouses: SERVER_URL + "/publishing-houses"
+    publishingHouses: SERVER_URL + "/publishing-houses",
+    publishingHouse: SERVER_URL + "/publishing-house",
+    author: SERVER_URL + "/author",
+    authors: SERVER_URL + "/authors",
+    authorship: SERVER_URL + "/authorship",
+    authorships: SERVER_URL + "/authorships",
 }

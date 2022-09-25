@@ -4,6 +4,7 @@
     "prettier.bracketSpacing": false,
     "prettier.htmlWhitespaceSensitivity": "ignore",
     "cSpell.words": [
+        "authorships",
         "Losts"
     ]
 }
