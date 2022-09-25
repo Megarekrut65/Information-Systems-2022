@@ -19,7 +19,7 @@ public class PublishingHouseService {
     }
 
     public List<PublishingHouse> getAll() {
-        return repository.findAll();
+        return repository.getAllOrdered();
     }
 
     public PublishingHouse update(Integer id, String name, String address) {

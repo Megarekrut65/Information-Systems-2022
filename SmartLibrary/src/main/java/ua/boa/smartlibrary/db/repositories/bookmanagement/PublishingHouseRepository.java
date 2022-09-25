@@ -11,4 +11,6 @@ public interface PublishingHouseRepository extends JpaRepository<PublishingHouse
     @Query(value = "SELECT * FROM publishing_house WHERE publishing_house.name LIKE CONCAT('%', CONCAT(:name, '%')) OR :name LIKE CONCAT('%', CONCAT(publishing_house.name, '%'))",
             nativeQuery = true)
     List<PublishingHouse> findPublishingHousesByNameAdvanced(@Param("name") String name);
+    @Query(value = "SELECT * FROM publishing_house ORDER BY publishing_house.name;", nativeQuery = true)
+    List<PublishingHouse> getAllOrdered();
 }

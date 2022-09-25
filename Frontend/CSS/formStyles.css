@@ -1,0 +1,90 @@
+.form-box {
+    position: fixed;
+    width: 40vw;
+    height: auto;
+    min-height: 60vh;
+    background-color: rgb(159, 178, 178);
+    color: black;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    left: 29vw;
+    top: 30%;
+    border-radius: 1vw;
+}
+
+.form-item {
+    display: flex;
+    align-items: stretch;
+}
+
+.form-style {
+    width: 90%;
+    height: 80%;
+    position: absolute;
+    left: 5%;
+    top: 15%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    font-size: 1.3vw;
+}
+
+.form-style>table>tbody>tr>td {
+    padding-bottom: 2%;
+}
+
+.form-submit-box {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-submit {
+    color: white;
+    font-size: 1.5vw;
+    border-radius: 10%;
+    width: 6vw;
+    margin-left: 5vw;
+    margin-right: 5vw;
+    border: 0.2vw black solid;
+}
+
+.form-ok {
+    background-color: rgb(92, 170, 92);
+}
+
+.form-cancel {
+    background-color: rgb(200, 78, 78);
+}
+
+.form-ok:hover,
+.form-cancel:hover {
+    opacity: 0.5;
+}
+
+.form-item>input,
+.form-item>datalist>option {
+    background-color: rgb(53, 53, 53);
+    color: aliceblue;
+    border: black;
+    width: 90%;
+    height: 100%;
+    font-size: 1.3vw;
+}
+
+.form-item>input[type="button"] {
+    background-color: rgb(130, 126, 126);
+    width: auto;
+    height: auto;
+}
+
+.form-item>input:hover {
+    opacity: 0.8;
+}
+
+.form-title {
+    font-size: 2vw;
+    background-color: brown;
+    border-radius: 1vw 1vw 0 0;
+    padding: 1vh;
+    color: white;
+    font-weight: bold;
+}

@@ -6,15 +6,14 @@
     <link rel="shortcut icon" href="../Images/library.png" type="image/png">
     <link rel="stylesheet" type="text/css" href="../CSS/styles.css">
     <script src="../JS/data.js"></script>
-    <script src="../JS/httpFunctions.js"></script>
-    <script src="../JS/DataFunctions/genreFunctions.js"></script>
-    <script src="../JS/DataFunctions/authorFunctions.js"></script>
-    <script src="../JS/DataFunctions/publishingHouse.js"></script>
-    <script src="../JS/DataFunctions/bookFunctions.js"></script>
     <script src="../JS/code.js"></script>
+    <script src="../JS/formCreator.js"></script>
+    <script src="../JS/httpFunctions.js"></script>
+    <script src="../JS/DataFunctions/bookFunctions.js"></script>
+    <link rel="stylesheet" type="text/css" href="../CSS/formStyles.css">
 </head>
 
-<body>
+<body onload="testLoad(); return false;" id="box">
     <div class="header">
         Smart Library
     </div>
@@ -26,6 +25,7 @@
         <input type="button" value="find" onclick="findObject(); return false;">
         <input type="button" value="get" onclick="getObject(); return false;">
     </div>
+
 </body>
 
 </html>

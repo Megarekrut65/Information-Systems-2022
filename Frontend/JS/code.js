@@ -39,3 +39,8 @@ function addTableToPage(parentId, list) {
     let parent = document.getElementById(parentId)
     parent.appendChild(createTable(list))
 }
+
+function testLoad() {
+    let parent = document.getElementById("box")
+    parent.appendChild(createBookFormUpdate())
+}
