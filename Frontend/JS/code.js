@@ -41,6 +41,6 @@ function addTableToPage(parentId, list) {
 }
 
 function testLoad() {
-    let parent = document.getElementById("box")
-    parent.appendChild(createAuthorshipFormUpdate(2))
+    let parent = document.getElementById("content")
+    parent.appendChild(createBookView(getBook(8)))
 }

@@ -67,6 +67,7 @@ function createInput(id, inputProperties, parent) {
     parent.appendChild(input)
     input.id = id
     if ("required" in inputProperties) input.required = inputProperties.required
+    if ("readOnly" in inputProperties) input.readOnly = inputProperties.readOnly
     let type = inputProperties.type
     switch (type) {
         case "list":

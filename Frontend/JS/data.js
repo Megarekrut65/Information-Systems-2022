@@ -12,4 +12,9 @@ const URLS = {
     authors: SERVER_URL + "/authors",
     authorship: SERVER_URL + "/authorship",
     authorships: SERVER_URL + "/authorships",
+    bookGenreByBook: SERVER_URL + "/book-genres/by-book-id",
+    bookGenre: SERVER_URL + "/book-genre",
+    bookGenres: SERVER_URL + "/book-genres",
+    bookTagByBook: SERVER_URL + "/book-tag/by-book-id",
+    authorshipByBook: SERVER_URL + "/authorships/by-book-id"
 }

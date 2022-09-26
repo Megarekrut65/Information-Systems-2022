@@ -100,3 +100,55 @@ function createBookFormUpdate(id) {
         update(URLS.book, obj)
     })
 }
+
+function createBookView(obj) {
+    const titleKey = "title",
+        publishingHouseIdKey = "publishing-house-id",
+        publishYearKey = "publish-year",
+        commentKey = "comment",
+        bookGenreKey = "book-genre",
+        bookTagKey = "book-tag",
+        authorshipKey = "authorship",
+        bookInfo = "book-info"
+    const publishingHouseKey = "publishingHouse",
+        publishYearBookKey = "publishYear"
+    return createObjectView(commandList = {
+        "title": "Book",
+        "fields": {
+            [titleKey]: {
+                "type": "text",
+                "name": "Title",
+                "value": obj[titleKey]
+            },
+            [bookGenreKey]: {
+                "type": "list",
+                "name": "Genres",
+                "list": get(URLS.bookGenreByBook, { "book-id": obj["id"] }).map(item => item.genre),
+                "remove": (id) => {
+                    remove(URLS.bookGenre, id)
+                },
+                "plus": (toSendData) => {
+                    let parent = document.getElementsByTagName("body")[0]
+                    parent.appendChild(createBookGenreFormCrate(obj, toSendData))
+                }
+            },
+            [publishingHouseIdKey]: {
+                "type": "reference",
+                "name": "Publishing house",
+                "id": obj[publishingHouseKey]["id"],
+                "value": obj[publishingHouseKey]["name"],
+                "onReference": (id) => { alert("Show publishing house") }
+            },
+            [publishYearKey]: {
+                "type": "text",
+                "name": "Publish year",
+                "value": obj[publishYearBookKey]
+            },
+            [commentKey]: {
+                "type": "text",
+                "name": "Comment",
+                "value": obj[commentKey]
+            }
+        }
+    })
+}

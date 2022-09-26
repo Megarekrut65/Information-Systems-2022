@@ -1,0 +1,73 @@
+.view-box {
+    width: 70%;
+}
+
+.view-table {
+    width: 100%;
+}
+
+.view-table>tbody>tr>td.view-label-td {
+    width: 40%;
+}
+
+.view-label {
+    font-weight: bold;
+    font-size: 1.5vw;
+}
+
+.view-item,
+.view-reference {
+    font-size: 1.3vw;
+    margin: 0.1vw;
+}
+
+.view-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.view-list-item {
+    margin: 0.1vw;
+    font-size: 1.2vw;
+    display: flex;
+    border: 0.1vw solid rgb(70, 68, 68);
+}
+
+.view-list-item>div {
+    padding: 0.2vw;
+}
+
+.view-list-item-remove:hover,
+.view-list-item-plus:hover,
+.view-reference:hover {
+    opacity: 0.7;
+}
+
+.view-list-item-plus,
+.view-list-item-remove {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.view-list-item-remove {
+    background-image: url("../Images/close.png");
+    background-size: 0.9vw;
+    width: 1vw;
+}
+
+.view-list-item-plus {
+    border: 0 solid rgb(70, 68, 68);
+    background-image: url("../Images/plus.png");
+    width: 1.5vw;
+    height: 1.5vw;
+}
+
+.view-reference {
+    text-decoration: underline;
+}
+
+.view-title {
+    font-weight: bold;
+    font-size: 3vw;
+}
