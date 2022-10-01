@@ -56,9 +56,7 @@ function createBookForm(title, obj, action, toSendData) {
                     return { "name": item.name, "id": item.id }
                 }),
                 "plus": () => {
-                    //let parent = document.getElementById("box")
-                    //parent.appendChild()
-                    alert("Plus")
+                    addOptionToList(createPublishingHouseFormCrate, publishingHouseIdKey)
                 }
             },
             [publishYearKey]: {
@@ -125,15 +123,8 @@ function createBookView(obj) {
             [authorshipKey]: createList("Authorship", obj, get(URLS.authorshipByBook, { "book-id": obj["id"] }).map(item => {
                 return { "name": item.author.name + " - " + item.authorRole, "id": item.id }
             }), URLS.authorship, createAuthorshipFormCrate, (data) => { return { "id": data.id, "name": data.author.name } }),
-            [publishingHouseIdKey]: {
-                "type": "reference",
-                "name": "Publishing house",
-                "value": obj[publishingHouseKey]["name"],
-                "onReference": () => {
-                    let id = obj[publishingHouseKey]["id"]
-                    openNewPage(id, "PublishingHouse")
-                }
-            },
+            [publishingHouseIdKey]: createReference("Publishing house", obj[publishingHouseKey]["name"],
+                obj[publishingHouseKey], "PublishingHouse"),
             [publishYearKey]: {
                 "type": "text",
                 "name": "Publish year",
@@ -147,7 +138,7 @@ function createBookView(obj) {
         },
         "edit": () => {
             document.getElementsByTagName("body")[0]
-                .appendChild(createBookForm("Update the book", obj, addIdAndUpdateReloadFunction(obj.id, URLS.book)))
+                .appendChild(createBookForm("Update the book", obj, updateReloadFunction(obj.id, URLS.book)))
         }
     })
 }

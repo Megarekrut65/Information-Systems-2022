@@ -5,30 +5,26 @@
     <title>Smart Library</title>
     <link rel="shortcut icon" href="../Images/library.png" type="image/png">
     <link rel="stylesheet" type="text/css" href="../CSS/styles.css">
-    <script src="../JS/data.js"></script>
-    <script src="../JS/code.js"></script>
-    <script src="../JS/formCreator.js"></script>
-    <script src="../JS/httpFunctions.js"></script>
-    <script src="../JS/DataFunctions/bookFunctions.js"></script>
-    <script src="../JS/DataFunctions/bookGenreFunctions.js"></script>
-    <script src="../JS/DataFunctions/bookTagFunctions.js"></script>
-    <script src="../JS/DataFunctions/publishingHouse.js"></script>
-    <script src="../JS/DataFunctions/genreFunctions.js"></script>
-    <script src="../JS/DataFunctions/tagFunctions.js"></script>
-    <script src="../JS/DataFunctions/authorFunctions.js"></script>
-    <script src="../JS/DataFunctions/authorshipFunctions.js"></script>
-    <script src="../JS/additionalFunctions.js"></script>
-    <script src="../JS/objectViewCreator.js"></script>
-    <script src="../JS/pageLoader.js"></script>
-    <link rel="stylesheet" type="text/css" href="../CSS/formStyles.css">
-    <link rel="stylesheet" type="text/css" href="../CSS/viewStyles.css">
+    <script src="../JS/index.js"></script>
 </head>
 
-<body id="box" onload="testLoad(); return false;">
+<body onload="createButtons(); return false;">
     <div class="header">
         Smart Library
     </div>
     <div class="content" id="content">
+        <div class="card-place" id="card-place">
+            <div class="card" onclick="window.location='book.html'; return false;">
+                <img class="card-image" src="../Images/book.png">
+                <div class="card-text">Books management</div>
+                <div class="card-list">
+                    <div>&#9900; View books</div>
+                    <div>&#9900; Add new books</div>
+                    <div>&#9900; Search books</div>
+                    <div>&#9900; ...</div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>

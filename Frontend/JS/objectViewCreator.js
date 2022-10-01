@@ -114,3 +114,14 @@ function createList(name, obj, list, removeUrl, formCreateFunction, converter) {
         "converter": converter
     }
 }
+
+function createReference(name, value, obj, functionName) {
+    return {
+        "type": "reference",
+        "name": name,
+        "value": value,
+        "onReference": () => {
+            openNewPage(obj.id, functionName)
+        }
+    }
+}
