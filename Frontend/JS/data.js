@@ -3,7 +3,7 @@ const URLS = {
     genre: SERVER_URL + "/genre",
     genres: SERVER_URL + "/genres",
     tag: SERVER_URL + "/tag",
-    tags: SERVER_URL + "/tag",
+    tags: SERVER_URL + "/tags",
     book: SERVER_URL + "/book",
     books: SERVER_URL + "/books",
     publishingHouses: SERVER_URL + "/publishing-houses",
@@ -15,6 +15,8 @@ const URLS = {
     bookGenreByBook: SERVER_URL + "/book-genres/by-book-id",
     bookGenre: SERVER_URL + "/book-genre",
     bookGenres: SERVER_URL + "/book-genres",
-    bookTagByBook: SERVER_URL + "/book-tag/by-book-id",
+    bookTag: SERVER_URL + "/book-tag",
+    bookTags: SERVER_URL + "/book-tags",
+    bookTagByBook: SERVER_URL + "/book-tags/by-book-id",
     authorshipByBook: SERVER_URL + "/authorships/by-book-id"
 }

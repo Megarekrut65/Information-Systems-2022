@@ -22,7 +22,7 @@ function findGenresByName(name) {
     return get(SERVER_URL + "/genres/by-name", { "name": name })
 }
 
-function createGenreForm(title, obj, action) {
+function createGenreForm(title, obj, action, toSendData) {
     const nameKey = "name"
     return createForm(commandList = {
         "title": title,
@@ -36,20 +36,20 @@ function createGenreForm(title, obj, action) {
         },
         "ok": () => {
             let name = document.getElementById(nameKey)
-            action({
+            toSendData(action({
                 [nameKey]: formatText(name.value)
-            })
+            }))
         }
     })
 }
 
-function createGenreFormCrate() {
-    return createGenreForm("Create new genre", {}, (obj) => create(URLS.genre, obj))
+function createGenreFormCrate(toSendData) {
+    return createGenreForm("Create new genre", {}, (obj) => create(URLS.genre, obj), toSendData)
 }
 
 function createGenreFormUpdate(id) {
     return createGenreForm("Update the genre", get(URLS.genre, { "id": id }), (obj) => {
         obj["id"] = id
         update(URLS.genre, obj)
-    })
+    }, (data) => {})
 }

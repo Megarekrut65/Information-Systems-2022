@@ -1,6 +1,6 @@
-function createBookGenreForm(title, obj, action, toSendData) {
+function createBookTagForm(title, obj, action, toSendData) {
     const bookKey = "book-id",
-        genreKey = "genre-id"
+        tagKey = "tag-id"
     return createForm({
         "title": title,
         "inputs": {
@@ -10,26 +10,26 @@ function createBookGenreForm(title, obj, action, toSendData) {
                 "value": obj.title,
                 "readOnly": true
             },
-            [genreKey]: {
+            [tagKey]: {
                 "type": "list",
-                "name": "Genre",
+                "name": "Tag",
                 "value": "",
                 "required": true,
-                "list": getAll(URLS.genres),
+                "list": getAll(URLS.tags),
                 "plus": () => {
-                    addOptionToList(createGenreFormCrate, genreKey)
+                    addOptionToList(createTagFormCrate, tagKey)
                 }
             }
         },
         "ok": () => {
             toSendData(action({
                 [bookKey]: obj.id,
-                [genreKey]: getDataFromList(genreKey)
+                [tagKey]: getDataFromList(tagKey)
             }))
         }
     })
 }
 
-function createBookGenreFormCrate(book, toSendData) {
-    return createBookGenreForm("Add genre to book", book, (obj) => create(URLS.bookGenre, obj), toSendData)
+function createBookTagFormCrate(book, toSendData) {
+    return createBookTagForm("Add tag to book", book, (obj) => create(URLS.bookTag, obj), toSendData)
 }

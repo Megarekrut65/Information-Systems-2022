@@ -22,7 +22,7 @@ function findTagsByName(name) {
     return get(SERVER_URL + "/tags/by-name", { "name": name })
 }
 
-function createTagForm(title, obj, action) {
+function createTagForm(title, obj, action, toSendData) {
     const nameKey = "name"
     return createForm(commandList = {
         "title": title,
@@ -36,20 +36,20 @@ function createTagForm(title, obj, action) {
         },
         "ok": () => {
             let name = document.getElementById(nameKey)
-            action({
+            toSendData(action({
                 [nameKey]: formatText(name.value)
-            })
+            }))
         }
     })
 }
 
-function createTagFormCrate() {
-    return createTagForm("Create new tag", {}, (obj) => create(URLS.tag, obj))
+function createTagFormCrate(toSendData) {
+    return createTagForm("Create new tag", {}, (obj) => create(URLS.tag, obj), toSendData)
 }
 
 function createTagFormUpdate(id) {
     return createTagForm("Update the tag", get(URLS.tag, { "id": id }), (obj) => {
         obj["id"] = id
         update(URLS.tag, obj)
-    })
+    }, (data) => data)
 }

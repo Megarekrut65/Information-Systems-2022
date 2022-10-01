@@ -30,14 +30,15 @@ function getBook(id) {
     return get(URLS.book, { "id": id })
 }
 
-function createBookForm(title, obj, action) {
+
+function createBookForm(title, obj, action, toSendData) {
     const titleKey = "title",
         publishingHouseIdKey = "publishing-house-id",
         publishYearKey = "publish-year",
         commentKey = "comment"
     const publishingHouseKey = "publishingHouse",
         publishYearBookKey = "publishYear"
-    return createForm(commandList = {
+    return createForm({
         "title": title,
         "inputs": {
             [titleKey]: {
@@ -75,30 +76,25 @@ function createBookForm(title, obj, action) {
         },
         "ok": () => {
             let title = document.getElementById(titleKey)
-            let publishingHouseId = document.getElementById(publishingHouseIdKey)
-            let publishingHouseIdList = document.getElementById(publishingHouseIdKey + "-datalist")
             let publishYear = document.getElementById(publishYearKey)
             let comment = document.getElementById(commentKey)
-            let id = getMetaDataFromDatalist(publishingHouseIdList, publishingHouseId.value)
-            action({
+            toSendData(action({
                 [titleKey]: formatText(title.value),
-                [publishingHouseIdKey]: id,
+                [publishingHouseIdKey]: getDataFromList(publishingHouseIdKey),
                 [publishYearKey]: publishYear.value,
                 [commentKey]: formatText(comment.value)
-            })
+            }))
         }
     })
 }
 
-function createBookFormCrate() {
-    return createBookForm("Create new book", {}, (obj) => create(URLS.book, obj))
+function createBookFormCrate(toSendData) {
+    return createBookForm("Create new book", {}, createFunction(URLS.book), toSendData)
 }
 
 function createBookFormUpdate(id) {
-    return createBookForm("Update the book", get(URLS.book, { "id": id }), (obj) => {
-        obj["id"] = id
-        update(URLS.book, obj)
-    })
+    return createBookForm("Update the book", get(URLS.book, { "id": id }),
+        updateFunction(id, URLS.book), (data) => {})
 }
 
 function createBookView(obj) {
@@ -112,7 +108,7 @@ function createBookView(obj) {
         bookInfo = "book-info"
     const publishingHouseKey = "publishingHouse",
         publishYearBookKey = "publishYear"
-    return createObjectView(commandList = {
+    return createObjectView({
         "title": "Book",
         "fields": {
             [titleKey]: {
@@ -120,24 +116,23 @@ function createBookView(obj) {
                 "name": "Title",
                 "value": obj[titleKey]
             },
-            [bookGenreKey]: {
-                "type": "list",
-                "name": "Genres",
-                "list": get(URLS.bookGenreByBook, { "book-id": obj["id"] }).map(item => item.genre),
-                "remove": (id) => {
-                    remove(URLS.bookGenre, id)
-                },
-                "plus": (toSendData) => {
-                    let parent = document.getElementsByTagName("body")[0]
-                    parent.appendChild(createBookGenreFormCrate(obj, toSendData))
-                }
-            },
+            [bookGenreKey]: createList("Genres", obj, get(URLS.bookGenreByBook, { "book-id": obj["id"] }).map(item => {
+                return { "name": item.genre.name, "id": item.id }
+            }), URLS.bookGenre, createBookGenreFormCrate, (data) => { return { "id": data.id, "name": data.genre.name } }),
+            [bookTagKey]: createList("Tags", obj, get(URLS.bookTagByBook, { "book-id": obj["id"] }).map(item => {
+                return { "name": item.tag.name, "id": item.id }
+            }), URLS.bookTag, createBookTagFormCrate, (data) => { return { "id": data.id, "name": data.tag.name } }),
+            [authorshipKey]: createList("Authorship", obj, get(URLS.authorshipByBook, { "book-id": obj["id"] }).map(item => {
+                return { "name": item.author.name + " - " + item.authorRole, "id": item.id }
+            }), URLS.authorship, createAuthorshipFormCrate, (data) => { return { "id": data.id, "name": data.author.name } }),
             [publishingHouseIdKey]: {
                 "type": "reference",
                 "name": "Publishing house",
-                "id": obj[publishingHouseKey]["id"],
                 "value": obj[publishingHouseKey]["name"],
-                "onReference": (id) => { alert("Show publishing house") }
+                "onReference": () => {
+                    let id = obj[publishingHouseKey]["id"]
+                    openNewPage(id, "PublishingHouse")
+                }
             },
             [publishYearKey]: {
                 "type": "text",
@@ -149,6 +144,10 @@ function createBookView(obj) {
                 "name": "Comment",
                 "value": obj[commentKey]
             }
+        },
+        "edit": () => {
+            document.getElementsByTagName("body")[0]
+                .appendChild(createBookForm("Update the book", obj, addIdAndUpdateReloadFunction(obj.id, URLS.book)))
         }
     })
 }

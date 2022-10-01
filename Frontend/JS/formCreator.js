@@ -28,7 +28,6 @@ function createSubmitPart(cancelFunction) {
     submitOk.className = "form-submit form-ok"
     submitOk.type = "submit"
     submitOk.value = "Ok"
-
     let submitCancel = document.createElement("input")
     submitBox.appendChild(submitCancel)
     submitCancel.className = "form-submit form-cancel"
@@ -66,6 +65,7 @@ function createInput(id, inputProperties, parent) {
     let input = document.createElement("input")
     parent.appendChild(input)
     input.id = id
+    input.name = id
     if ("required" in inputProperties) input.required = inputProperties.required
     if ("readOnly" in inputProperties) input.readOnly = inputProperties.readOnly
     let type = inputProperties.type
@@ -94,9 +94,7 @@ function createInputList(input, id, inputProperties, parent) {
     input.setAttribute('list', datalist.id);
     for (let i in inputProperties.list) {
         let item = inputProperties.list[i]
-        let option = document.createElement("option")
-        option.value = item.id + " - " + item.name
-        option.setAttribute('meta-data', item.id);
+        let option = createDatalistOption(item)
         datalist.appendChild(option)
         if ("value" in inputProperties && inputProperties.value === item.id) input.value = option.value
     }
@@ -108,4 +106,33 @@ function createInputList(input, id, inputProperties, parent) {
         plus.onclick = inputProperties.plus
         parent.appendChild(plus)
     }
+}
+
+function createDatalistOption(item) {
+    let option = document.createElement("option")
+    option.value = item.id + " - " + item.name
+    option.setAttribute('meta-data', item.id);
+    return option
+}
+
+function addOptionToList(creatingFunction, key) {
+    document.getElementsByTagName("body")[0].appendChild(creatingFunction((data) => {
+        let item = createDatalistOption(data)
+        document.getElementById(key + "-datalist").appendChild(item)
+        document.getElementById(key).value = item.value
+    }))
+}
+
+function getDataFromList(key) {
+    let item = document.getElementById(key)
+    let list = document.getElementById(key + "-datalist")
+    return getMetaDataFromDatalist(list, item.value)
+}
+
+function getMetaDataFromDatalist(datalist, pattern) {
+    for (let i in datalist.options) {
+        if (datalist.options[i].value === pattern)
+            return datalist.options[i].getAttribute("meta-data")
+    }
+    return null
 }

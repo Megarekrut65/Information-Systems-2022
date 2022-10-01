@@ -22,13 +22,13 @@ function getAuthor(id) {
     return get(URLS.author, { "id": id })
 }
 
-function createAuthorForm(title, obj, action) {
+function createAuthorForm(title, obj, action, toSendData) {
     const nameKey = "name",
         dateOfBirthKey = "date-of-birth",
         dateOfDeathKey = "date-of-death"
     const dateOfBirthAuthorKey = "dateOfBirth",
         dateOfDeathAuthorKey = "dateOfDeath"
-    return createForm(commandList = {
+    return createForm({
         "title": title,
         "inputs": {
             [nameKey]: {
@@ -52,22 +52,22 @@ function createAuthorForm(title, obj, action) {
             let name = document.getElementById(nameKey)
             let dateOfBirth = document.getElementById(dateOfBirthKey)
             let dateOfDeath = document.getElementById(dateOfDeathKey)
-            action({
+            toSendData(action({
                 [nameKey]: formatText(name.value),
                 [dateOfBirthKey]: normalize(dateOfBirth.value),
                 [dateOfDeathKey]: normalize(dateOfDeath.value)
-            })
+            }))
         }
     })
 }
 
-function createAuthorFormCrate() {
-    return createAuthorForm("Create new author", {}, (obj) => create(URLS.author, obj))
+function createAuthorFormCrate(toSendData) {
+    return createAuthorForm("Create new author", {}, (obj) => create(URLS.author, obj), toSendData)
 }
 
 function createAuthorFormUpdate(id) {
     return createAuthorForm("Update the author", get(URLS.author, { "id": id }), (obj) => {
         obj["id"] = id
         update(URLS.author, obj)
-    })
+    }, (data) => {})
 }

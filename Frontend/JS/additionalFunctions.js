@@ -8,11 +8,31 @@ function normalize(obj) {
     return obj
 }
 
-function getMetaDataFromDatalist(datalist, pattern) {
-    let data = 0
-    for (let i in datalist.options) {
-        if (datalist.options[i].value === pattern)
-            return data = datalist.options[i].getAttribute("meta-data")
+function createFunction(url) {
+    return (obj) => {
+        return create(url, obj)
     }
-    return null
+}
+
+function updateFunction(id, url) {
+    return (obj) => {
+        obj.id = id
+        return update(url, obj)
+    }
+}
+
+function updateReloadFunction(id, url) {
+    return (obj) => {
+        obj["id"] = id
+        update(url, obj)
+        location.reload()
+    }
+}
+
+function backAndReload() {
+    if ('referrer' in document) {
+        window.location = document.referrer;
+        return
+    }
+    window.history.back();
 }

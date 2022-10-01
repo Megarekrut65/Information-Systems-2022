@@ -10,6 +10,11 @@
     width: 40%;
 }
 
+.view-table {
+    border-collapse: separate;
+    border-spacing: 0 1.5vh;
+}
+
 .view-label {
     font-weight: bold;
     font-size: 1.5vw;
@@ -24,6 +29,7 @@
 .view-list {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
 }
 
 .view-list-item {
@@ -39,7 +45,8 @@
 
 .view-list-item-remove:hover,
 .view-list-item-plus:hover,
-.view-reference:hover {
+.view-reference:hover,
+.view-edit:hover {
     opacity: 0.7;
 }
 
@@ -63,6 +70,14 @@
     height: 1.5vw;
 }
 
+.view-edit {
+    background-image: url("../Images/pencil.png");
+    width: 1.8vw;
+    height: 1.8vw;
+    background-size: 1.8vw;
+    margin-left: 1vw
+}
+
 .view-reference {
     text-decoration: underline;
 }
@@ -70,4 +85,9 @@
 .view-title {
     font-weight: bold;
     font-size: 3vw;
+}
+
+.view-title-container {
+    display: flex;
+    align-items: center;
 }

@@ -1,10 +1,17 @@
 function createObjectView(properties) {
     let viewBox = document.createElement("div")
     viewBox.className = "view-box"
+    let titleContainer = document.createElement("div")
+    viewBox.appendChild(titleContainer)
+    titleContainer.className = "view-title-container"
     let title = document.createElement("div")
-    viewBox.appendChild(title)
+    titleContainer.appendChild(title)
     title.className = "view-title"
     title.textContent = properties.title
+    let edit = document.createElement("div")
+    titleContainer.appendChild(edit)
+    edit.className = "view-edit"
+    edit.onclick = properties.edit
     let table = createViewTable(properties)
     viewBox.appendChild(table)
     return viewBox
@@ -41,7 +48,7 @@ function createField(fieldProperties) {
             {
                 item.className = "view-reference"
                 item.textContent = fieldProperties.value
-                item.onclick = () => { fieldProperties.onReference(fieldProperties.id) }
+                item.onclick = () => { fieldProperties.onReference() }
             }
             break;
         case "list":
@@ -66,7 +73,7 @@ function createViewList(item, fieldProperties) {
     plus.className = "view-list-item view-list-item-plus"
     plus.onclick = () => {
         fieldProperties.plus((data) => {
-            item.insertBefore(createViewListItem(fieldProperties, data))
+            item.insertBefore(createViewListItem(fieldProperties, fieldProperties.converter(data)), plus)
         })
     }
     item.appendChild(plus)
@@ -90,4 +97,20 @@ function createViewListItem(fieldProperties, listObject) {
     }
     listItem.appendChild(remove)
     return listItem
+}
+
+function createList(name, obj, list, removeUrl, formCreateFunction, converter) {
+    return {
+        "type": "list",
+        "name": name,
+        "list": list,
+        "remove": (id) => {
+            remove(removeUrl, id)
+        },
+        "plus": (toSendData) => {
+            let parent = document.getElementsByTagName("body")[0]
+            parent.appendChild(formCreateFunction(obj, toSendData))
+        },
+        "converter": converter
+    }
 }

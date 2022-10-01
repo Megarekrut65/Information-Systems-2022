@@ -41,6 +41,6 @@ function addTableToPage(parentId, list) {
 }
 
 function testLoad() {
-    let parent = document.getElementById("content")
-    parent.appendChild(createBookView(getBook(8)))
+    openNewPage(11, "Book")
+        //document.getElementById("content").appendChild(createBookView(getBook(11)))
 }
