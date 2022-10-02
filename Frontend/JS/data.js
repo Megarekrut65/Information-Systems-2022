@@ -20,3 +20,9 @@ const URLS = {
     bookTagByBook: SERVER_URL + "/book-tags/by-book-id",
     authorshipByBook: SERVER_URL + "/authorships/by-book-id"
 }
+const indexProperties = [
+    { "title": "Book management", "img": "../Images/book.png", "list": ["View books", "Search books", "Add new books", "Borrow books"], "location": "book.html" },
+    { "title": "Author management", "img": "../Images/writers.png", "list": ["View authors", "Search authors and books by author", "Add new author"], "location": "author.html" },
+    { "title": "Customer management", "img": "../Images/customers.png", "list": ["View customers", "Search customers", "Add new customer", "Return book"], "location": "customer.html" },
+    { "title": "Library statistics", "img": "../Images/statistic.png", "list": ["Borrowing statistic", "Purchasing statistic", "Recommendations for purchase"], "location": "statistic.html" },
+]
