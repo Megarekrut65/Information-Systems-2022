@@ -25,7 +25,7 @@ public class BookService {
     }
 
     public List<Book> getAll() {
-        return repository.findAll();
+        return repository.getAllOrdered();
     }
 
     public Book update(Integer id, String title, Integer publishingHouseId, Integer publishYear, String comment) {
@@ -47,7 +47,6 @@ public class BookService {
     public List<Book> findByTitle(String title) {
         return repository.findBooksByTitleAdvanced(title);
     }
-
     public List<Book> findByPublishingHouse(Integer publishingHouseId) {
         PublishingHouse publishingHouse = publishingHouseService.get(publishingHouseId);
         return repository.findBooksByPublishingHouse(publishingHouse);

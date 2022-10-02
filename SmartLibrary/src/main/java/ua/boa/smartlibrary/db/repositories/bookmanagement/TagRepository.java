@@ -8,9 +8,9 @@ import ua.boa.smartlibrary.dataclasses.bookmanagement.Tag;
 import java.util.List;
 
 public interface TagRepository extends JpaRepository<Tag, Integer> {
-    @Query(value = "SELECT * FROM tag WHERE tag.name " +
-            "LIKE CONCAT('%', CONCAT(:name, '%')) OR :name " +
-            "LIKE CONCAT('%', CONCAT(tag.name, '%'))",
+    @Query(value = "SELECT * FROM tag WHERE LOWER(tag.name) " +
+            "LIKE CONCAT('%', CONCAT(LOWER(:name), '%')) OR LOWER(:name) " +
+            "LIKE CONCAT('%', CONCAT(LOWER(tag.name), '%'))",
             nativeQuery = true)
     List<Tag> findTagsByNameAdvanced(@Param("name") String name);
 }

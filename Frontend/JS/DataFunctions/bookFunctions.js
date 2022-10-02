@@ -122,7 +122,7 @@ function createBookView(obj) {
             }), URLS.bookTag, createBookTagFormCrate, (data) => { return { "id": data.id, "name": data.tag.name } }),
             [authorshipKey]: createList("Authorship", obj, get(URLS.authorshipByBook, { "book-id": obj["id"] }).map(item => {
                 return { "name": item.author.name + " - " + item.authorRole, "id": item.id }
-            }), URLS.authorship, createAuthorshipFormCrate, (data) => { return { "id": data.id, "name": data.author.name } }),
+            }), URLS.authorship, createAuthorshipFormCrate, (data) => { return { "id": data.id, "name": data.author.name + " - " + data.authorRole } }),
             [publishingHouseIdKey]: createReference("Publishing house", obj[publishingHouseKey]["name"],
                 obj[publishingHouseKey], "PublishingHouse"),
             [publishYearKey]: {
@@ -141,4 +141,40 @@ function createBookView(obj) {
                 .appendChild(createBookForm("Update the book", obj, updateReloadFunction(obj.id, URLS.book)))
         }
     })
+}
+
+function getBooksForTable(title, genre, tag, author) {
+    return get(URLS.booksByAll, { "title": title, "genre-name": genre, "tag-name": tag, "author-name": author })
+        .sort((a, b) => a.title.localeCompare(b.title))
+        .map(obj => {
+            return {
+                "Id": obj.id,
+                "Title": {
+                    "text": obj.title,
+                    "id": obj.id,
+                    "object": "Book",
+                    "type": "reference"
+                },
+                "Genres": {
+                    "type": "list",
+                    "list": get(URLS.bookGenreByBook, { "book-id": obj.id }).map(item => item.genre.name)
+                },
+                "Tags": {
+                    "type": "list",
+                    "list": get(URLS.bookTagByBook, { "book-id": obj.id }).map(item => item.tag.name)
+                },
+                "Authorship": {
+                    "type": "list",
+                    "list": get(URLS.authorshipByBook, { "book-id": obj.id }).map(item => item.author.name)
+                },
+                "Available": obj.bookInfo.availableCount,
+                "Publishing House": {
+                    "text": obj.publishingHouse.name,
+                    "id": obj.publishingHouse.id,
+                    "object": "PublishingHouse",
+                    "type": "reference"
+                },
+                "Publish Year": obj.publishYear
+            }
+        })
 }

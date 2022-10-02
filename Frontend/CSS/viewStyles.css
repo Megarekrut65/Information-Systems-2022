@@ -75,11 +75,13 @@
     width: 1.8vw;
     height: 1.8vw;
     background-size: 1.8vw;
-    margin-left: 1vw
+    margin-left: 1vw;
+    cursor: pointer;
 }
 
 .view-reference {
     text-decoration: underline;
+    cursor: pointer;
 }
 
 .view-title {

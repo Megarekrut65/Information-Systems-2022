@@ -29,3 +29,87 @@ function findBookBorrowingsByCustomer(customerId) {
 function getBookBorrowing(id) {
     return get(SERVER_URL + "/book-borrowing", { "id": id })
 }
+
+function createBookBorrowingForm(title, obj, action, toSendData) {
+    const customerIdKey = "customer-id",
+        bookIdKey = "book-id",
+        borrowingDateKey = "date-of-borrowing",
+        estimatedDateKey = "estimated-date-of-return",
+        actualDateKey = "actual-date-of-return",
+        comment = "comment"
+    const customerKey = "customer",
+        bookKey = "book",
+        borrowingKey = "dateOfBorrowing",
+        estimatedKey = "estimatedDateOfReturn",
+        actualKey = "actualDateOfReturn"
+    return createForm({
+        "title": title,
+        "inputs": {
+            [customerIdKey]: {
+                "type": "list",
+                "name": "Customer",
+                "value": customerKey in obj ? obj[customerKey] : "",
+                "required": true,
+                "list": getAll(URLS.customers).map(item => {
+                    return { "name": item.name + " " + item.phoneNumber, "id": item.id }
+                }),
+                "plus": () => {
+                    //addOptionToList(createCustomerFormCreate, customerIdKey)
+                }
+            },
+            [bookIdKey]: {
+                "type": "list",
+                "name": "Book",
+                "value": bookKey in obj ? obj[bookKey]["id"] : "",
+                "required": true,
+                "list": getAll(URLS.books).map(item => {
+                    return { "name": item.title, "id": item.id }
+                }),
+                "plus": () => {
+                    addOptionToList(createBookFormCrate, bookIdKey)
+                }
+            },
+            [borrowingDateKey]: {
+                "type": "date",
+                "value": borrowingKey in obj ? obj[borrowingKey] : getToday(),
+                "required": true,
+                "name": "Date of borrowing"
+            },
+            [estimatedDateKey]: {
+                "type": "date",
+                "value": estimatedKey in obj ? obj[estimatedKey] : "",
+                "required": true,
+                "name": "Estimated date of return"
+            },
+            [actualDateKey]: {
+                "type": "date",
+                "value": actualKey in obj ? obj[actualKey] : "",
+                "name": "Actual date of return"
+            },
+            [comment]: {
+                "type": "text",
+                "value": comment in obj ? obj[comment] : "",
+                "name": "Comment"
+            }
+        },
+        "ok": () => {
+            toSendData(action({
+                [customerIdKey]: getDataFromList(customerIdKey),
+                [bookIdKey]: getDataFromList(bookIdKey),
+                [borrowingDateKey]: normalize(document.getElementById(borrowingDateKey).value),
+                [estimatedDateKey]: normalize(document.getElementById(estimatedDateKey).value),
+                [actualDateKey]: normalize(document.getElementById(actualDateKey).value),
+                [comment]: formatText(document.getElementById(comment).value)
+            }))
+        }
+    })
+}
+
+function createBookBorrowingFormCrate(toSendData) {
+    return createBookBorrowingForm("Borrow book", {}, createFunction(URLS.bookBorrowing), toSendData)
+}
+
+function createBookBorrowingFormUpdate(id) {
+    return createBookBorrowingForm("Update the book borrowing", get(URLS.bookBorrowing, { "id": id }),
+        updateFunction(id, URLS.bookBorrowing), (data) => {})
+}

@@ -21,6 +21,7 @@
     align-items: center;
     font-size: 10vw;
     text-shadow: -0.2vw -0.2vw 0 rgb(192, 189, 189), 0.2vw -0.2vw 0 gray, -0.2vw 0.2vw 0 black, 0.2vw 0.2vw 0 gray;
+    cursor: pointer;
 }
 
 body {

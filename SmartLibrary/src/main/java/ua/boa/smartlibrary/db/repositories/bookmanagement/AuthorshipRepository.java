@@ -11,4 +11,6 @@ public interface AuthorshipRepository extends JpaRepository<Authorship, Integer>
     List<Authorship> findAuthorshipsByBook(Book book);
 
     List<Authorship> findAuthorshipsByAuthor(Author author);
+
+    List<Authorship> findAuthorshipsByAuthorInAndBookIn(List<Author> authors, List<Book> book);
 }

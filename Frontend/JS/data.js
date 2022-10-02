@@ -6,6 +6,8 @@ const URLS = {
     tags: SERVER_URL + "/tags",
     book: SERVER_URL + "/book",
     books: SERVER_URL + "/books",
+    booksByTitle: SERVER_URL + "/books/by-title",
+    booksByAll: SERVER_URL + "/books/by-all",
     publishingHouses: SERVER_URL + "/publishing-houses",
     publishingHouse: SERVER_URL + "/publishing-house",
     author: SERVER_URL + "/author",
@@ -18,11 +20,20 @@ const URLS = {
     bookTag: SERVER_URL + "/book-tag",
     bookTags: SERVER_URL + "/book-tags",
     bookTagByBook: SERVER_URL + "/book-tags/by-book-id",
-    authorshipByBook: SERVER_URL + "/authorships/by-book-id"
+    authorshipByBook: SERVER_URL + "/authorships/by-book-id",
+    bookDelivery: SERVER_URL + "/book-delivery",
+    bookDeliveries: SERVER_URL + "/book-deliveries",
+    delivery: SERVER_URL + "/delivery",
+    deliveries: SERVER_URL + "/deliveries",
+    bookBorrowing: SERVER_URL + "/book-borrowing",
+    bookBorrowings: SERVER_URL + "/book-borrowings",
+    customer: SERVER_URL + "/customer",
+    customers: SERVER_URL + "/customers",
 }
 const indexProperties = [
     { "title": "Book management", "img": "../Images/book.png", "list": ["View books", "Search books", "Add new books", "Borrow books"], "location": "book.html" },
     { "title": "Author management", "img": "../Images/writers.png", "list": ["View authors", "Search authors and books by author", "Add new author"], "location": "author.html" },
     { "title": "Customer management", "img": "../Images/customers.png", "list": ["View customers", "Search customers", "Add new customer", "Return book"], "location": "customer.html" },
-    { "title": "Library statistics", "img": "../Images/statistic.png", "list": ["Borrowing statistic", "Purchasing statistic", "Recommendations for purchase"], "location": "statistic.html" },
+    { "title": "Library statistics", "img": "../Images/statistic.png", "list": ["Borrowing statistic", "Delivery statistic", "Recommendations for purchase"], "location": "statistic.html" },
+    { "title": "Other", "img": "../Images/functions.png", "list": ["Genres", "Tags", "Publishing houses"], "location": "other.html" },
 ]

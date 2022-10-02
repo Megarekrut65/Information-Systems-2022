@@ -62,12 +62,9 @@ function createAuthorForm(title, obj, action, toSendData) {
 }
 
 function createAuthorFormCrate(toSendData) {
-    return createAuthorForm("Create new author", {}, (obj) => create(URLS.author, obj), toSendData)
+    return createAuthorForm("Create new author", {}, createFunction(URLS.author), toSendData)
 }
 
 function createAuthorFormUpdate(id) {
-    return createAuthorForm("Update the author", get(URLS.author, { "id": id }), (obj) => {
-        obj["id"] = id
-        update(URLS.author, obj)
-    }, (data) => {})
+    return createAuthorForm("Update the author", get(URLS.author, { "id": id }), updateFunction(id, URLS.author), (data) => {})
 }

@@ -8,9 +8,9 @@ import ua.boa.smartlibrary.dataclasses.bookmanagement.Genre;
 import java.util.List;
 
 public interface GenreRepository extends JpaRepository<Genre, Integer> {
-    @Query(value = "SELECT * FROM genre WHERE genre.name " +
-            "LIKE CONCAT('%', CONCAT(:name, '%')) OR :name " +
-            "LIKE CONCAT('%', CONCAT(genre.name, '%'))",
+    @Query(value = "SELECT * FROM genre WHERE LOWER(genre.name) " +
+            "LIKE CONCAT('%', CONCAT(LOWER(:name), '%')) OR LOWER(:name) " +
+            "LIKE CONCAT('%', CONCAT(LOWER(genre.name), '%'))",
             nativeQuery = true)
     List<Genre> findGenresByNameAdvanced(@Param("name") String name);
 }

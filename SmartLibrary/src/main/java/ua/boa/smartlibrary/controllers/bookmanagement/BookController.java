@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ua.boa.smartlibrary.dataclasses.bookmanagement.Book;
+import ua.boa.smartlibrary.services.bookmanagement.BookSearchService;
 import ua.boa.smartlibrary.services.bookmanagement.BookService;
 
 import java.util.List;
@@ -15,6 +16,8 @@ public class BookController {
     @Autowired
     private BookService service;
 
+    @Autowired
+    private BookSearchService bookSearchService;
     @RequestMapping(value = "/book", method = RequestMethod.POST)
     public Book create(@RequestParam("title") String title,
                        @RequestParam("publishing-house-id") String publishingHouseId,
@@ -61,5 +64,13 @@ public class BookController {
     @RequestMapping(value = "/book", method = RequestMethod.GET)
     public Book get(@RequestParam("id") String id) {
         return service.get(Integer.parseInt(id));
+    }
+
+    @RequestMapping(value = "/books/by-all", method = RequestMethod.GET)
+    public List<Book> searchByAll(@RequestParam("title") String title,
+                                  @RequestParam("genre-name") String genreName,
+                                  @RequestParam("tag-name") String tagName,
+                                  @RequestParam("author-name") String authorName) {
+        return bookSearchService.findBookByAll(title, genreName, tagName, authorName);
     }
 }

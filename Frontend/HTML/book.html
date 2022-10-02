@@ -5,18 +5,54 @@
     <title>Smart Library - Books</title>
     <link rel="shortcut icon" href="../Images/library.png" type="image/png">
     <link rel="stylesheet" type="text/css" href="../CSS/styles.css">
+    <link rel="stylesheet" type="text/css" href="../CSS/managementStyles.css">
+    <link rel="stylesheet" type="text/css" href="../CSS/formStyles.css">
+    <script src="../JS/book.js"></script>
     <script src="../JS/tableCreator.js"></script>
     <script src="../JS/httpFunctions.js"></script>
     <script src="../JS/data.js"></script>
+    <script src="../JS/pageLoader.js"></script>
+    <script src="../JS/additionalFunctions.js"></script>
+    <script src="../JS/formCreator.js"></script>
     <script src="../JS/DataFunctions/bookFunctions.js"></script>
+    <script src="../JS/DataFunctions/publishingHouse.js"></script>
+    <script src="../JS/DataFunctions/bookDeliveryFunctions.js"></script>
+    <script src="../JS/DataFunctions/bookBorowingFunctions.js"></script>
 </head>
 
-<body onload="addTableToPage('content', getAll(URLS.books).map(obj=>{return{'Id':obj.id, 'Title':obj.title, 'Publishing House':obj.publishingHouse.name, 'Publish Year':obj.publishYear}})); return false;">
-    <div class="header">
+<body onload="addTableToPage('table', getBooksForTable('', '','','')); return false;">
+    <div class="header" onclick="window.location='index.html'; return false;">
         Smart Library
     </div>
     <div class="content" id="content">
-
+        <div>
+            <div class="h-style">Functions</div>
+            <div class="functions-list-style">
+                <div class="functions-style" onclick="functionButton(createBookDeliveryFormCrate); return false;">
+                    Add delivery
+                </div>
+                <div class="functions-style">
+                    Write-off book
+                </div>
+                <div class="functions-style">
+                    Add lost book
+                </div>
+                <div class="functions-style" onclick="functionButton(createBookBorrowingFormCrate); return false;">
+                    Borrow book
+                </div>
+            </div>
+            <div class="h-style">Books</div>
+            <div class="search-style">
+                <input type="text" class="search-input" id="input-title" value="" placeholder="Books title...">
+                <input type="text" class="search-input" id="input-genre" value="" placeholder="Genres name...">
+                <input type="text" class="search-input" id="input-tag" value="" placeholder="Tags name...">
+                <input type="text" class="search-input" id="input-author" value="" placeholder="Authors name...">
+                <img src="../Images/search.png" class="button-img" onclick="findButton(); return false" title="Search">
+                <img src="../Images/clear.png" class="button-img" onclick="clearButton(); return false;" title="Clear">
+                <img src="../Images/add.png" class="button-img" onclick="addButton(); return false;" title="Add new">
+            </div>
+            <div id="table"></div>
+        </div>
     </div>
 
 </body>

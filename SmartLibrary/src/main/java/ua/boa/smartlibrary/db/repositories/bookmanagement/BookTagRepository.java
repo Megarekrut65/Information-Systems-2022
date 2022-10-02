@@ -11,4 +11,6 @@ public interface BookTagRepository extends JpaRepository<BookTag, Integer> {
     List<BookTag> findBookTagsByBook(Book book);
 
     List<BookTag> findBookTagsByTag(Tag tag);
+
+    List<BookTag> findBookTagsByTagInAndBookIn(List<Tag> tags, List<Book> book);
 }
