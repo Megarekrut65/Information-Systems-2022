@@ -29,6 +29,11 @@ const URLS = {
     bookBorrowings: SERVER_URL + "/book-borrowings",
     customer: SERVER_URL + "/customer",
     customers: SERVER_URL + "/customers",
+    monthStatistic: SERVER_URL + "/month-statistic",
+    monthStatistics: SERVER_URL + "/month-statistics",
+    monthStatisticsByPeriod: SERVER_URL + "/month-statistics/by-month-date-period",
+    deliveriesByAll: SERVER_URL + "/deliveries/by-all",
+    bookDeliveriesByDelivery: SERVER_URL + "/book-deliveries/by-delivery-id",
 }
 const indexProperties = [
     { "title": "Book management", "img": "../Images/book.png", "list": ["View books", "Search books", "Add new books", "Borrow books"], "location": "book.html" },

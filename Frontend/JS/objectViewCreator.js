@@ -125,3 +125,14 @@ function createReference(name, value, obj, functionName) {
         }
     }
 }
+
+function createDetails(title, obj) {
+    let details = document.createElement("details")
+    details.open = true
+    let summary = document.createElement("summary")
+    summary.textContent = title
+    summary.className = "summary-style"
+    details.appendChild(summary)
+    details.appendChild(obj)
+    return details
+}

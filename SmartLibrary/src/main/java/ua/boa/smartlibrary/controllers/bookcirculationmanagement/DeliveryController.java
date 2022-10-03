@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ua.boa.smartlibrary.Utilities;
 import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.Delivery;
+import ua.boa.smartlibrary.services.bookcirculationmanagement.DeliverySearchService;
 import ua.boa.smartlibrary.services.bookcirculationmanagement.DeliveryService;
 
 import java.util.List;
@@ -15,6 +16,8 @@ import java.util.List;
 public class DeliveryController {
     @Autowired
     private DeliveryService service;
+    @Autowired
+    private DeliverySearchService deliverySearchService;
 
     @RequestMapping(value = "/delivery", method = RequestMethod.POST)
     public Delivery create(@RequestParam("date-of-delivery") String dateOfDelivery,
@@ -48,7 +51,13 @@ public class DeliveryController {
                                              @RequestParam("date-of-delivery-max") String dateOfDeliveryMax) {
         return service.findByDatePeriod(Utilities.getDate(dateOfDeliveryMin), Utilities.getDate(dateOfDeliveryMax));
     }
-
+    @RequestMapping(value = "/deliveries/by-all", method = RequestMethod.GET)
+    public List<Delivery> searchByAll(@RequestParam("distributor-name") String distributorName,
+                                      @RequestParam("date-of-delivery-min") String dateOfDeliveryMin,
+                                      @RequestParam("date-of-delivery-max") String dateOfDeliveryMax) {
+        return deliverySearchService.findDeliveriesByAll(distributorName,
+                Utilities.getDate(dateOfDeliveryMin), Utilities.getDate(dateOfDeliveryMax));
+    }
     @RequestMapping(value = "/delivery", method = RequestMethod.GET)
     public Delivery get(@RequestParam("id") String id) {
         return service.get(Integer.parseInt(id));

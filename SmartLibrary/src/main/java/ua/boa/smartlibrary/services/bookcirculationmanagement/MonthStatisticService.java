@@ -151,7 +151,13 @@ public class MonthStatisticService {
     }
 
     public List<MonthStatistic> findByMonthDatePeriod(Date monthDateMin, Date monthDateMax) {
-        return repository.findMonthStatisticsByMonthDateBetween(monthDateMin, monthDateMax);
+        if(monthDateMin != null && monthDateMax != null)
+            return repository.findMonthStatisticsByMonthDateBetween(monthDateMin, monthDateMax);
+        if(monthDateMin != null)
+            return repository.findMonthStatisticsByMonthDateGreaterThanEqual(monthDateMin);
+        if(monthDateMax != null)
+            return repository.findMonthStatisticsByMonthDateLessThanEqual(monthDateMax);
+        return repository.getAllOrdered();
     }
 
     public MonthStatistic get(Integer id) {

@@ -72,6 +72,6 @@ function makeList(list) {
 }
 
 function textCutter(text, length) {
-    if (text.length > length) return text.slice(0, length - text.length) + "..."
+    if (text && text.length > length) return text.slice(0, length - text.length) + "..."
     return text
 }

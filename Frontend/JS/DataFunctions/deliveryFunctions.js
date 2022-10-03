@@ -26,3 +26,27 @@ function findDeliveriesByDatePeriod(dateOfDeliveryMin, dateOfDeliveryMax) {
 function getDelivery(id) {
     return get(SERVER_URL + "/delivery", { "id": id })
 }
+
+function getDeliveriesForTable(distributorName, minDate, maxDate) {
+    return get(URLS.deliveriesByAll, {
+            "distributor-name": distributorName,
+            "date-of-delivery-min": minDate,
+            "date-of-delivery-max": maxDate
+        })
+        .sort((a, b) => b.dateOfDelivery.localeCompare(a.dateOfDelivery))
+        .map(obj => {
+            let bookDeliveries = get(URLS.bookDeliveriesByDelivery, { "delivery-id": obj.id });
+            return {
+                "Id": obj.id,
+                "Date": obj.dateOfDelivery,
+                "Distributor": {
+                    "text": obj.distributor.name,
+                    "id": obj.distributor.id,
+                    "object": "Distributor",
+                    "type": "reference"
+                },
+                "Book count": bookDeliveries.map(bookDelivery => bookDelivery.bookCount).reduce((a, b) => a + b, 0),
+                "Total price": bookDeliveries.map(bookDelivery => bookDelivery.bookCount * bookDelivery.bookPrice).reduce((a, b) => a + b, 0)
+            }
+        })
+}
