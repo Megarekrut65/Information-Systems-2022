@@ -56,7 +56,7 @@ function createBookForm(title, obj, action, toSendData) {
                     return { "name": item.name, "id": item.id }
                 }),
                 "plus": () => {
-                    addOptionToList(createPublishingHouseFormCrate, publishingHouseIdKey)
+                    addOptionToList(createPublishingHouseFormCreate, publishingHouseIdKey)
                 }
             },
             [publishYearKey]: {
@@ -86,7 +86,7 @@ function createBookForm(title, obj, action, toSendData) {
     })
 }
 
-function createBookFormCrate(toSendData) {
+function createBookFormCreate(toSendData) {
     return createBookForm("Create new book", {}, createFunction(URLS.book), toSendData)
 }
 
@@ -116,13 +116,13 @@ function createBookView(obj) {
             },
             [bookGenreKey]: createList("Genres", obj, get(URLS.bookGenreByBook, { "book-id": obj["id"] }).map(item => {
                 return { "name": item.genre.name, "id": item.id }
-            }), URLS.bookGenre, createBookGenreFormCrate, (data) => { return { "id": data.id, "name": data.genre.name } }),
+            }), URLS.bookGenre, createBookGenreFormCreate, (data) => { return { "id": data.id, "name": data.genre.name } }),
             [bookTagKey]: createList("Tags", obj, get(URLS.bookTagByBook, { "book-id": obj["id"] }).map(item => {
                 return { "name": item.tag.name, "id": item.id }
-            }), URLS.bookTag, createBookTagFormCrate, (data) => { return { "id": data.id, "name": data.tag.name } }),
+            }), URLS.bookTag, createBookTagFormCreate, (data) => { return { "id": data.id, "name": data.tag.name } }),
             [authorshipKey]: createList("Authorship", obj, get(URLS.authorshipByBook, { "book-id": obj["id"] }).map(item => {
                 return { "name": item.author.name + " - " + item.authorRole, "id": item.id }
-            }), URLS.authorship, createAuthorshipFormCrate, (data) => { return { "id": data.id, "name": data.author.name + " - " + data.authorRole } }),
+            }), URLS.authorship, createAuthorshipFormCreate, (data) => { return { "id": data.id, "name": data.author.name + " - " + data.authorRole } }),
             [publishingHouseIdKey]: createReference("Publishing house", obj[publishingHouseKey]["name"],
                 obj[publishingHouseKey], "PublishingHouse"),
             [publishYearKey]: {

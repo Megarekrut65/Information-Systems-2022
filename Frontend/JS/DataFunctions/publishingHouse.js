@@ -49,7 +49,7 @@ function createPublishingHouseForm(title, obj, action, toSendData) {
     })
 }
 
-function createPublishingHouseFormCrate(toSendData) {
+function createPublishingHouseFormCreate(toSendData) {
     return createPublishingHouseForm("Create new publishing house", {}, createFunction(URLS.publishingHouse), toSendData)
 }
 

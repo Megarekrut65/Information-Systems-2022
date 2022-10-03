@@ -38,7 +38,12 @@ function getDeliveriesForTable(distributorName, minDate, maxDate) {
             let bookDeliveries = get(URLS.bookDeliveriesByDelivery, { "delivery-id": obj.id });
             return {
                 "Id": obj.id,
-                "Date": obj.dateOfDelivery,
+                "Date": {
+                    "text": obj.dateOfDelivery,
+                    "id": obj.id,
+                    "object": "Delivery",
+                    "type": "reference"
+                },
                 "Distributor": {
                     "text": obj.distributor.name,
                     "id": obj.distributor.id,

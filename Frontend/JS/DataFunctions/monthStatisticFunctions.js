@@ -48,6 +48,7 @@ function createMonthStatisticView(statistic) {
     startDate.setDate(1)
     let endDate = statistic.monthDate
     viewBox.appendChild(createMonthStatisticPart("Deliveries", getDeliveriesForTable('', getTextDate(startDate), endDate)))
+    viewBox.appendChild(createMonthStatisticPart("Borrowings", getBookBorrowingsForTable('', '', getTextDate(startDate), endDate)))
     return viewBox
 }
 

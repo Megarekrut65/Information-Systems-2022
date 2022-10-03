@@ -59,7 +59,7 @@ function createBookDeliveryForm(title, obj, action, toSendData) {
                     return { "name": item.title, "id": item.id }
                 }),
                 "plus": () => {
-                    addOptionToList(createBookFormCrate, bookIdKey)
+                    addOptionToList(createBookFormCreate, bookIdKey)
                 }
             },
             [bookCountKey]: {
@@ -86,7 +86,7 @@ function createBookDeliveryForm(title, obj, action, toSendData) {
     })
 }
 
-function createBookDeliveryFormCrate(toSendData) {
+function createBookDeliveryFormCreate(toSendData) {
     return createBookDeliveryForm("Create new book delivery", {}, createFunction(URLS.bookDelivery), toSendData)
 }
 

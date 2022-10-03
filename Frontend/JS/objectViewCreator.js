@@ -128,6 +128,7 @@ function createReference(name, value, obj, functionName) {
 
 function createDetails(title, obj) {
     let details = document.createElement("details")
+    details.className = "details-style"
     details.open = true
     let summary = document.createElement("summary")
     summary.textContent = title

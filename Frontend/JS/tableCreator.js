@@ -25,7 +25,7 @@ function createRow(properties, style) {
         let td = document.createElement("td")
         let item = properties[key]
         td.textContent = textCutter(item, 15)
-        if (typeof item === 'object' && "type" in item) {
+        if (item !== null && item !== undefined && typeof item === 'object' && "type" in item) {
             switch (item.type) {
                 case "reference":
                     td = makeReference(item.text, item.id, item.object)

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ua.boa.smartlibrary.Utilities;
 import ua.boa.smartlibrary.dataclasses.customermanagement.BookBorrowing;
+import ua.boa.smartlibrary.services.customermanagement.BookBorrowingSearchService;
 import ua.boa.smartlibrary.services.customermanagement.BookBorrowingService;
 
 import java.util.List;
@@ -15,6 +16,8 @@ import java.util.List;
 public class BookBorrowingController {
     @Autowired
     private BookBorrowingService service;
+    @Autowired
+    private BookBorrowingSearchService bookBorrowingSearchService;
 
     @RequestMapping(value = "/book-borrowing", method = RequestMethod.POST)
     public BookBorrowing create(@RequestParam("date-of-borrowing") String dateOfBorrowing,
@@ -71,5 +74,13 @@ public class BookBorrowingController {
     @RequestMapping(value = "/book-borrowing", method = RequestMethod.GET)
     public BookBorrowing get(@RequestParam("id") String id) {
         return service.get(Integer.parseInt(id));
+    }
+    @RequestMapping(value = "/book-borrowings/by-all", method = RequestMethod.GET)
+    public List<BookBorrowing> searchByAll(@RequestParam("book-title") String bookTitle,
+                                           @RequestParam("customer-name") String customerName,
+                                           @RequestParam("date-of-borrowing-min") String dateOfBorrowingMin,
+                                                  @RequestParam("date-of-borrowing-max") String dateOfBorrowingMax) {
+        return bookBorrowingSearchService.findBookBorrowingsByAll(bookTitle, customerName, Utilities.getDate(dateOfBorrowingMin),
+                Utilities.getDate(dateOfBorrowingMax));
     }
 }

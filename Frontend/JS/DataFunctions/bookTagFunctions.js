@@ -17,7 +17,7 @@ function createBookTagForm(title, obj, action, toSendData) {
                 "required": true,
                 "list": getAll(URLS.tags),
                 "plus": () => {
-                    addOptionToList(createTagFormCrate, tagKey)
+                    addOptionToList(createTagFormCreate, tagKey)
                 }
             }
         },
@@ -30,6 +30,6 @@ function createBookTagForm(title, obj, action, toSendData) {
     })
 }
 
-function createBookTagFormCrate(book, toSendData) {
+function createBookTagFormCreate(book, toSendData) {
     return createBookTagForm("Add tag to book", book, (obj) => create(URLS.bookTag, obj), toSendData)
 }

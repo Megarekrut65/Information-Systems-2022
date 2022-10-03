@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ua.boa.smartlibrary.Utilities;
 import ua.boa.smartlibrary.dataclasses.customermanagement.Customer;
+import ua.boa.smartlibrary.services.customermanagement.CustomerSearchService;
 import ua.boa.smartlibrary.services.customermanagement.CustomerService;
 
 import java.util.List;
@@ -16,6 +17,8 @@ public class CustomerController {
 
     @Autowired
     private CustomerService service;
+    @Autowired
+    private CustomerSearchService customerSearchService;
 
 
     @RequestMapping(value = "/customer", method = RequestMethod.POST)
@@ -63,5 +66,11 @@ public class CustomerController {
     @RequestMapping(value = "/customer", method = RequestMethod.GET)
     public Customer get(@RequestParam("id") String id) {
         return service.get(Integer.parseInt(id));
+    }
+    @RequestMapping(value = "/customers/by-all", method = RequestMethod.GET)
+    public List<Customer> searchByAll(@RequestParam("name") String name,
+                                      @RequestParam("phone-number") String phoneNumber,
+                                      @RequestParam("email") String email) {
+        return customerSearchService.findCustomersByAll(name, phoneNumber, email);
     }
 }

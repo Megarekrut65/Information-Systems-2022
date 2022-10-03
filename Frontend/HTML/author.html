@@ -2,12 +2,12 @@
 <html lang="uk">
 
 <head>
-    <title>Smart Library - Books</title>
+    <title>Smart Library - Authors</title>
     <link rel="shortcut icon" href="../Images/library.png" type="image/png">
     <link rel="stylesheet" type="text/css" href="../CSS/styles.css">
     <link rel="stylesheet" type="text/css" href="../CSS/managementStyles.css">
     <link rel="stylesheet" type="text/css" href="../CSS/formStyles.css">
-    <script src="../JS/book.js"></script>
+    <script src="../JS/author.js"></script>
     <script src="../JS/tableCreator.js"></script>
     <script src="../JS/httpFunctions.js"></script>
     <script src="../JS/data.js"></script>
@@ -15,13 +15,12 @@
     <script src="../JS/additionalFunctions.js"></script>
     <script src="../JS/formCreator.js"></script>
     <script src="../JS/DataFunctions/bookFunctions.js"></script>
+    <script src="../JS/DataFunctions/authorFunctions.js"></script>
+    <script src="../JS/DataFunctions/authorshipFunctions.js"></script>
     <script src="../JS/DataFunctions/publishingHouse.js"></script>
-    <script src="../JS/DataFunctions/bookDeliveryFunctions.js"></script>
-    <script src="../JS/DataFunctions/bookBorowingFunctions.js"></script>
-    <script src="../JS/DataFunctions/customerFunction.js"></script>
 </head>
 
-<body onload="addTableToPage('table', getBooksForTable('', '','','')); return false;">
+<body onload="addTableToPage('table', getAuthorsForTable('', '','','')); return false;">
     <div class="header" onclick="window.location='index.html'; return false;">
         Smart Library
     </div>
@@ -29,25 +28,14 @@
         <div>
             <div class="h-style">Functions</div>
             <div class="functions-list-style">
-                <div class="functions-style" onclick="functionButton(createBookDeliveryFormCreate); return false;">
-                    Add delivery
-                </div>
-                <div class="functions-style">
-                    Write-off book
-                </div>
-                <div class="functions-style">
-                    Add lost book
-                </div>
-                <div class="functions-style" onclick="functionButton(createBookBorrowingFormCreate); return false;">
-                    Borrow book
+                <div class="functions-style" onclick="functionButton(createAuthorshipFormCreate); return false;">
+                    Add authorship
                 </div>
             </div>
-            <div class="h-style">Books</div>
+            <div class="h-style">Authors</div>
             <div class="search-style">
-                <input type="text" class="search-input" id="input-title" value="" placeholder="Books title...">
-                <input type="text" class="search-input" id="input-genre" value="" placeholder="Genres name...">
-                <input type="text" class="search-input" id="input-tag" value="" placeholder="Tags name...">
                 <input type="text" class="search-input" id="input-author" value="" placeholder="Authors name...">
+                <input type="text" class="search-input" id="input-title" value="" placeholder="Books title...">
                 <img src="../Images/search.png" class="button-img" onclick="findButton(); return false" title="Search">
                 <img src="../Images/clear.png" class="button-img" onclick="clearButton(); return false;" title="Clear">
                 <img src="../Images/add.png" class="button-img" onclick="addButton(); return false;" title="Add new">

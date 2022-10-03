@@ -6,6 +6,7 @@ import ua.boa.smartlibrary.dataclasses.customermanagement.BookBorrowing;
 import ua.boa.smartlibrary.dataclasses.customermanagement.Customer;
 
 import java.sql.Date;
+import java.util.Collection;
 import java.util.List;
 
 public interface BookBorrowingRepository extends JpaRepository<BookBorrowing, Integer> {
@@ -14,4 +15,15 @@ public interface BookBorrowingRepository extends JpaRepository<BookBorrowing, In
     List<BookBorrowing> findBookBorrowingByCustomer(Customer customer);
 
     List<BookBorrowing> findBookBorrowingByDateOfBorrowingBetween(Date dateOfBorrowingMin, Date dateOfBorrowingMax);
+    List<BookBorrowing> findBookBorrowingByDateOfBorrowingBetweenAndBookInAndCustomerIn(Date dateOfBorrowing,
+                                                                                        Date dateOfBorrowing2,
+                                                                                        Collection<Book> book,
+                                                                                        Collection<Customer> customer);
+    List<BookBorrowing> findBookBorrowingByDateOfBorrowingGreaterThanAndBookInAndCustomerIn(Date dateOfBorrowing,
+                                                                                            Collection<Book> book,
+                                                                                            Collection<Customer> customer);
+    List<BookBorrowing> findBookBorrowingByDateOfBorrowingLessThanAndBookInAndCustomerIn(Date dateOfBorrowing,
+                                                                                         Collection<Book> book,
+                                                                                         Collection<Customer> customer);
+    List<BookBorrowing> findBookBorrowingByBookInAndCustomerIn(Collection<Book> book, Collection<Customer> customer);
 }

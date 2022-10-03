@@ -43,7 +43,7 @@ function createGenreForm(title, obj, action, toSendData) {
     })
 }
 
-function createGenreFormCrate(toSendData) {
+function createGenreFormCreate(toSendData) {
     return createGenreForm("Create new genre", {}, (obj) => create(URLS.genre, obj), toSendData)
 }
 

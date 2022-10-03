@@ -17,7 +17,7 @@ function createBookGenreForm(title, obj, action, toSendData) {
                 "required": true,
                 "list": getAll(URLS.genres),
                 "plus": () => {
-                    addOptionToList(createGenreFormCrate, genreKey)
+                    addOptionToList(createGenreFormCreate, genreKey)
                 }
             }
         },
@@ -30,6 +30,6 @@ function createBookGenreForm(title, obj, action, toSendData) {
     })
 }
 
-function createBookGenreFormCrate(book, toSendData) {
+function createBookGenreFormCreate(book, toSendData) {
     return createBookGenreForm("Add genre to book", book, (obj) => create(URLS.bookGenre, obj), toSendData)
 }

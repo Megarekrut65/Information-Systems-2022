@@ -11,20 +11,34 @@ function createAuthorshipForm(title, obj, action, toSendData) {
                 "value": "",
                 "required": true
             },
-            [bookIdKey]: {
+            [bookIdKey]: "title" in obj ? {
                 "type": "text",
                 "name": "Book",
                 "value": obj.title,
                 "readOnly": true
+            } : {
+                "type": "list",
+                "name": "Book",
+                "value": "",
+                "list": getAll(URLS.books).map(item => { return { "id": item.id, "name": item.title } }),
+                "required": true,
+                "plus": () => {
+                    addOptionToList(createBookFormCreate, bookIdKey)
+                }
             },
-            [authorIdKey]: {
+            [authorIdKey]: "name" in obj ? {
+                "type": "text",
+                "name": "Author",
+                "value": obj.name,
+                "readOnly": true
+            } : {
                 "type": "list",
                 "name": "Author",
                 "value": "",
                 "list": getAll(URLS.authors),
                 "required": true,
                 "plus": () => {
-                    addOptionToList(createAuthorFormCrate, authorIdKey)
+                    addOptionToList(createAuthorFormCreate, authorIdKey)
                 }
             }
         },
@@ -32,13 +46,13 @@ function createAuthorshipForm(title, obj, action, toSendData) {
             let roleName = document.getElementById(roleNameKey)
             toSendData(action({
                 [roleNameKey]: formatText(roleName.value),
-                [bookIdKey]: obj.id,
-                [authorIdKey]: getDataFromList(authorIdKey)
+                [bookIdKey]: "title" in obj ? obj.id : getDataFromList(bookIdKey),
+                [authorIdKey]: "name" in obj ? obj.id : getDataFromList(authorIdKey)
             }))
         }
     })
 }
 
-function createAuthorshipFormCrate(book, toSendData) {
-    return createAuthorshipForm("Create new authorship", book, (obj) => create(URLS.authorship, obj), toSendData)
+function createAuthorshipFormCreate(obj, toSendData) {
+    return createAuthorshipForm("Create new authorship", obj, createFunction(URLS.authorship), toSendData)
 }

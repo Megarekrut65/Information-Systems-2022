@@ -43,7 +43,7 @@ function createTagForm(title, obj, action, toSendData) {
     })
 }
 
-function createTagFormCrate(toSendData) {
+function createTagFormCreate(toSendData) {
     return createTagForm("Create new tag", {}, (obj) => create(URLS.tag, obj), toSendData)
 }
 

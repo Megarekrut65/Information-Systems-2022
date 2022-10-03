@@ -54,7 +54,7 @@ function createBookBorrowingForm(title, obj, action, toSendData) {
                     return { "name": item.name + " " + item.phoneNumber, "id": item.id }
                 }),
                 "plus": () => {
-                    //addOptionToList(createCustomerFormCreate, customerIdKey)
+                    addOptionToList(createCustomerFormCreate, customerIdKey)
                 }
             },
             [bookIdKey]: {
@@ -66,7 +66,7 @@ function createBookBorrowingForm(title, obj, action, toSendData) {
                     return { "name": item.title, "id": item.id }
                 }),
                 "plus": () => {
-                    addOptionToList(createBookFormCrate, bookIdKey)
+                    addOptionToList(createBookFormCreate, bookIdKey)
                 }
             },
             [borrowingDateKey]: {
@@ -105,11 +105,41 @@ function createBookBorrowingForm(title, obj, action, toSendData) {
     })
 }
 
-function createBookBorrowingFormCrate(toSendData) {
+function createBookBorrowingFormCreate(toSendData) {
     return createBookBorrowingForm("Borrow book", {}, createFunction(URLS.bookBorrowing), toSendData)
 }
 
 function createBookBorrowingFormUpdate(id) {
     return createBookBorrowingForm("Update the book borrowing", get(URLS.bookBorrowing, { "id": id }),
         updateFunction(id, URLS.bookBorrowing), (data) => {})
+}
+
+function getBookBorrowingsForTable(bookTitle, customerName, minDate, maxDate) {
+    return get(URLS.bookBorrowingsByAll, {
+            "book-title": bookTitle,
+            "customer-name": customerName,
+            "date-of-borrowing-min": minDate,
+            "date-of-borrowing-max": maxDate
+        })
+        .sort((a, b) => b.dateOfBorrowing.localeCompare(a.dateOfBorrowing))
+        .map(obj => {
+            return {
+                "Id": obj.id,
+                "Borrowing date": obj.dateOfBorrowing,
+                "Estimated return date": obj.estimatedDateOfReturn,
+                "Actual return date": obj.actualDateOfReturn,
+                "Book": {
+                    "text": obj.book.title,
+                    "id": obj.book.id,
+                    "object": "Book",
+                    "type": "reference"
+                },
+                "Customer": {
+                    "text": obj.customer.name,
+                    "id": obj.customer.id,
+                    "object": "Customer",
+                    "type": "reference"
+                },
+            }
+        })
 }

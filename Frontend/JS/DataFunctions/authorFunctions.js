@@ -61,10 +61,32 @@ function createAuthorForm(title, obj, action, toSendData) {
     })
 }
 
-function createAuthorFormCrate(toSendData) {
+function createAuthorFormCreate(toSendData) {
     return createAuthorForm("Create new author", {}, createFunction(URLS.author), toSendData)
 }
 
 function createAuthorFormUpdate(id) {
     return createAuthorForm("Update the author", get(URLS.author, { "id": id }), updateFunction(id, URLS.author), (data) => {})
+}
+
+function getAuthorsForTable(bookTitle, authorName) {
+    return get(URLS.authorsByAll, { "author-name": authorName, "book-title": bookTitle })
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map(obj => {
+            return {
+                "Id": obj.id,
+                "Name": {
+                    "text": obj.name,
+                    "id": obj.id,
+                    "object": "Author",
+                    "type": "reference"
+                },
+                "Birth date": obj.dateOfBirth,
+                "Death date": obj.dateOfDeath,
+                "Books": {
+                    "type": "list",
+                    "list": get(URLS.authorshipByAuthor, { "author-id": obj.id }).map(item => item.book.title)
+                }
+            }
+        })
 }

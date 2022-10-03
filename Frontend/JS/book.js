@@ -13,7 +13,7 @@ function clearButton() {
 }
 
 function addButton() {
-    document.getElementsByTagName('body')[0].appendChild(createBookFormCrate((data) => findButton()))
+    document.getElementsByTagName('body')[0].appendChild(createBookFormCreate((data) => findButton()))
 }
 
 function functionButton(form) {
