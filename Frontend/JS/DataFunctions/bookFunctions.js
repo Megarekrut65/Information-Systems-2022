@@ -52,11 +52,9 @@ function createBookForm(title, obj, action, toSendData) {
                 "name": "Publishing House",
                 "value": publishingHouseKey in obj ? obj[publishingHouseKey]["id"] : "",
                 "required": true,
-                "list": getAll(URLS.publishingHouses).map(item => {
-                    return { "name": item.name, "id": item.id }
-                }),
-                "plus": () => {
-                    addOptionToList(createPublishingHouseFormCreate, publishingHouseIdKey)
+                "list": getAll(URLS.publishingHouses),
+                "plus": (convector) => {
+                    addOptionToList(createPublishingHouseFormCreate, publishingHouseIdKey, convector)
                 }
             },
             [publishYearKey]: {
@@ -69,8 +67,7 @@ function createBookForm(title, obj, action, toSendData) {
                 "type": "text",
                 "name": "Comment",
                 "value": commentKey in obj ? obj[commentKey] : ""
-            },
-
+            }
         },
         "ok": () => {
             let title = document.getElementById(titleKey)
@@ -137,8 +134,7 @@ function createBookView(obj) {
             }
         },
         "edit": () => {
-            document.getElementsByTagName("body")[0]
-                .appendChild(createBookForm("Update the book", obj, updateReloadFunction(obj.id, URLS.book)))
+            addToBody(createBookForm("Update the book", obj, updateReloadFunction(obj.id, URLS.book)))
         }
     })
 }

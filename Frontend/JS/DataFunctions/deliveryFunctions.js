@@ -27,6 +27,49 @@ function getDelivery(id) {
     return get(SERVER_URL + "/delivery", { "id": id })
 }
 
+function createDeliveryForm(title, obj, action, toSendData) {
+    const dateOfDeliveryKey = "date-of-delivery",
+        distributorIdKey = "distributor-id"
+    const dateOfDeliveryObjectKey = "dateOfDelivery",
+        distributorKey = "distributor"
+    return createForm({
+        "title": title,
+        "inputs": {
+            [dateOfDeliveryKey]: {
+                "type": "date",
+                "name": "Date",
+                "value": dateOfDeliveryObjectKey in obj ? obj[dateOfDeliveryObjectKey] : "",
+                "required": true
+            },
+            [distributorIdKey]: {
+                "type": "list",
+                "name": "Distributor",
+                "value": distributorKey in obj ? obj[distributorKey]["id"] : "",
+                "required": true,
+                "list": getAll(URLS.distributors),
+                "plus": (convector) => {
+                    addOptionToList(createDistributorFormCreate, distributorIdKey, convector)
+                }
+            }
+        },
+        "ok": () => {
+            toSendData(action({
+                [dateOfDeliveryKey]: normalize(document.getElementById(dateOfDeliveryKey).value),
+                [distributorIdKey]: getDataFromList(distributorIdKey)
+            }))
+        }
+    })
+}
+
+function createDeliveryFormCreate(toSendData) {
+    return createDeliveryForm("Create new delivery", {}, createFunction(URLS.delivery), toSendData)
+}
+
+function createDeliveryFormUpdate(id) {
+    return createDeliveryForm("Update the delivery", get(URLS.delivery, { "id": id }),
+        updateFunction(id, URLS.delivery), (data) => {})
+}
+
 function getDeliveriesForTable(distributorName, minDate, maxDate) {
     return get(URLS.deliveriesByAll, {
             "distributor-name": distributorName,

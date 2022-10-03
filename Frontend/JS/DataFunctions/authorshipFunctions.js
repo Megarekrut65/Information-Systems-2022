@@ -20,10 +20,13 @@ function createAuthorshipForm(title, obj, action, toSendData) {
                 "type": "list",
                 "name": "Book",
                 "value": "",
-                "list": getAll(URLS.books).map(item => { return { "id": item.id, "name": item.title } }),
+                "list": getAll(URLS.books),
+                "convector": item => {
+                    return { "id": item.id, "name": item.title }
+                },
                 "required": true,
-                "plus": () => {
-                    addOptionToList(createBookFormCreate, bookIdKey)
+                "plus": (convector) => {
+                    addOptionToList(createBookFormCreate, bookIdKey, convector)
                 }
             },
             [authorIdKey]: "name" in obj ? {
@@ -37,8 +40,8 @@ function createAuthorshipForm(title, obj, action, toSendData) {
                 "value": "",
                 "list": getAll(URLS.authors),
                 "required": true,
-                "plus": () => {
-                    addOptionToList(createAuthorFormCreate, authorIdKey)
+                "plus": (convector) => {
+                    addOptionToList(createAuthorFormCreate, authorIdKey, convector)
                 }
             }
         },

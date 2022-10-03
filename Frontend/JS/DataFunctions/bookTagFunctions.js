@@ -16,8 +16,8 @@ function createBookTagForm(title, obj, action, toSendData) {
                 "value": "",
                 "required": true,
                 "list": getAll(URLS.tags),
-                "plus": () => {
-                    addOptionToList(createTagFormCreate, tagKey)
+                "plus": (convector) => {
+                    addOptionToList(createTagFormCreate, tagKey, convector)
                 }
             }
         },

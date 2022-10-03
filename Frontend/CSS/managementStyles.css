@@ -31,6 +31,7 @@
     margin-bottom: 1%;
     width: 100%;
     display: flex;
+    align-items: center;
 }
 
 .button-img {
@@ -68,4 +69,10 @@
 .h-style {
     font-size: 2vw;
     font-weight: bold;
+}
+
+.label-style {
+    font-size: 1.2vw;
+    font-weight: bold;
+    margin-right: 1%;
 }

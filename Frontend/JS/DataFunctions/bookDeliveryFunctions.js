@@ -43,11 +43,12 @@ function createBookDeliveryForm(title, obj, action, toSendData) {
                 "name": "Delivery",
                 "value": deliveryKey in obj ? obj[deliveryKey] : "",
                 "required": true,
-                "list": getAll(URLS.deliveries).map(item => {
-                    return { "name": item.dateOfDelivery + " from " + item.distributor.name, "id": item.id }
-                }),
-                "plus": () => {
-                    //addOptionToList(createDeliveryFormCreate, deliveryIdKey)
+                "list": getAll(URLS.deliveries),
+                "convector": item => {
+                    return { "id": item.id, "name": item.dateOfDelivery + " from " + item.distributor.name }
+                },
+                "plus": (convector) => {
+                    addOptionToList(createDeliveryFormCreate, deliveryIdKey, convector)
                 }
             },
             [bookIdKey]: {
@@ -55,11 +56,12 @@ function createBookDeliveryForm(title, obj, action, toSendData) {
                 "name": "Book",
                 "value": bookKey in obj ? obj[bookKey]["id"] : "",
                 "required": true,
-                "list": getAll(URLS.books).map(item => {
+                "list": getAll(URLS.books),
+                "convector": item => {
                     return { "name": item.title, "id": item.id }
-                }),
-                "plus": () => {
-                    addOptionToList(createBookFormCreate, bookIdKey)
+                },
+                "plus": (convector) => {
+                    addOptionToList(createBookFormCreate, bookIdKey, convector)
                 }
             },
             [bookCountKey]: {

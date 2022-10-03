@@ -76,7 +76,7 @@ function createPublishingHouseView(obj) {
             }
         },
         "edit": () => {
-            document.getElementsByTagName("body")[0].appendChild(createPublishingHouseForm("Update the publishing house", obj,
+            addToBody(createPublishingHouseForm("Update the publishing house", obj,
                 updateReloadFunction(obj.id, URLS.publishingHouse)))
         }
     })

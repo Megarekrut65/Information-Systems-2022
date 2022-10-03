@@ -28,6 +28,8 @@ const URLS = {
     delivery: SERVER_URL + "/delivery",
     deliveries: SERVER_URL + "/deliveries",
     deliveriesByAll: SERVER_URL + "/deliveries/by-all",
+    distributor: SERVER_URL + "/distributor",
+    distributors: SERVER_URL + "/distributors",
     bookBorrowing: SERVER_URL + "/book-borrowing",
     bookBorrowings: SERVER_URL + "/book-borrowings",
     bookBorrowingsByCustomer: SERVER_URL + "/book-borrowings/by-customer-id",

@@ -51,11 +51,12 @@ function createBookBorrowingForm(title, obj, action, toSendData) {
                 "name": "Customer",
                 "value": customerKey in obj ? obj[customerKey]["id"] : "",
                 "required": true,
-                "list": getAll(URLS.customers).map(item => {
+                "list": getAll(URLS.customers),
+                "convector": item => {
                     return { "name": item.name + " " + item.phoneNumber, "id": item.id }
-                }),
-                "plus": () => {
-                    addOptionToList(createCustomerFormCreate, customerIdKey)
+                },
+                "plus": (convector) => {
+                    addOptionToList(createCustomerFormCreate, customerIdKey, convector)
                 }
             },
             [bookIdKey]: {
@@ -63,11 +64,12 @@ function createBookBorrowingForm(title, obj, action, toSendData) {
                 "name": "Book",
                 "value": bookKey in obj ? obj[bookKey]["id"] : "",
                 "required": true,
-                "list": getAll(URLS.books).map(item => {
+                "list": getAll(URLS.books),
+                "convector": item => {
                     return { "name": item.title, "id": item.id }
-                }),
-                "plus": () => {
-                    addOptionToList(createBookFormCreate, bookIdKey)
+                },
+                "plus": (convector) => {
+                    addOptionToList(createBookFormCreate, bookIdKey, convector)
                 }
             },
             [borrowingDateKey]: {
@@ -155,11 +157,12 @@ function createBookReturnCustomerFormCreate(toSendData) {
                 "name": "Customer",
                 "value": "",
                 "required": true,
-                "list": getAll(URLS.customers).map(item => {
+                "list": getAll(URLS.customers),
+                "convector": item => {
                     return { "name": item.name + " " + item.phoneNumber, "id": item.id }
-                }),
-                "plus": () => {
-                    addOptionToList(createCustomerFormCreate, customerIdKey)
+                },
+                "plus": (convector) => {
+                    addOptionToList(createCustomerFormCreate, customerIdKey, convector)
                 }
             }
         },
@@ -188,9 +191,10 @@ function createBookReturnBorrowingFormCreate(customer, toSendData) {
                 "required": true,
                 "list": get(URLS.bookBorrowingsNotReturnedByCustomer, {
                     [customerIdKey]: customer.id
-                }).map(item => {
+                }),
+                "convector": item => {
                     return { "name": item.book.title + " - " + item.dateOfBorrowing, "id": item.id }
-                })
+                }
             }
         },
         "ok": () => {

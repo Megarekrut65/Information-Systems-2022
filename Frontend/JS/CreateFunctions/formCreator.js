@@ -88,6 +88,8 @@ function createInput(id, inputProperties, parent) {
 }
 
 function createInputList(input, id, inputProperties, parent) {
+    if (!("convector" in inputProperties)) inputProperties.convector = item => item
+    inputProperties.list = inputProperties.list.map(inputProperties.convector)
     input.autocomplete = "off"
     let datalist = document.createElement("datalist")
     datalist.id = id + "-datalist"
@@ -103,7 +105,7 @@ function createInputList(input, id, inputProperties, parent) {
         let plus = document.createElement("input")
         plus.type = "button"
         plus.value = "+"
-        plus.onclick = inputProperties.plus
+        plus.onclick = () => inputProperties.plus(inputProperties.convector)
         parent.appendChild(plus)
     }
 }
@@ -115,9 +117,9 @@ function createDatalistOption(item) {
     return option
 }
 
-function addOptionToList(creatingFunction, key) {
-    document.getElementsByTagName("body")[0].appendChild(creatingFunction((data) => {
-        let item = createDatalistOption(data)
+function addOptionToList(creatingFunction, key, convector) {
+    addToBody(creatingFunction((data) => {
+        let item = createDatalistOption(convector(data))
         document.getElementById(key + "-datalist").appendChild(item)
         document.getElementById(key).value = item.value
     }))
