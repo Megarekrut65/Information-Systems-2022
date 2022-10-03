@@ -13,9 +13,9 @@ function clearButton() {
 }
 
 function addButton() {
-    document.getElementsByTagName('body')[0].appendChild(createBookFormCreate((data) => findButton()))
+    addToBody(createBookFormCreate((data) => findButton()))
 }
 
 function functionButton(form) {
-    document.getElementsByTagName('body')[0].appendChild(form((data) => findButton()))
+    addToBody(form((data) => findButton()))
 }

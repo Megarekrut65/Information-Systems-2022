@@ -31,6 +31,7 @@ function getBookBorrowing(id) {
 }
 
 function createBookBorrowingForm(title, obj, action, toSendData) {
+    if ("error" in obj) return errorFormCreate(title, "Borrowing not found!")
     const customerIdKey = "customer-id",
         bookIdKey = "book-id",
         borrowingDateKey = "date-of-borrowing",
@@ -48,7 +49,7 @@ function createBookBorrowingForm(title, obj, action, toSendData) {
             [customerIdKey]: {
                 "type": "list",
                 "name": "Customer",
-                "value": customerKey in obj ? obj[customerKey] : "",
+                "value": customerKey in obj ? obj[customerKey]["id"] : "",
                 "required": true,
                 "list": getAll(URLS.customers).map(item => {
                     return { "name": item.name + " " + item.phoneNumber, "id": item.id }
@@ -109,9 +110,9 @@ function createBookBorrowingFormCreate(toSendData) {
     return createBookBorrowingForm("Borrow book", {}, createFunction(URLS.bookBorrowing), toSendData)
 }
 
-function createBookBorrowingFormUpdate(id) {
+function createBookBorrowingFormUpdate(id, toSendData = (data) => {}) {
     return createBookBorrowingForm("Update the book borrowing", get(URLS.bookBorrowing, { "id": id }),
-        updateFunction(id, URLS.bookBorrowing), (data) => {})
+        updateFunction(id, URLS.bookBorrowing), toSendData)
 }
 
 function getBookBorrowingsForTable(bookTitle, customerName, minDate, maxDate) {
@@ -139,7 +140,61 @@ function getBookBorrowingsForTable(bookTitle, customerName, minDate, maxDate) {
                     "id": obj.customer.id,
                     "object": "Customer",
                     "type": "reference"
-                },
+                }
             }
         })
+}
+
+function createBookReturnCustomerFormCreate(toSendData) {
+    const customerIdKey = "customer-id"
+    return createForm({
+        "title": "Select customer",
+        "inputs": {
+            [customerIdKey]: {
+                "type": "list",
+                "name": "Customer",
+                "value": "",
+                "required": true,
+                "list": getAll(URLS.customers).map(item => {
+                    return { "name": item.name + " " + item.phoneNumber, "id": item.id }
+                }),
+                "plus": () => {
+                    addOptionToList(createCustomerFormCreate, customerIdKey)
+                }
+            }
+        },
+        "ok": () => {
+            addToBody(createBookReturnBorrowingFormCreate(getCustomer(getDataFromList(customerIdKey)), toSendData))
+        }
+    })
+}
+
+function createBookReturnBorrowingFormCreate(customer, toSendData) {
+    const customerIdKey = "customer-id",
+        borrowingIdKey = "borrowing-id"
+    return createForm({
+        "title": "Select borrowing",
+        "inputs": {
+            [customerIdKey]: {
+                "type": "text",
+                "name": "Customer",
+                "value": customer.id + " - " + customer.name,
+                "readOnly": true
+            },
+            [borrowingIdKey]: {
+                "type": "list",
+                "name": "Borrowing",
+                "value": "",
+                "required": true,
+                "list": get(URLS.bookBorrowingsNotReturnedByCustomer, {
+                    [customerIdKey]: customer.id
+                }).map(item => {
+                    return { "name": item.book.title + " - " + item.dateOfBorrowing, "id": item.id }
+                })
+            }
+        },
+        "ok": () => {
+            addToBody(createBookBorrowingFormUpdate(getDataFromList(borrowingIdKey), toSendData))
+        }
+    })
 }

@@ -136,3 +136,18 @@ function getMetaDataFromDatalist(datalist, pattern) {
     }
     return null
 }
+
+function errorFormCreate(title, cause) {
+    return createForm({
+        "title": title,
+        "inputs": {
+            "error": {
+                "type": "text",
+                "value": cause,
+                "name": "Error",
+                "readOnly": true
+            }
+        },
+        "ok": () => {}
+    })
+}

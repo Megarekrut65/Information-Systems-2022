@@ -11,9 +11,9 @@ function clearButton() {
 }
 
 function addButton() {
-    document.getElementsByTagName('body')[0].appendChild(createCustomerFormCreate((data) => findButton()))
+    addToBody(createCustomerFormCreate((data) => findButton()))
 }
 
 function functionButton(form) {
-    document.getElementsByTagName('body')[0].appendChild(form((data) => findButton()))
+    addToBody(form((data) => findButton()))
 }
