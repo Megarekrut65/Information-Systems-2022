@@ -21,3 +21,48 @@ function findDistributorsByName(name) {
 function getDistributor(id) {
     return get(SERVER_URL + "/distributor", { "id": id })
 }
+
+function createDistributorForm(title, obj, action, toSendData) {
+    const nameKey = "name",
+        phoneKey = "phone-number",
+        address = "address"
+    const phoneObjectKey = "phoneNumber"
+    return createForm({
+        "title": title,
+        "inputs": {
+            [nameKey]: {
+                "type": "text",
+                "name": "Distributor name",
+                "value": nameKey in obj ? obj[nameKey] : "",
+                "required": true
+            },
+            [phoneKey]: {
+                "type": "text",
+                "name": "Phone number",
+                "value": phoneObjectKey in obj ? obj[phoneObjectKey] : "",
+                "required": true
+            },
+            [address]: {
+                "type": "text",
+                "name": "Address",
+                "value": address in obj ? obj[address] : ""
+            }
+        },
+        "ok": () => {
+            toSendData(action({
+                [nameKey]: formatText(document.getElementById(nameKey).value),
+                [phoneKey]: formatText(document.getElementById(phoneKey).value),
+                [address]: formatText(document.getElementById(address).value)
+            }))
+        }
+    })
+}
+
+function createDistributorFormCreate(toSendData) {
+    return createDistributorForm("Create new distributor", {}, createFunction(URLS.distributor), toSendData)
+}
+
+function createDistributorFormUpdate(id) {
+    return createDistributorForm("Update the distributor", get(URLS.distributor, { "id": id }),
+        updateFunction(id, URLS.distributor), (data) => {})
+}

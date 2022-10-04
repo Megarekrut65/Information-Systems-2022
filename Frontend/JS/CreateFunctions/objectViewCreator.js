@@ -14,7 +14,17 @@ function createObjectView(properties) {
     edit.onclick = properties.edit
     let table = createViewTable(properties)
     viewBox.appendChild(table)
+    viewBox.appendChild(createTables(properties.tables))
     return viewBox
+}
+
+function createTables(properties) {
+    let container = document.createElement("div")
+    for (let key in properties) {
+        let table = createTable(properties[key])
+        container.appendChild(createDetails(key, table))
+    }
+    return container
 }
 
 function createViewTable(properties) {
@@ -22,9 +32,8 @@ function createViewTable(properties) {
     table.className = "view-table"
     let tbody = document.createElement("tbody")
     table.appendChild(tbody)
-    let fields = properties["fields"]
-    let keys = Object.keys(fields)
-    for (let key in keys) {
+    let fields = properties.fields
+    for (let key in fields) {
         let tr = document.createElement("tr")
         let tdLabel = document.createElement("td")
         tdLabel.className = "view-label-td"
@@ -34,9 +43,9 @@ function createViewTable(properties) {
         tbody.appendChild(tr)
         let label = document.createElement("div")
         label.className = "view-label"
-        label.textContent = fields[keys[key]].name
+        label.textContent = fields[key].name
         tdLabel.appendChild(label)
-        tdItem.appendChild(createField(fields[keys[key]]))
+        tdItem.appendChild(createField(fields[key]))
     }
     return table
 }
@@ -66,6 +75,7 @@ function createField(fieldProperties) {
 function createViewList(item, fieldProperties) {
     item.className = "view-list"
     let list = fieldProperties.list
+    if ("converter" in fieldProperties) list = list.map(fieldProperties.converter)
     for (let i in list) {
         item.appendChild(createViewListItem(fieldProperties, list[i]))
     }
@@ -86,7 +96,7 @@ function createViewListItem(fieldProperties, listObject) {
     label.textContent = listObject.name
     if ("onReference" in fieldProperties) {
         label.className = "view-reference"
-        label.onclick = () => { fieldProperties.onReference(listObject.id) }
+        label.onclick = () => { fieldProperties.onReference(listObject.referenceId) }
     }
     listItem.appendChild(label)
     let remove = document.createElement("div")
@@ -99,8 +109,8 @@ function createViewListItem(fieldProperties, listObject) {
     return listItem
 }
 
-function createList(name, obj, list, removeUrl, formCreateFunction, converter) {
-    return {
+function createList(name, obj, list, removeUrl, formCreateFunction, converter, onReference) {
+    let property = {
         "type": "list",
         "name": name,
         "list": list,
@@ -110,9 +120,11 @@ function createList(name, obj, list, removeUrl, formCreateFunction, converter) {
         "plus": (toSendData) => {
             let parent = document.getElementsByTagName("body")[0]
             parent.appendChild(formCreateFunction(obj, toSendData))
-        },
-        "converter": converter
+        }
     }
+    if (converter !== undefined) property["converter"] = converter
+    if (onReference !== undefined) property["onReference"] = onReference
+    return property
 }
 
 function createReference(name, value, obj, functionName) {

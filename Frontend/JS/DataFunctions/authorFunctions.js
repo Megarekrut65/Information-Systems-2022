@@ -69,9 +69,44 @@ function createAuthorFormUpdate(id) {
     return createAuthorForm("Update the author", get(URLS.author, { "id": id }), updateFunction(id, URLS.author), (data) => {})
 }
 
+function createAuthorView(obj) {
+    const nameKey = "name",
+        dateOfBirthKey = "dateOfBirth",
+        dateOfDeathKey = "dateOfDeath"
+    return createObjectView({
+        "title": "Author",
+        "fields": {
+            [nameKey]: {
+                "type": "text",
+                "name": "Name",
+                "value": obj[nameKey]
+            },
+            [dateOfBirthKey]: {
+                "type": "text",
+                "name": "Date of birth",
+                "value": obj[dateOfBirthKey]
+            },
+            [dateOfDeathKey]: {
+                "type": "text",
+                "name": "Date of death",
+                "value": obj[dateOfDeathKey]
+            }
+        },
+        "edit": () => {
+            addToBody(createAuthorForm("Update the author", obj, updateReloadFunction(obj.id, URLS.author)))
+        },
+        "tables": {
+            "Books": booksToTableProperties(get(URLS.authorshipByAuthor, { "author-id": obj.id }).map(item => item.book))
+        }
+    })
+}
+
 function getAuthorsForTable(bookTitle, authorName) {
-    return get(URLS.authorsByAll, { "author-name": authorName, "book-title": bookTitle })
-        .sort((a, b) => a.name.localeCompare(b.name))
+    return authorsToTableProperties(get(URLS.authorsByAll, { "author-name": authorName, "book-title": bookTitle }))
+}
+
+function authorsToTableProperties(authors) {
+    return authors.sort((a, b) => a.name.localeCompare(b.name))
         .map(obj => {
             return {
                 "Id": obj.id,

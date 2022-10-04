@@ -38,21 +38,14 @@ function getMonthStatisticsForTable(minDate, maxDate) {
 }
 
 function createMonthStatisticView(statistic) {
-    let viewBox = document.createElement("div")
-    viewBox.className = "view-box"
-    let title = document.createElement("div")
-    viewBox.appendChild(title)
-    title.className = "view-title"
-    title.textContent = "Statistic for " + getMonthYearDate(statistic.monthDate)
     let startDate = new Date(statistic.monthDate)
     startDate.setDate(1)
     let endDate = statistic.monthDate
-    viewBox.appendChild(createMonthStatisticPart("Deliveries", getDeliveriesForTable('', getTextDate(startDate), endDate)))
-    viewBox.appendChild(createMonthStatisticPart("Borrowings", getBookBorrowingsForTable('', '', getTextDate(startDate), endDate)))
-    return viewBox
-}
-
-function createMonthStatisticPart(title, properties) {
-    let table = createTable(properties)
-    return createDetails(title, table)
+    return createObjectView({
+        "title": "Statistic for " + getMonthYearDate(statistic.monthDate),
+        "tables": {
+            "Deliveries": getDeliveriesForTable('', getTextDate(startDate), endDate),
+            "Borrowings": getBookBorrowingsForTable('', '', getTextDate(startDate), endDate)
+        }
+    })
 }

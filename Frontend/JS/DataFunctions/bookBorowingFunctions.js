@@ -128,7 +128,12 @@ function getBookBorrowingsForTable(bookTitle, customerName, minDate, maxDate) {
         .map(obj => {
             return {
                 "Id": obj.id,
-                "Borrowing date": obj.dateOfBorrowing,
+                "Borrowing date": {
+                    "text": obj.dateOfBorrowing,
+                    "id": obj.id,
+                    "object": "BookBorrowing",
+                    "type": "reference"
+                },
                 "Estimated return date": obj.estimatedDateOfReturn,
                 "Actual return date": obj.actualDateOfReturn,
                 "Book": {

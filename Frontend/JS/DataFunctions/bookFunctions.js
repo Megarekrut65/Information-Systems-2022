@@ -111,15 +111,15 @@ function createBookView(obj) {
                 "name": "Title",
                 "value": obj[titleKey]
             },
-            [bookGenreKey]: createList("Genres", obj, get(URLS.bookGenreByBook, { "book-id": obj["id"] }).map(item => {
-                return { "name": item.genre.name, "id": item.id }
-            }), URLS.bookGenre, createBookGenreFormCreate, (data) => { return { "id": data.id, "name": data.genre.name } }),
-            [bookTagKey]: createList("Tags", obj, get(URLS.bookTagByBook, { "book-id": obj["id"] }).map(item => {
-                return { "name": item.tag.name, "id": item.id }
-            }), URLS.bookTag, createBookTagFormCreate, (data) => { return { "id": data.id, "name": data.tag.name } }),
-            [authorshipKey]: createList("Authorship", obj, get(URLS.authorshipByBook, { "book-id": obj["id"] }).map(item => {
-                return { "name": item.author.name + " - " + item.authorRole, "id": item.id }
-            }), URLS.authorship, createAuthorshipFormCreate, (data) => { return { "id": data.id, "name": data.author.name + " - " + data.authorRole } }),
+            [bookGenreKey]: createList("Genres", obj, get(URLS.bookGenreByBook, { "book-id": obj["id"] }),
+                URLS.bookGenre, createBookGenreFormCreate, data => { return { "id": data.id, "name": data.genre.name } }),
+            [bookTagKey]: createList("Tags", obj, get(URLS.bookTagByBook, { "book-id": obj["id"] }),
+                URLS.bookTag, createBookTagFormCreate, data => { return { "id": data.id, "name": data.tag.name } }),
+            [authorshipKey]: createList("Authorship", obj, get(URLS.authorshipByBook, { "book-id": obj["id"] }),
+                URLS.authorship, createAuthorshipFormCreate,
+                data => { return { "id": data.id, "name": data.author.name + " - " + data.authorRole, "referenceId": data.author.id } },
+                id => openNewPage(id, "Author")
+            ),
             [publishingHouseIdKey]: createReference("Publishing house", obj[publishingHouseKey]["name"],
                 obj[publishingHouseKey], "PublishingHouse"),
             [publishYearKey]: {
@@ -140,8 +140,11 @@ function createBookView(obj) {
 }
 
 function getBooksForTable(title, genre, tag, author) {
-    return get(URLS.booksByAll, { "title": title, "genre-name": genre, "tag-name": tag, "author-name": author })
-        .sort((a, b) => a.title.localeCompare(b.title))
+    return booksToTableProperties(get(URLS.booksByAll, { "title": title, "genre-name": genre, "tag-name": tag, "author-name": author }))
+}
+
+function booksToTableProperties(books) {
+    return books.sort((a, b) => a.title.localeCompare(b.title))
         .map(obj => {
             return {
                 "Id": obj.id,
