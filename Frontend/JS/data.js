@@ -45,6 +45,9 @@ const URLS = {
     bookWriteOff: SERVER_URL + "/book-write-off",
     bookWriteOffs: SERVER_URL + "/book-write-offs",
     bookWriteOffsByAll: SERVER_URL + "/book-write-offs/by-all",
+    bookLost: SERVER_URL + "/book-lost",
+    bookLosts: SERVER_URL + "/book-losts",
+    bookLostsByAll: SERVER_URL + "/book-losts/by-all",
 }
 const indexProperties = [
     { "title": "Book management", "img": "../Images/book.png", "list": ["View books", "Search books", "Add new books", "Borrow books"], "location": "book.html" },

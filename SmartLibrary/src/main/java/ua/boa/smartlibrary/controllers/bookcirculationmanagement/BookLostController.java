@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ua.boa.smartlibrary.Utilities;
 import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.BookLost;
+import ua.boa.smartlibrary.services.bookcirculationmanagement.BookLostSearchService;
 import ua.boa.smartlibrary.services.bookcirculationmanagement.BookLostService;
 
 import java.util.List;
@@ -15,6 +16,8 @@ import java.util.List;
 public class BookLostController {
     @Autowired
     private BookLostService service;
+    @Autowired
+    private BookLostSearchService bookLostSearchService;
 
     @RequestMapping(value = "/book-lost", method = RequestMethod.POST)
     public BookLost create(@RequestParam("book-count") String bookCount, @RequestParam("book-id") String bookId,
@@ -60,5 +63,12 @@ public class BookLostController {
     @RequestMapping(value = "/book-lost", method = RequestMethod.GET)
     public BookLost get(@RequestParam("id") String id) {
         return service.get(Integer.parseInt(id));
+    }
+    @RequestMapping(value = "/book-losts/by-all", method = RequestMethod.GET)
+    public List<BookLost> searchByAll(@RequestParam("book-title") String bookTitle,
+                                      @RequestParam("date-of-loss-min") String dateOfLossMin,
+                                      @RequestParam("date-of-loss-max") String dateOfLossMax) {
+        return bookLostSearchService.findBookLostsByAll(bookTitle, Utilities.getDate(dateOfLossMin),
+                Utilities.getDate(dateOfLossMax));
     }
 }
