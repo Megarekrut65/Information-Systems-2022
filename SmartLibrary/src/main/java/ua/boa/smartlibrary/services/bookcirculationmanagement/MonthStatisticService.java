@@ -32,12 +32,12 @@ public class MonthStatisticService {
         int count = bookDelivery.getBookCount();
         for (MonthStatistic statistic : toChange) {
             int newAvailable = statistic.getBooksAvailableCount() + count;
-            if (newAvailable < 0) throw new BadDatabaseOperationException("Can't change delivery date " +
-                    "because available book count will be < 0");
+//            if (newAvailable < 0) throw new BadDatabaseOperationException("Can't change delivery date " +
+//                    "because available book count will be < 0");
             statistic.setBooksAvailableCount(newAvailable);
             int newTotal = statistic.getBooksTotalCount() + count;
-            if (newTotal < 0) throw new BadDatabaseOperationException("Can't change delivery date " +
-                    "because total book count will be < 0");
+//            if (newTotal < 0) throw new BadDatabaseOperationException("Can't change delivery date " +
+//                    "because total book count will be < 0");
             statistic.setBooksTotalCount(newTotal);
             statistic.setBooksPurchasingCount(statistic.getBooksPurchasingCount() + count);
         }

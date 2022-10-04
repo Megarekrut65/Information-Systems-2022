@@ -37,12 +37,12 @@ public class BookInfoService {
         BookInfo bookInfo = get(bookDelivery.getBook().getBookInfo().getId());
         int count = bookDelivery.getBookCount();
         int newTotal = bookInfo.getTotalCount() + count;
-        if (newTotal < 0) throw new BadDatabaseOperationException("Can't change delivery date " +
-                "because total book count will be < 0");
+//        if (newTotal < 0) throw new BadDatabaseOperationException("Can't change delivery date " +
+//                "because total book count will be < 0");
         bookInfo.setTotalCount(newTotal);
         int newAvailable = bookInfo.getAvailableCount() + count;
-        if (newAvailable < 0) throw new BadDatabaseOperationException("Can't change delivery date " +
-                "because available book count will be < 0");
+//        if (newAvailable < 0) throw new BadDatabaseOperationException("Can't change delivery date " +
+//                "because available book count will be < 0");
         bookInfo.setAvailableCount(newAvailable);
         bookInfo.setPurchasingCount(bookInfo.getPurchasingCount() + count);
         return repository.save(bookInfo);

@@ -70,6 +70,30 @@ function createDeliveryFormUpdate(id) {
         updateFunction(id, URLS.delivery), (data) => {})
 }
 
+function createDeliveryView(obj) {
+    const dateOfDeliveryObjectKey = "dateOfDelivery",
+        distributorKey = "distributor"
+    return createObjectView({
+        "title": "Delivery",
+        "fields": {
+            [dateOfDeliveryObjectKey]: {
+                "type": "text",
+                "name": "Date of delivery",
+                "value": obj[dateOfDeliveryObjectKey]
+            },
+            [distributorKey]: createReference("Distributor", obj[distributorKey].name,
+                obj[distributorKey], "Distributor")
+        },
+        "edit": () => {
+            addToBody(createDeliveryForm("Update the delivery", obj, updateReloadFunction(obj.id, URLS.delivery)))
+        },
+        "tables": {
+            "Book deliveries": bookDeliveriesToTableProperties(
+                get(URLS.bookDeliveriesByDelivery, { "delivery-id": obj.id }))
+        }
+    })
+}
+
 function getDeliveriesForTable(distributorName, minDate, maxDate) {
     return get(URLS.deliveriesByAll, {
             "distributor-name": distributorName,

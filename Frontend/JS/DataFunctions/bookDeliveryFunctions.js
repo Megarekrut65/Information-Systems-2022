@@ -68,13 +68,15 @@ function createBookDeliveryForm(title, obj, action, toSendData) {
                 "type": "number",
                 "value": bookCountDeliveryKey in obj ? obj[bookCountDeliveryKey] : "",
                 "required": true,
-                "name": "Book count"
+                "name": "Book count",
+                "min": 1
             },
             [bookPriceKey]: {
                 "type": "number",
                 "value": bookPriceDeliveryKey in obj ? obj[bookPriceDeliveryKey] : "",
                 "required": true,
-                "name": "Book price"
+                "name": "Book price",
+                "min": 1
             }
         },
         "ok": () => {
@@ -95,4 +97,37 @@ function createBookDeliveryFormCreate(toSendData) {
 function createBookDeliveryFormUpdate(id) {
     return createBookDeliveryForm("Update the book delivery", get(URLS.bookDelivery, { "id": id }),
         updateFunction(id, URLS.bookDelivery), (data) => {})
+}
+
+function getBooksForTable(title, genre, tag, author) {
+    return booksToTableProperties(get(URLS.booksByAll, { "title": title, "genre-name": genre, "tag-name": tag, "author-name": author }))
+}
+
+function bookDeliveriesToTableProperties(bookDeliveries) {
+    return bookDeliveries.sort((a, b) => a.delivery.dateOfDelivery.localeCompare(b.delivery.dateOfDelivery))
+        .map(obj => {
+            return {
+                "Id": {
+                    "text": obj.id,
+                    "id": obj.id,
+                    "object": "BookDelivery",
+                    "type": "reference"
+                },
+                "Delivery": {
+                    "text": obj.delivery.dateOfDelivery,
+                    "id": obj.delivery.id,
+                    "object": "Delivery",
+                    "type": "reference"
+                },
+                "Book": {
+                    "text": obj.book.title,
+                    "id": obj.book.id,
+                    "object": "Book",
+                    "type": "reference"
+                },
+                "Book count": obj.bookCount,
+                "Book price": obj.bookPrice,
+                "Total price": obj.bookCount * obj.bookPrice
+            }
+        })
 }

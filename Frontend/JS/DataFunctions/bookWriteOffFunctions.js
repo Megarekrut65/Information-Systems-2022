@@ -59,7 +59,8 @@ function createBookWriteOffForm(title, obj, action, toSendData) {
                 "type": "number",
                 "value": bookCountObjectKey in obj ? obj[bookCountObjectKey] : "",
                 "name": "Book count",
-                "required": true
+                "required": true,
+                "min": 1
             }
         },
         "ok": () => {

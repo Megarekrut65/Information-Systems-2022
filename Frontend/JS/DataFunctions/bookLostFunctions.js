@@ -63,7 +63,8 @@ function createBookLostForm(title, obj, action, toSendData) {
                 "type": "number",
                 "value": bookCountObjectKey in obj ? obj[bookCountObjectKey] : "",
                 "required": true,
-                "name": "Book count"
+                "name": "Book count",
+                "min": 1
             },
             [wasReturnedKey]: {
                 "type": "checkbox",
