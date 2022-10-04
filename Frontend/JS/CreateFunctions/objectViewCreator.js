@@ -83,7 +83,8 @@ function createViewList(item, fieldProperties) {
     plus.className = "view-list-item view-list-item-plus"
     plus.onclick = () => {
         fieldProperties.plus((data) => {
-            item.insertBefore(createViewListItem(fieldProperties, fieldProperties.converter(data)), plus)
+            if ("converter" in fieldProperties) data = fieldProperties.converter(data)
+            item.insertBefore(createViewListItem(fieldProperties, data), plus)
         })
     }
     item.appendChild(plus)

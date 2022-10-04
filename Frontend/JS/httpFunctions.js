@@ -42,5 +42,7 @@ function makeParametersUrl(url, obj) {
 
 function normalizeObject(str) {
     if (str === undefined || str === "" || str === null) return ""
-    return JSON.parse(str)
+    let res = JSON.parse(str)
+    if (typeof res === "object" && "trace" in res && res.message === "Bad operation") addToBody(createErrorBox(res.trace.split("!")[0].split(":")[1] + "!"))
+    return res
 }
