@@ -117,6 +117,47 @@ function createBookBorrowingFormUpdate(id, toSendData = (data) => {}) {
         updateFunction(id, URLS.bookBorrowing), toSendData)
 }
 
+function createBookBorrowingView(obj) {
+    const customerIdKey = "customer",
+        bookIdKey = "book",
+        borrowingDateKey = "dateOfBorrowing",
+        estimatedDateKey = "estimatedDateOfReturn",
+        actualDateKey = "actualDateOfReturn",
+        comment = "comment"
+    return createObjectView({
+        "title": "Book borrowing",
+        "fields": {
+            [borrowingDateKey]: {
+                "type": "text",
+                "name": "Date of borrowing",
+                "value": obj[borrowingDateKey]
+            },
+            [estimatedDateKey]: {
+                "type": "text",
+                "name": "Estimated date of return",
+                "value": obj[estimatedDateKey]
+            },
+            [actualDateKey]: {
+                "type": "text",
+                "name": "Actual date of return",
+                "value": obj[actualDateKey]
+            },
+            [customerIdKey]: createReference("Customer", obj[customerIdKey].name,
+                obj[customerIdKey], "Customer"),
+            [bookIdKey]: createReference("Book", obj[bookIdKey].title,
+                obj[bookIdKey], "Book"),
+            [comment]: {
+                "type": "text",
+                "name": "Comment",
+                "value": obj[comment]
+            }
+        },
+        "edit": () => {
+            addToBody(createBookBorrowingForm("Update the book borrowing", obj, updateReloadFunction(obj.id, URLS.bookBorrowing)))
+        }
+    })
+}
+
 function getBookBorrowingsForTable(bookTitle, customerName, minDate, maxDate) {
     return get(URLS.bookBorrowingsByAll, {
             "book-title": bookTitle,
