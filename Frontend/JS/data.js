@@ -42,6 +42,9 @@ const URLS = {
     monthStatistics: SERVER_URL + "/month-statistics",
     monthStatisticsByPeriod: SERVER_URL + "/month-statistics/by-month-date-period",
     bookDeliveriesByDelivery: SERVER_URL + "/book-deliveries/by-delivery-id",
+    bookWriteOff: SERVER_URL + "/book-write-off",
+    bookWriteOffs: SERVER_URL + "/book-write-offs",
+    bookWriteOffsByAll: SERVER_URL + "/book-write-offs/by-all",
 }
 const indexProperties = [
     { "title": "Book management", "img": "../Images/book.png", "list": ["View books", "Search books", "Add new books", "Borrow books"], "location": "book.html" },

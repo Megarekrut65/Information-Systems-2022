@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ua.boa.smartlibrary.Utilities;
 import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.BookWriteOff;
+import ua.boa.smartlibrary.services.bookcirculationmanagement.BookWriteOffSearchService;
 import ua.boa.smartlibrary.services.bookcirculationmanagement.BookWriteOffService;
 
 import java.util.List;
@@ -15,6 +16,8 @@ import java.util.List;
 public class BookWriteOffController {
     @Autowired
     private BookWriteOffService service;
+    @Autowired
+    private BookWriteOffSearchService bookWriteOffSearchService;
 
     @RequestMapping(value = "/book-write-off", method = RequestMethod.POST)
     public BookWriteOff create(@RequestParam("date-of-write-off") String dateOfWriteOff,
@@ -56,5 +59,12 @@ public class BookWriteOffController {
     @RequestMapping(value = "/book-write-off", method = RequestMethod.GET)
     public BookWriteOff get(@RequestParam("id") String id) {
         return service.get(Integer.parseInt(id));
+    }
+    @RequestMapping(value = "/book-write-offs/by-all", method = RequestMethod.GET)
+    public List<BookWriteOff> searchByAll(@RequestParam("date-of-write-off-min") String dateOfWriteOffMin,
+                                          @RequestParam("date-of-write-off-max") String dateOfWriteOffMax,
+                                          @RequestParam("book-title") String bookTitle) {
+        return bookWriteOffSearchService.findBookWriteOffsByAll(bookTitle, Utilities.getDate(dateOfWriteOffMin),
+                Utilities.getDate(dateOfWriteOffMax));
     }
 }

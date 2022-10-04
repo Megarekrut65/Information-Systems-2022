@@ -45,7 +45,8 @@ function createMonthStatisticView(statistic) {
         "title": "Statistic for " + getMonthYearDate(statistic.monthDate),
         "tables": {
             "Deliveries": getDeliveriesForTable('', getTextDate(startDate), endDate),
-            "Borrowings": getBookBorrowingsForTable('', '', getTextDate(startDate), endDate)
+            "Borrowings": getBookBorrowingsForTable('', '', getTextDate(startDate), endDate),
+            "Write-offs": getBookWriteOffsForTable('', getTextDate(startDate), endDate)
         }
     })
 }

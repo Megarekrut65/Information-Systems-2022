@@ -25,3 +25,110 @@ function findBookWriteOffsByBook(bookId) {
 function getBookWriteOff(id) {
     return get(SERVER_URL + "/book-write-off", { "id": id })
 }
+
+function createBookWriteOffForm(title, obj, action, toSendData) {
+    const bookIdKey = "book-id",
+        dateOfWriteOffKey = "date-of-write-off",
+        bookCountKey = "book-count"
+    const bookKey = "book",
+        writeOffKey = "dateOfWriteOff",
+        bookCountObjectKey = "bookCount"
+    return createForm({
+        "title": title,
+        "inputs": {
+            [bookIdKey]: {
+                "type": "list",
+                "name": "Book",
+                "value": bookKey in obj ? obj[bookKey]["id"] : "",
+                "required": true,
+                "list": getAll(URLS.books),
+                "convector": item => {
+                    return { "name": item.title, "id": item.id }
+                },
+                "plus": (convector) => {
+                    addOptionToList(createBookFormCreate, bookIdKey, convector)
+                }
+            },
+            [dateOfWriteOffKey]: {
+                "type": "date",
+                "value": writeOffKey in obj ? obj[writeOffKey] : getToday(),
+                "required": true,
+                "name": "Date of write-off"
+            },
+            [bookCountKey]: {
+                "type": "number",
+                "value": bookCountObjectKey in obj ? obj[bookCountObjectKey] : "",
+                "name": "Book count"
+            }
+        },
+        "ok": () => {
+            toSendData(action({
+                [bookIdKey]: getDataFromList(bookIdKey),
+                [dateOfWriteOffKey]: normalize(document.getElementById(dateOfWriteOffKey).value),
+                [bookCountKey]: document.getElementById(bookCountKey).value
+            }))
+        }
+    })
+}
+
+function createBookWriteOffFormCreate(toSendData) {
+    return createBookWriteOffForm("Write off book", {}, createFunction(URLS.bookWriteOff), toSendData)
+}
+
+function createBookWriteOffFormUpdate(id, toSendData = (data) => {}) {
+    return createBookWriteOffForm("Update the book write-off", get(URLS.bookWriteOff, { "id": id }),
+        updateFunction(id, URLS.bookWriteOff), toSendData)
+}
+
+function createBookWriteOffView(obj) {
+    const bookKey = "book",
+        writeOffKey = "dateOfWriteOff",
+        bookCountObjectKey = "bookCount"
+    return createObjectView({
+        "title": "Book write-off",
+        "fields": {
+            [writeOffKey]: {
+                "type": "text",
+                "name": "Date of write-off",
+                "value": obj[writeOffKey]
+            },
+            [bookKey]: createReference("Book", obj[bookKey].title,
+                obj[bookKey], "Book"),
+            [bookCountObjectKey]: {
+                "type": "text",
+                "name": "Book count",
+                "value": obj[bookCountObjectKey]
+            }
+        },
+        "edit": () => {
+            addToBody(createBookWriteOffForm("Update the book write-off", obj, updateReloadFunction(obj.id, URLS.bookWriteOff)))
+        }
+    })
+}
+
+function getBookWriteOffsForTable(bookTitle, minDate, maxDate) {
+    return get(URLS.bookWriteOffsByAll, {
+            "book-title": bookTitle,
+            "date-of-write-off-min": minDate,
+            "date-of-write-off-max": maxDate
+        })
+        .sort((a, b) => b.dateOfWriteOff.localeCompare(a.dateOfWriteOff))
+        .map(obj => {
+            return {
+                "Id": obj.id,
+                "Write-off date": {
+                    "text": obj.dateOfWriteOff,
+                    "id": obj.id,
+                    "object": "BookWriteOff",
+                    "type": "reference"
+                },
+                "Book": {
+                    "text": obj.book.title,
+                    "id": obj.book.id,
+                    "object": "Book",
+                    "type": "reference"
+                },
+                "Book count": obj.bookCount
+            }
+        })
+}
