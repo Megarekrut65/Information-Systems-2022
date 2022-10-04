@@ -34,6 +34,7 @@ function createViewTable(properties) {
     table.appendChild(tbody)
     let fields = properties.fields
     for (let key in fields) {
+        if (typeof fields[key] !== "object") fields[key] = { "value": fields[key], "type": "text", "name": key }
         let tr = document.createElement("tr")
         let tdLabel = document.createElement("td")
         tdLabel.className = "view-label-td"

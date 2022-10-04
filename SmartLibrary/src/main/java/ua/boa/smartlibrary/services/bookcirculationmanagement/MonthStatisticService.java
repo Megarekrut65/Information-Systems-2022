@@ -159,7 +159,12 @@ public class MonthStatisticService {
             return repository.findMonthStatisticsByMonthDateLessThanEqual(monthDateMax);
         return repository.getAllOrdered();
     }
-
+    public MonthStatistic findClosestStatisticByDate(Date monthDate) {
+        List<MonthStatistic> closestStatistics = repository.findClosestMonthStatistics(monthDate);
+        return closestStatistics.size() > 0
+                ? closestStatistics.get(0)
+                : new MonthStatistic(monthDate);
+    }
     public MonthStatistic get(Integer id) {
         Optional<MonthStatistic> optional = repository.findById(id);
         if (optional.isEmpty()) throw new MonthStatisticNotFoundException(id);

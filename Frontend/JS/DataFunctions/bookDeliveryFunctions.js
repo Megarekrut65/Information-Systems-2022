@@ -41,7 +41,7 @@ function createBookDeliveryForm(title, obj, action, toSendData) {
             [deliveryIdKey]: {
                 "type": "list",
                 "name": "Delivery",
-                "value": deliveryKey in obj ? obj[deliveryKey] : "",
+                "value": deliveryKey in obj ? obj[deliveryKey]["id"] : "",
                 "required": true,
                 "list": getAll(URLS.deliveries),
                 "convector": item => {
@@ -97,6 +97,40 @@ function createBookDeliveryFormCreate(toSendData) {
 function createBookDeliveryFormUpdate(id) {
     return createBookDeliveryForm("Update the book delivery", get(URLS.bookDelivery, { "id": id }),
         updateFunction(id, URLS.bookDelivery), (data) => {})
+}
+
+function createBookDeliveryView(obj) {
+    const deliveryKey = "delivery",
+        bookKey = "book",
+        bookCountDeliveryKey = "bookCount",
+        bookPriceDeliveryKey = "bookPrice"
+    return createObjectView({
+        "title": "Book delivery",
+        "fields": {
+            [deliveryKey]: createReference("Delivery", obj[deliveryKey].dateOfDelivery,
+                obj[deliveryKey], "Delivery"),
+            [bookKey]: createReference("Book", obj[bookKey].title,
+                obj[bookKey], "Book"),
+            [bookCountDeliveryKey]: {
+                "type": "text",
+                "name": "Book count",
+                "value": obj[bookCountDeliveryKey]
+            },
+            [bookPriceDeliveryKey]: {
+                "type": "text",
+                "name": "Book price",
+                "value": obj[bookPriceDeliveryKey]
+            },
+            ["totalPrice"]: {
+                "type": "text",
+                "name": "Total price",
+                "value": obj[bookCountDeliveryKey] * obj[bookPriceDeliveryKey]
+            }
+        },
+        "edit": () => {
+            addToBody(createBookDeliveryForm("Update the book delivery", obj, updateReloadFunction(obj.id, URLS.bookDelivery)))
+        }
+    })
 }
 
 function getBooksForTable(title, genre, tag, author) {

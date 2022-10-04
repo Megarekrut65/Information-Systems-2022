@@ -41,6 +41,7 @@ const URLS = {
     customers: SERVER_URL + "/customers",
     customersByAll: SERVER_URL + "/customers/by-all",
     monthStatistic: SERVER_URL + "/month-statistic",
+    monthStatisticClosest: SERVER_URL + "/month-statistic/closest-statistic/by-month-date",
     monthStatistics: SERVER_URL + "/month-statistics",
     monthStatisticsByPeriod: SERVER_URL + "/month-statistics/by-month-date-period",
     bookWriteOff: SERVER_URL + "/book-write-off",

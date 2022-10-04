@@ -66,3 +66,33 @@ function createDistributorFormUpdate(id) {
     return createDistributorForm("Update the distributor", get(URLS.distributor, { "id": id }),
         updateFunction(id, URLS.distributor), (data) => {})
 }
+
+function createDistributorView(obj) {
+    const nameKey = "name",
+        phoneKey = "phoneNumber",
+        address = "address"
+    return createObjectView({
+        "title": "Distributor",
+        "fields": {
+            [nameKey]: {
+                "type": "text",
+                "name": "Name",
+                "value": obj[nameKey]
+            },
+            [phoneKey]: {
+                "type": "text",
+                "name": "Phone number",
+                "value": obj[phoneKey]
+            },
+            [address]: {
+                "type": "text",
+                "name": "Address",
+                "value": obj[address]
+            }
+        },
+        "edit": () => {
+            addToBody(createDistributorForm("Update the distributor", obj,
+                updateReloadFunction(obj.id, URLS.distributor)))
+        }
+    })
+}

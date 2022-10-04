@@ -38,11 +38,28 @@ function getMonthStatisticsForTable(minDate, maxDate) {
 }
 
 function createMonthStatisticView(statistic) {
+    let prevDate = new Date(statistic.monthDate)
+    prevDate.setDate(0)
+    let prevMonth = get(URLS.monthStatisticClosest, {
+        "month-date": getTextDate(prevDate)
+    })
     let startDate = new Date(statistic.monthDate)
     startDate.setDate(1)
     let endDate = statistic.monthDate
     return createObjectView({
         "title": "Statistic for " + getMonthYearDate(statistic.monthDate),
+        "fields": {
+            "Book total count": statistic.booksTotalCount,
+            "Book available count": statistic.booksAvailableCount,
+            "Book purchasing count": statistic.booksPurchasingCount,
+            "Book borrowing count": statistic.booksBorrowingCount,
+            "Book write-off count": statistic.booksWriteOffCount,
+            "Book lost count": statistic.booksLostCount,
+            "Purchased": statistic.booksPurchasingCount - prevMonth.booksPurchasingCount,
+            "Borrowed": statistic.booksBorrowingCount - prevMonth.booksBorrowingCount,
+            "Write-offed": statistic.booksWriteOffCount - prevMonth.booksWriteOffCount,
+            "Lost": statistic.booksLostCount - prevMonth.booksLostCount
+        },
         "tables": {
             "Deliveries": getDeliveriesForTable('', getTextDate(startDate), endDate),
             "Borrowings": getBookBorrowingsForTable('', '', getTextDate(startDate), endDate),
