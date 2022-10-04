@@ -101,8 +101,9 @@ function createAuthorView(obj) {
     })
 }
 
-function getAuthorsForTable(bookTitle, authorName) {
-    return authorsToTableProperties(get(URLS.authorsByAll, { "author-name": authorName, "book-title": bookTitle }))
+function getAuthorsForTable(item) {
+    item = normalizeItem(item, ["name", "title"])
+    return authorsToTableProperties(get(URLS.authorsByAll, { "author-name": item.name, "book-title": item.title }))
 }
 
 function authorsToTableProperties(authors) {
@@ -124,4 +125,31 @@ function authorsToTableProperties(authors) {
                 }
             }
         })
+}
+
+function createAuthorsSearch(createTable, formCreate) {
+    return {
+        "inputs": {
+            "name": {
+                "type": "text",
+                "placeholder": "Author name..."
+            },
+            "title": {
+                "type": "text",
+                "placeholder": "Books title..."
+            }
+        },
+        "createTable": createTable,
+        "formCreate": formCreate,
+        "title": "Authors"
+    }
+}
+
+function createAuthorFunction(toSendData) {
+    return {
+        "buttons": {
+            "Add authorship": createAuthorshipFormCreate
+        },
+        "toSendData": toSendData
+    }
 }

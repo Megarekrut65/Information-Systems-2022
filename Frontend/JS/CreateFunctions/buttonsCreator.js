@@ -1,5 +1,6 @@
 function createAddToBodyButtons(properties) {
     let div = document.createElement("div")
+    if (properties === null) return div
     let titleDiv = document.createElement("div")
     titleDiv.textContent = "Functions"
     titleDiv.className = "h-style"

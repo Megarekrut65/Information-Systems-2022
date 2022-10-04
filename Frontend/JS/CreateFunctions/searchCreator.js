@@ -32,6 +32,7 @@ function createSearchInputs(container, inputs) {
         input.className = "search-input"
         input.value = ""
         input.id = key + "-input"
+        input.type = inputs[key].type
         if ("placeholder" in inputs[key]) input.placeholder = inputs[key].placeholder
         container.appendChild(input)
     }
@@ -45,7 +46,7 @@ function createButtons(container, properties) {
         clearSearchInputs(properties.inputs)
         properties.createTable(getSearchResult(properties.inputs))
     }))
-    container.appendChild(createSearchButton("../../Images/add.png", "Add", () => {
+    if ("formCreate" in properties) container.appendChild(createSearchButton("../../Images/add.png", "Add", () => {
         addToBody(properties.formCreate(data =>
             properties.createTable(getSearchResult(properties.inputs))
         ))

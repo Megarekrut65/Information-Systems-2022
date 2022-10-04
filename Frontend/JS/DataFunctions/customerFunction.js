@@ -148,8 +148,9 @@ function createCustomerView(obj) {
     })
 }
 
-function getCustomersForTable(name, phoneNumber, email) {
-    return get(URLS.customersByAll, { "name": name, "phone-number": phoneNumber, "email": email })
+function getCustomersForTable(item) {
+    item = normalizeItem(item, ["name", "phone", "email"])
+    return get(URLS.customersByAll, { "name": item.name, "phone-number": item.phone, "email": item.email })
         .sort((a, b) => a.name.localeCompare(b.name))
         .map(obj => {
             return {
@@ -166,4 +167,36 @@ function getCustomersForTable(name, phoneNumber, email) {
                 "Birth date": obj.dateOfBirth
             }
         })
+}
+
+function createCustomersSearch(createTable, formCreate) {
+    return {
+        "inputs": {
+            "name": {
+                "type": "text",
+                "placeholder": "Customer name..."
+            },
+            "phone": {
+                "type": "text",
+                "placeholder": "Phone number..."
+            },
+            "email": {
+                "type": "text",
+                "placeholder": "Email..."
+            }
+        },
+        "createTable": createTable,
+        "formCreate": formCreate,
+        "title": "Customers"
+    }
+}
+
+function createCustomerFunction(toSendData) {
+    return {
+        "buttons": {
+            "Borrow book": createBookBorrowingFormCreate,
+            "Return book": createBookReturnCustomerFormCreate
+        },
+        "toSendData": toSendData
+    }
 }

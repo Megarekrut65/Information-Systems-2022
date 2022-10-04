@@ -5,12 +5,15 @@
     <title>Smart Library - Statistics</title>
     <link rel="shortcut icon" href="../Images/library.png" type="image/png">
     <link rel="stylesheet" type="text/css" href="../CSS/styles.css">
-    <link rel="stylesheet" type="text/css" href="../CSS/managementStyles.css">
+    <link rel="stylesheet" type="text/css" href="../CSS/creatingStyles.css">
     <link rel="stylesheet" type="text/css" href="../CSS/formStyles.css">
     <link rel="stylesheet" type="text/css" href="../CSS/errorStyles.css">
     <script src="../JS/PageFunctions/statistic.js"></script>
     <script src="../JS/CreateFunctions/tableCreator.js"></script>
     <script src="../JS/CreateFunctions/formCreator.js"></script>
+    <script src="../JS/CreateFunctions/pageCreator.js"></script>
+    <script src="../JS/CreateFunctions/buttonsCreator.js"></script>
+    <script src="../JS/CreateFunctions/searchCreator.js"></script>
     <script src="../JS/CreateFunctions/errorBoxCreator.js"></script>
     <script src="../JS/httpFunctions.js"></script>
     <script src="../JS/data.js"></script>
@@ -23,23 +26,11 @@
     <script src="../JS/DataFunctions/monthStatisticFunctions.js"></script>
 </head>
 
-<body onload="addTableToPage('table', getMonthStatisticsForTable(null, null)); return false;">
+<body onload="loadObjectPage('content', 'MonthStatistic', 'MonthStatistics')">
     <div class="header" onclick="window.location='index.html'; return false;">
         Smart Library
     </div>
     <div class="content" id="content">
-        <div>
-            <div class="h-style">Statistic</div>
-            <div class="search-style">
-                <label class="label-style">Begin</label>
-                <input type="date" class="search-input" id="input-min">
-                <label class="label-style">End</label>
-                <input type="date" class="search-input" id="input-max">
-                <img src="../Images/search.png" class="button-img" onclick="findButton(); return false" title="Search">
-                <img src="../Images/clear.png" class="button-img" onclick="clearButton(); return false;" title="Clear">
-            </div>
-            <div id="table"></div>
-        </div>
     </div>
 
 </body>

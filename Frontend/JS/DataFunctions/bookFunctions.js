@@ -205,7 +205,8 @@ function createBooksSearch(createTable, formCreate) {
             }
         },
         "createTable": createTable,
-        "formCreate": formCreate
+        "formCreate": formCreate,
+        "title": "Books"
     }
 }
 

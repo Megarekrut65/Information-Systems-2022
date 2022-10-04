@@ -15,8 +15,9 @@ function getMonthYearDate(date) {
     return d.toLocaleString('en-GB', { month: 'long' }) + " " + d.getFullYear()
 }
 
-function getMonthStatisticsForTable(minDate, maxDate) {
-    return get(URLS.monthStatisticsByPeriod, { "month-date-min": minDate, "month-date-max": maxDate })
+function getMonthStatisticsForTable(item) {
+    item = normalizeItem(item, ["min", "max"])
+    return get(URLS.monthStatisticsByPeriod, { "month-date-min": item.min, "month-date-max": item.max })
         .sort((a, b) => b.monthDate.localeCompare(a.monthDate))
         .map(obj => {
             return {
@@ -67,4 +68,25 @@ function createMonthStatisticView(statistic) {
             "Losts": getBookLostsForTable('', getTextDate(startDate), endDate)
         }
     })
+}
+
+function createMonthStatisticsSearch(createTable, formCreate) {
+    return {
+        "inputs": {
+            "min": {
+                "type": "date",
+                "label": "Begin"
+            },
+            "max": {
+                "type": "date",
+                "label": "End"
+            }
+        },
+        "createTable": createTable,
+        "title": "Statistics"
+    }
+}
+
+function createMonthStatisticFunction(toSendData) {
+    return null
 }
