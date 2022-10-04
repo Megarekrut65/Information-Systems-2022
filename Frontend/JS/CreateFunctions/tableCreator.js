@@ -43,11 +43,6 @@ function createRow(properties, style) {
     return tr
 }
 
-function addTableToPage(parentId, properties) {
-    let parent = document.getElementById(parentId)
-    parent.innerHTML = ''
-    parent.appendChild(createTable(properties))
-}
 
 function makeReference(text, id, object) {
     let div = document.createElement("td")

@@ -133,8 +133,8 @@ function createBookDeliveryView(obj) {
     })
 }
 
-function getBooksForTable(title, genre, tag, author) {
-    return booksToTableProperties(get(URLS.booksByAll, { "title": title, "genre-name": genre, "tag-name": tag, "author-name": author }))
+function getBookDeliveriesForTable(title, genre, tag, author) {
+    return bookDeliveriesToTableProperties(get(URLS.booksByAll, { "title": title, "genre-name": genre, "tag-name": tag, "author-name": author }))
 }
 
 function bookDeliveriesToTableProperties(bookDeliveries) {

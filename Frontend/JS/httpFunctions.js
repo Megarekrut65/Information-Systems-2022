@@ -2,7 +2,7 @@ function getAll(url) {
     let xmlHttpReq = new XMLHttpRequest()
     xmlHttpReq.open("GET", url, false)
     xmlHttpReq.send(null)
-    return normalizeObject(xmlHttpReq.responseText)
+    return normalizeHttpResponse(xmlHttpReq.responseText)
 }
 
 function create(url, obj) {
@@ -17,7 +17,7 @@ function remove(url, id) {
     let xmlHttpReq = new XMLHttpRequest()
     xmlHttpReq.open("DELETE", makeParametersUrl(url, { "id": id }), false)
     xmlHttpReq.send(null)
-    return normalizeObject(xmlHttpReq.responseText)
+    return normalizeHttpResponse(xmlHttpReq.responseText)
 }
 
 function get(url, obj) {
@@ -28,7 +28,7 @@ function getPostPut(url, obj, type) {
     let xmlHttpReq = new XMLHttpRequest()
     xmlHttpReq.open(type, makeParametersUrl(url, obj), false)
     xmlHttpReq.send(null)
-    return normalizeObject(xmlHttpReq.responseText)
+    return normalizeHttpResponse(xmlHttpReq.responseText)
 }
 
 function makeParametersUrl(url, obj) {
@@ -40,7 +40,7 @@ function makeParametersUrl(url, obj) {
     return res.slice(0, -1)
 }
 
-function normalizeObject(str) {
+function normalizeHttpResponse(str) {
     if (str === undefined || str === "" || str === null) return ""
     let res = JSON.parse(str)
     if (typeof res === "object" && "trace" in res && res.message === "Bad operation") addToBody(createErrorBox(res.trace.split("!")[0].split(":")[1] + "!"))

@@ -139,8 +139,14 @@ function createBookView(obj) {
     })
 }
 
-function getBooksForTable(title, genre, tag, author) {
-    return booksToTableProperties(get(URLS.booksByAll, { "title": title, "genre-name": genre, "tag-name": tag, "author-name": author }))
+function getBooksForTable(item) {
+    item = normalizeItem(item, ["title", "genre", "tag", "author"])
+    return booksToTableProperties(get(URLS.booksByAll, {
+        "title": item.title,
+        "genre-name": item.genre,
+        "tag-name": item.tag,
+        "author-name": item.author,
+    }))
 }
 
 function booksToTableProperties(books) {
@@ -176,4 +182,41 @@ function booksToTableProperties(books) {
                 "Publish Year": obj.publishYear
             }
         })
+}
+
+function createBooksSearch(createTable, formCreate) {
+    return {
+        "inputs": {
+            "title": {
+                "type": "text",
+                "placeholder": "Books title..."
+            },
+            "genre": {
+                "type": "text",
+                "placeholder": "Genres name..."
+            },
+            "tag": {
+                "type": "text",
+                "placeholder": "Tags name..."
+            },
+            "author": {
+                "type": "text",
+                "placeholder": "Authors name..."
+            }
+        },
+        "createTable": createTable,
+        "formCreate": formCreate
+    }
+}
+
+function createBookFunction(toSendData) {
+    return {
+        "buttons": {
+            "Add delivery": createBookDeliveryFormCreate,
+            "Write-off book": createBookWriteOffFormCreate,
+            "Add lost book": createBookLostFormCreate,
+            "Borrow book": createBookBorrowingFormCreate,
+        },
+        "toSendData": toSendData
+    }
 }

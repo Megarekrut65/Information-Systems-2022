@@ -51,3 +51,10 @@ function getTextDate(local) {
 function addToBody(obj) {
     document.getElementsByTagName("body")[0].appendChild(obj)
 }
+
+function normalizeItem(item, keys) {
+    for (let i in keys) {
+        if (!(keys[i] in item)) item[keys[i]] = ""
+    }
+    return item
+}
