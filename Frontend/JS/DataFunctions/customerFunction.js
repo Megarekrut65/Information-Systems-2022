@@ -96,6 +96,58 @@ function createCustomerFormUpdate(id) {
         updateFunction(id, URLS.customer), (data) => {})
 }
 
+function createCustomerView(obj) {
+    const nameKey = "name",
+        phoneKey = "phoneNumber",
+        emailKey = "email",
+        addressKey = "address",
+        dateOfBirthKey = "dateOfBirth"
+    let borrowings = get(URLS.bookBorrowingsByCustomer, { "customer-id": obj.id })
+    let borrowed = [],
+        returned = []
+    borrowings.forEach(item => {
+        if (item.actualDateOfReturn === null) borrowed.push(item.book)
+        else returned.push(item.book)
+    })
+    return createObjectView({
+        "title": "Customer",
+        "fields": {
+            [nameKey]: {
+                "type": "text",
+                "name": "Name",
+                "value": obj[nameKey]
+            },
+            [phoneKey]: {
+                "type": "text",
+                "name": "Phone number",
+                "value": obj[phoneKey]
+            },
+            [emailKey]: {
+                "type": "text",
+                "name": "Email",
+                "value": obj[emailKey]
+            },
+            [addressKey]: {
+                "type": "text",
+                "name": "Address",
+                "value": obj[addressKey]
+            },
+            [dateOfBirthKey]: {
+                "type": "text",
+                "name": "Date of birth",
+                "value": obj[dateOfBirthKey]
+            }
+        },
+        "edit": () => {
+            addToBody(createCustomerForm("Update the customer", obj, updateReloadFunction(obj.id, URLS.customer)))
+        },
+        "tables": {
+            "Borrowed books": booksToTableProperties(borrowed),
+            "Returned books": booksToTableProperties(returned)
+        }
+    })
+}
+
 function getCustomersForTable(name, phoneNumber, email) {
     return get(URLS.customersByAll, { "name": name, "phone-number": phoneNumber, "email": email })
         .sort((a, b) => a.name.localeCompare(b.name))
