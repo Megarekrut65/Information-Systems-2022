@@ -13,12 +13,16 @@ public interface BookDeliveryRepository extends JpaRepository<BookDelivery, Inte
     List<BookDelivery> findBookDeliveriesByDelivery(Delivery delivery);
 
     List<BookDelivery> findBookDeliveriesByBook(Book book);
+
     List<BookDelivery> findBookDeliveriesByBookIn(Collection<Book> book);
+
     List<BookDelivery> findBookDeliveriesByDelivery_DateOfDeliveryBetweenAndBookIn(Date deliveryDateOfDeliveryMin,
                                                                                    Date deliveryDateOfDeliveryMax,
                                                                                    Collection<Book> book);
+
     List<BookDelivery> findBookDeliveriesByDelivery_DateOfDeliveryGreaterThanAndBookIn(Date deliveryDateOfDelivery,
-                                                                                   Collection<Book> book);
-    List<BookDelivery> findBookDeliveriesByDelivery_DateOfDeliveryLessThanAndBookIn(Date deliveryDateOfDelivery,
                                                                                        Collection<Book> book);
+
+    List<BookDelivery> findBookDeliveriesByDelivery_DateOfDeliveryLessThanAndBookIn(Date deliveryDateOfDelivery,
+                                                                                    Collection<Book> book);
 }

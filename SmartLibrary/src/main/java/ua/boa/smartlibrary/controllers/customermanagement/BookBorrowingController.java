@@ -70,19 +70,22 @@ public class BookBorrowingController {
     public List<BookBorrowing> searchByCustomer(@RequestParam("customer-id") String customerId) {
         return service.findByCustomer(Integer.parseInt(customerId));
     }
+
     @RequestMapping(value = "/book-borrowings/not-returned/by-customer-id", method = RequestMethod.GET)
     public List<BookBorrowing> searchNotReturnedByCustomer(@RequestParam("customer-id") String customerId) {
         return service.findNotReturnedByCustomer(Integer.parseInt(customerId));
     }
+
     @RequestMapping(value = "/book-borrowing", method = RequestMethod.GET)
     public BookBorrowing get(@RequestParam("id") String id) {
         return service.get(Integer.parseInt(id));
     }
+
     @RequestMapping(value = "/book-borrowings/by-all", method = RequestMethod.GET)
     public List<BookBorrowing> searchByAll(@RequestParam("book-title") String bookTitle,
                                            @RequestParam("customer-name") String customerName,
                                            @RequestParam("date-of-borrowing-min") String dateOfBorrowingMin,
-                                                  @RequestParam("date-of-borrowing-max") String dateOfBorrowingMax) {
+                                           @RequestParam("date-of-borrowing-max") String dateOfBorrowingMax) {
         return bookBorrowingSearchService.findBookBorrowingsByAll(bookTitle, customerName, Utilities.getDate(dateOfBorrowingMin),
                 Utilities.getDate(dateOfBorrowingMax));
     }

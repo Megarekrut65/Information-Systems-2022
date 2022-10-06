@@ -15,15 +15,16 @@ public class DeliverySearchService {
     private DeliveryRepository deliveryRepository;
     @Autowired
     private DistributorService distributorService;
-    public List<Delivery> findDeliveriesByAll(String distributorName, Date minDate, Date maxDate){
-        List<Distributor> distributors = distributorName.equals("")?distributorService.getAll():
+
+    public List<Delivery> findDeliveriesByAll(String distributorName, Date minDate, Date maxDate) {
+        List<Distributor> distributors = distributorName.equals("") ? distributorService.getAll() :
                 distributorService.findByName(distributorName);
-        if(minDate != null && maxDate != null)
+        if (minDate != null && maxDate != null)
             return deliveryRepository
                     .findDeliveriesByDateOfDeliveryBetweenAndDistributorIn(minDate, maxDate, distributors);
-        if(minDate != null)
+        if (minDate != null)
             return deliveryRepository.findDeliveriesByDateOfDeliveryGreaterThanAndDistributorIn(minDate, distributors);
-        if(maxDate != null)
+        if (maxDate != null)
             return deliveryRepository.findDeliveriesByDateOfDeliveryLessThanAndDistributorIn(maxDate, distributors);
         return deliveryRepository.findDeliveriesByDistributorIn(distributors);
     }

@@ -17,17 +17,17 @@ public class BookDeliverySearchService {
     @Autowired
     private BookDeliveryRepository bookDeliveryRepository;
 
-    public List<BookDelivery> findBookDeliveriesByAll(String bookTitle, Date minDate, Date maxDate){
-        List<Book> books = bookTitle.equals("")?bookService.getAll():bookService.findByTitle(bookTitle);
-        if(minDate != null && maxDate != null)
+    public List<BookDelivery> findBookDeliveriesByAll(String bookTitle, Date minDate, Date maxDate) {
+        List<Book> books = bookTitle.equals("") ? bookService.getAll() : bookService.findByTitle(bookTitle);
+        if (minDate != null && maxDate != null)
             return bookDeliveryRepository
                     .findBookDeliveriesByDelivery_DateOfDeliveryBetweenAndBookIn(minDate, maxDate,
                             books);
-        if(minDate != null)
+        if (minDate != null)
             return bookDeliveryRepository
                     .findBookDeliveriesByDelivery_DateOfDeliveryGreaterThanAndBookIn(minDate,
                             books);
-        if(maxDate != null)
+        if (maxDate != null)
             return bookDeliveryRepository
                     .findBookDeliveriesByDelivery_DateOfDeliveryLessThanAndBookIn(maxDate,
                             books);

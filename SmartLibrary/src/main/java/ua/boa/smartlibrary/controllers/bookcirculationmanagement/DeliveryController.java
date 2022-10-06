@@ -51,6 +51,7 @@ public class DeliveryController {
                                              @RequestParam("date-of-delivery-max") String dateOfDeliveryMax) {
         return service.findByDatePeriod(Utilities.getDate(dateOfDeliveryMin), Utilities.getDate(dateOfDeliveryMax));
     }
+
     @RequestMapping(value = "/deliveries/by-all", method = RequestMethod.GET)
     public List<Delivery> searchByAll(@RequestParam("distributor-name") String distributorName,
                                       @RequestParam("date-of-delivery-min") String dateOfDeliveryMin,
@@ -58,6 +59,7 @@ public class DeliveryController {
         return deliverySearchService.findDeliveriesByAll(distributorName,
                 Utilities.getDate(dateOfDeliveryMin), Utilities.getDate(dateOfDeliveryMax));
     }
+
     @RequestMapping(value = "/delivery", method = RequestMethod.GET)
     public Delivery get(@RequestParam("id") String id) {
         return service.get(Integer.parseInt(id));

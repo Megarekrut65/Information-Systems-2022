@@ -20,19 +20,19 @@ public class BookBorrowingSearchService {
     @Autowired
     private CustomerService customerService;
 
-    public List<BookBorrowing> findBookBorrowingsByAll(String bookTitle, String customerName, Date minDate, Date maxDate){
-        List<Book> books = bookTitle.equals("")?bookService.getAll():bookService.findByTitle(bookTitle);
-        List<Customer> customers = customerName.equals("")?customerService.getAll()
-                :customerService.findByName(customerName);
-        if(minDate != null && maxDate != null)
+    public List<BookBorrowing> findBookBorrowingsByAll(String bookTitle, String customerName, Date minDate, Date maxDate) {
+        List<Book> books = bookTitle.equals("") ? bookService.getAll() : bookService.findByTitle(bookTitle);
+        List<Customer> customers = customerName.equals("") ? customerService.getAll()
+                : customerService.findByName(customerName);
+        if (minDate != null && maxDate != null)
             return bookBorrowingRepository
                     .findBookBorrowingByDateOfBorrowingBetweenAndBookInAndCustomerIn(minDate, maxDate,
                             books, customers);
-        if(minDate != null)
+        if (minDate != null)
             return bookBorrowingRepository
                     .findBookBorrowingByDateOfBorrowingGreaterThanAndBookInAndCustomerIn(minDate,
                             books, customers);
-        if(maxDate != null)
+        if (maxDate != null)
             return bookBorrowingRepository
                     .findBookBorrowingByDateOfBorrowingLessThanAndBookInAndCustomerIn(maxDate,
                             books, customers);

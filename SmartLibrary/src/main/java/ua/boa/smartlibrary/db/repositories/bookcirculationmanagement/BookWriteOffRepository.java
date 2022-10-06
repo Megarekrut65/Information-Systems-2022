@@ -12,12 +12,16 @@ public interface BookWriteOffRepository extends JpaRepository<BookWriteOff, Inte
     List<BookWriteOff> findBookWriteOffsByDateOfWriteOffBetween(Date dateOfWriteOffMin, Date dateOfWriteOffMax);
 
     List<BookWriteOff> findBookWriteOffsByBook(Book book);
+
     List<BookWriteOff> findBookWriteOffsByBookIn(Collection<Book> book);
+
     List<BookWriteOff> findBookWriteOffsByDateOfWriteOffBetweenAndBookIn(Date dateOfWriteOffMin,
                                                                          Date dateOfWriteOffMax,
                                                                          Collection<Book> book);
+
     List<BookWriteOff> findBookWriteOffsByDateOfWriteOffGreaterThanAndBookIn(Date dateOfWriteOff,
-                                                                         Collection<Book> book);
-    List<BookWriteOff> findBookWriteOffsByDateOfWriteOffLessThanAndBookIn(Date dateOfWriteOff,
                                                                              Collection<Book> book);
+
+    List<BookWriteOff> findBookWriteOffsByDateOfWriteOffLessThanAndBookIn(Date dateOfWriteOff,
+                                                                          Collection<Book> book);
 }

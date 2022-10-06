@@ -149,10 +149,12 @@ public class BookBorrowingService {
         Customer customer = customerService.get(customerId);
         return repository.findBookBorrowingByCustomer(customer);
     }
+
     public List<BookBorrowing> findNotReturnedByCustomer(Integer customerId) {
         Customer customer = customerService.get(customerId);
         return repository.findBookBorrowingByCustomerAndActualDateOfReturnEquals(customer, null);
     }
+
     public List<BookBorrowing> findByBook(Integer bookId) {
         Book book = bookService.get(bookId);
         return repository.findBookBorrowingByBook(book);
