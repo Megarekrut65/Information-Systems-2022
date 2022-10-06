@@ -5,7 +5,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ua.boa.smartlibrary.Utilities;
 import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.BookDelivery;
+import ua.boa.smartlibrary.services.bookcirculationmanagement.BookDeliverySearchService;
 import ua.boa.smartlibrary.services.bookcirculationmanagement.BookDeliveryService;
 
 import java.util.List;
@@ -14,7 +16,8 @@ import java.util.List;
 public class BookDeliveryController {
     @Autowired
     private BookDeliveryService service;
-
+    @Autowired
+    private BookDeliverySearchService bookDeliverySearchService;
     @RequestMapping(value = "/book-delivery", method = RequestMethod.POST)
     public BookDelivery create(@RequestParam("delivery-id") String deliveryId,
                                @RequestParam("book-id") String bookId,
@@ -56,5 +59,13 @@ public class BookDeliveryController {
     @RequestMapping(value = "/book-delivery", method = RequestMethod.GET)
     public BookDelivery get(@RequestParam("id") String id) {
         return service.get(Integer.parseInt(id));
+    }
+
+    @RequestMapping(value = "/book-deliveries/by-all", method = RequestMethod.GET)
+    public List<BookDelivery> searchByPublishYearPeriod(@RequestParam("date-of-delivery-min") String deliveryDateMin,
+                                                        @RequestParam("date-of-delivery-max") String deliveryDateMax,
+                                                        @RequestParam("book-title") String bookTitle) {
+        return bookDeliverySearchService.findBookDeliveriesByAll(bookTitle,
+                Utilities.getDate(deliveryDateMin), Utilities.getDate(deliveryDateMax));
     }
 }

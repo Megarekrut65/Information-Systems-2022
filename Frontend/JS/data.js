@@ -27,6 +27,7 @@ const URLS = {
     bookDeliveries: SERVER_URL + "/book-deliveries",
     bookDeliveriesByDelivery: SERVER_URL + "/book-deliveries/by-delivery-id",
     bookDeliveriesByBook: SERVER_URL + "/book-deliveries/by-book-id",
+    bookDeliveriesByAll: SERVER_URL + "/book-deliveries/by-all",
     delivery: SERVER_URL + "/delivery",
     deliveries: SERVER_URL + "/deliveries",
     deliveriesByAll: SERVER_URL + "/deliveries/by-all",

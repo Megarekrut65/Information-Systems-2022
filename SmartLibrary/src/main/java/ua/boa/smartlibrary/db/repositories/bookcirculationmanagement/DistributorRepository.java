@@ -8,9 +8,9 @@ import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.Distributor;
 import java.util.List;
 
 public interface DistributorRepository extends JpaRepository<Distributor, Integer> {
-    @Query(value = "SELECT * FROM distributor WHERE distributor.name " +
-            "LIKE CONCAT('%', CONCAT(:name, '%')) OR :name " +
-            "LIKE CONCAT('%', CONCAT(distributor.name, '%'))",
+    @Query(value = "SELECT * FROM distributor WHERE LOWER(distributor.name) " +
+            "LIKE CONCAT('%', CONCAT(LOWER(:name), '%')) OR LOWER(:name) " +
+            "LIKE CONCAT('%', CONCAT(LOWER(distributor.name), '%'))",
             nativeQuery = true)
     List<Distributor> findDistributorsByNameAdvanced(@Param("name") String name);
 }

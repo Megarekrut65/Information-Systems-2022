@@ -26,7 +26,7 @@ function getBookWriteOff(id) {
     return get(SERVER_URL + "/book-write-off", { "id": id })
 }
 
-function createBookWriteOffForm(title, obj, action, toSendData) {
+function createBookWriteOffForm(title, obj, action, toSendData = (data) => {}) {
     const bookIdKey = "book-id",
         dateOfWriteOffKey = "date-of-write-off",
         bookCountKey = "book-count"
@@ -108,11 +108,12 @@ function createBookWriteOffView(obj) {
     })
 }
 
-function getBookWriteOffsForTable(bookTitle, minDate, maxDate) {
+function getBookWriteOffsForTable(item) {
+    item = normalizeItem(item, ["title", "min", "max"])
     return get(URLS.bookWriteOffsByAll, {
-            "book-title": bookTitle,
-            "date-of-write-off-min": minDate,
-            "date-of-write-off-max": maxDate
+            "book-title": item.title,
+            "date-of-write-off-min": item.min,
+            "date-of-write-off-max": item.max
         })
         .sort((a, b) => b.dateOfWriteOff.localeCompare(a.dateOfWriteOff))
         .map(obj => {
@@ -133,4 +134,30 @@ function getBookWriteOffsForTable(bookTitle, minDate, maxDate) {
                 "Book count": obj.bookCount
             }
         })
+}
+
+function createBookWriteOffsSearch(createTable, formCreate) {
+    return {
+        "inputs": {
+            "title": {
+                "type": "text",
+                "placeholder": "Books title..."
+            },
+            "min": {
+                "type": "date",
+                "label": "Begin"
+            },
+            "max": {
+                "type": "date",
+                "label": "End"
+            }
+        },
+        "createTable": createTable,
+        "formCreate": formCreate,
+        "title": "Book write-offs"
+    }
+}
+
+function createBookWriteOffFunction(toSendData) {
+    return null
 }

@@ -1,4 +1,4 @@
-function createAuthorshipForm(title, obj, action, toSendData) {
+function createAuthorshipForm(title, obj, action, toSendData = (data) => {}) {
     const roleNameKey = "author-role",
         bookIdKey = "book-id",
         authorIdKey = "author-id"

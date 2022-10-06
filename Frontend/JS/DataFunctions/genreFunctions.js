@@ -22,7 +22,7 @@ function findGenresByName(name) {
     return get(SERVER_URL + "/genres/by-name", { "name": name })
 }
 
-function createGenreForm(title, obj, action, toSendData) {
+function createGenreForm(title, obj, action, toSendData = (data) => {}) {
     const nameKey = "name"
     return createForm(commandList = {
         "title": title,

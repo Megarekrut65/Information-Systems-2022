@@ -22,7 +22,7 @@ function findTagsByName(name) {
     return get(SERVER_URL + "/tags/by-name", { "name": name })
 }
 
-function createTagForm(title, obj, action, toSendData) {
+function createTagForm(title, obj, action, toSendData = (data) => {}) {
     const nameKey = "name"
     return createForm(commandList = {
         "title": title,

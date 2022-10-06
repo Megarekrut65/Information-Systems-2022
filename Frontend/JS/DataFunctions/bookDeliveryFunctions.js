@@ -26,7 +26,7 @@ function getBookDelivery(id) {
     return get(SERVER_URL + "/book-delivery", { "id": id })
 }
 
-function createBookDeliveryForm(title, obj, action, toSendData) {
+function createBookDeliveryForm(title, obj, action, toSendData = (data) => {}) {
     const deliveryIdKey = "delivery-id",
         bookIdKey = "book-id",
         bookCountKey = "book-count",
@@ -133,12 +133,17 @@ function createBookDeliveryView(obj) {
     })
 }
 
-function getBookDeliveriesForTable(title, genre, tag, author) {
-    return bookDeliveriesToTableProperties(get(URLS.booksByAll, { "title": title, "genre-name": genre, "tag-name": tag, "author-name": author }))
+function getBookDeliveriesForTable(item) {
+    item = normalizeItem(item, ["title", "min", "max"])
+    return bookDeliveriesToTableProperties(get(URLS.bookDeliveriesByAll, {
+        "book-title": item.title,
+        "date-of-delivery-min": item.min,
+        "date-of-delivery-max": item.max
+    }))
 }
 
 function bookDeliveriesToTableProperties(bookDeliveries) {
-    return bookDeliveries.sort((a, b) => a.delivery.dateOfDelivery.localeCompare(b.delivery.dateOfDelivery))
+    return bookDeliveries.sort((a, b) => b.delivery.dateOfDelivery.localeCompare(a.delivery.dateOfDelivery))
         .map(obj => {
             return {
                 "Id": {
@@ -164,4 +169,30 @@ function bookDeliveriesToTableProperties(bookDeliveries) {
                 "Total price": obj.bookCount * obj.bookPrice
             }
         })
+}
+
+function createBookDeliveriesSearch(createTable, formCreate) {
+    return {
+        "inputs": {
+            "title": {
+                "type": "text",
+                "placeholder": "Books title..."
+            },
+            "min": {
+                "type": "date",
+                "label": "Begin"
+            },
+            "max": {
+                "type": "date",
+                "label": "End"
+            }
+        },
+        "createTable": createTable,
+        "formCreate": formCreate,
+        "title": "Book deliveries"
+    }
+}
+
+function createBookDeliveryFunction(toSendData) {
+    return null
 }

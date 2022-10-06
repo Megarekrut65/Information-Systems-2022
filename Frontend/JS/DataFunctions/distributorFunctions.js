@@ -22,7 +22,7 @@ function getDistributor(id) {
     return get(SERVER_URL + "/distributor", { "id": id })
 }
 
-function createDistributorForm(title, obj, action, toSendData) {
+function createDistributorForm(title, obj, action, toSendData = (data) => {}) {
     const nameKey = "name",
         phoneKey = "phone-number",
         address = "address"

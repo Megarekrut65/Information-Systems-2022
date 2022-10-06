@@ -30,7 +30,7 @@ function getBookBorrowing(id) {
     return get(SERVER_URL + "/book-borrowing", { "id": id })
 }
 
-function createBookBorrowingForm(title, obj, action, toSendData) {
+function createBookBorrowingForm(title, obj, action, toSendData = (data) => {}) {
     if ("error" in obj) return errorFormCreate(title, "Borrowing not found!")
     const customerIdKey = "customer-id",
         bookIdKey = "book-id",
@@ -158,12 +158,13 @@ function createBookBorrowingView(obj) {
     })
 }
 
-function getBookBorrowingsForTable(bookTitle, customerName, minDate, maxDate) {
+function getBookBorrowingsForTable(item) {
+    item = normalizeItem(item, ["title", "name", "min", "max"])
     return get(URLS.bookBorrowingsByAll, {
-            "book-title": bookTitle,
-            "customer-name": customerName,
-            "date-of-borrowing-min": minDate,
-            "date-of-borrowing-max": maxDate
+            "book-title": item.title,
+            "customer-name": item.name,
+            "date-of-borrowing-min": item.min,
+            "date-of-borrowing-max": item.max
         })
         .sort((a, b) => b.dateOfBorrowing.localeCompare(a.dateOfBorrowing))
         .map(obj => {
@@ -191,6 +192,42 @@ function getBookBorrowingsForTable(bookTitle, customerName, minDate, maxDate) {
                 }
             }
         })
+}
+
+function createBookBorrowingsSearch(createTable, formCreate) {
+    return {
+        "inputs": {
+            "title": {
+                "type": "text",
+                "placeholder": "Books title..."
+            },
+            "name": {
+                "type": "text",
+                "placeholder": "Customer name..."
+            },
+            "min": {
+                "type": "date",
+                "label": "Begin"
+            },
+            "max": {
+                "type": "date",
+                "label": "End"
+            }
+        },
+        "createTable": createTable,
+        "formCreate": formCreate,
+        "title": "Book write-offs"
+    }
+}
+
+function createBookBorrowingFunction(toSendData) {
+    return {
+        "buttons": {
+            "Return book": createBookReturnCustomerFormCreate,
+            "Borrow book": createBookBorrowingFormCreate,
+        },
+        "toSendData": toSendData
+    }
 }
 
 function createBookReturnCustomerFormCreate(toSendData) {

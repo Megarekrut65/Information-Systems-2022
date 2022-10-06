@@ -8,7 +8,6 @@
     <link rel="stylesheet" type="text/css" href="../CSS/creatingStyles.css">
     <link rel="stylesheet" type="text/css" href="../CSS/formStyles.css">
     <link rel="stylesheet" type="text/css" href="../CSS/errorStyles.css">
-    <script src="../JS/PageFunctions/statistic.js"></script>
     <script src="../JS/CreateFunctions/tableCreator.js"></script>
     <script src="../JS/CreateFunctions/formCreator.js"></script>
     <script src="../JS/CreateFunctions/pageCreator.js"></script>
@@ -31,6 +30,15 @@
         Smart Library
     </div>
     <div class="content" id="content">
+        <div>
+            <div class="h-style">Functions</div>
+            <div class="functions-list-style">
+                <div class="functions-style" onclick="openNewListPage('Delivery', 'Deliveries');return false;">Delivery list</div>
+                <div class="functions-style" onclick="openNewListPage('BookWriteOff', 'BookWriteOffs');return false;">Write-off list</div>
+                <div class="functions-style" onclick="openNewListPage('BookLost', 'BookLosts');return false;">Lost list</div>
+                <div class="functions-style" onclick="openNewListPage('BookBorrowing', 'BookBorrowings');return false;">Borrowing list</div>
+            </div>
+        </div>
     </div>
 
 </body>

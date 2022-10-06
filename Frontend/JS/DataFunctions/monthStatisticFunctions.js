@@ -47,6 +47,7 @@ function createMonthStatisticView(statistic) {
     let startDate = new Date(statistic.monthDate)
     startDate.setDate(1)
     let endDate = statistic.monthDate
+    let item = { "min": getTextDate(startDate), "max": endDate }
     return createObjectView({
         "title": "Statistic for " + getMonthYearDate(statistic.monthDate),
         "fields": {
@@ -62,10 +63,10 @@ function createMonthStatisticView(statistic) {
             "Lost": statistic.booksLostCount - prevMonth.booksLostCount
         },
         "tables": {
-            "Deliveries": getDeliveriesForTable('', getTextDate(startDate), endDate),
-            "Borrowings": getBookBorrowingsForTable('', '', getTextDate(startDate), endDate),
-            "Write-offs": getBookWriteOffsForTable('', getTextDate(startDate), endDate),
-            "Losts": getBookLostsForTable('', getTextDate(startDate), endDate)
+            "Deliveries": getDeliveriesForTable(item),
+            "Borrowings": getBookBorrowingsForTable(item),
+            "Write-offs": getBookWriteOffsForTable(item),
+            "Losts": getBookLostsForTable(item)
         }
     })
 }

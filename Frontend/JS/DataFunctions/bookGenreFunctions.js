@@ -1,4 +1,4 @@
-function createBookGenreForm(title, obj, action, toSendData) {
+function createBookGenreForm(title, obj, action, toSendData = (data) => {}) {
     const bookKey = "book-id",
         genreKey = "genre-id"
     return createForm({

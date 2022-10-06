@@ -31,7 +31,7 @@ function getBook(id) {
 }
 
 
-function createBookForm(title, obj, action, toSendData) {
+function createBookForm(title, obj, action, toSendData = (data) => {}) {
     const titleKey = "title",
         publishingHouseIdKey = "publishing-house-id",
         publishYearKey = "publish-year",

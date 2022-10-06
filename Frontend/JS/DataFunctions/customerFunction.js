@@ -30,7 +30,7 @@ function getCustomer(id) {
     return get(SERVER_URL + "/customer", { "id": id })
 }
 
-function createCustomerForm(title, obj, action, toSendData) {
+function createCustomerForm(title, obj, action, toSendData = (data) => {}) {
     const nameKey = "name",
         phoneKey = "phone-number",
         emailKey = "email",

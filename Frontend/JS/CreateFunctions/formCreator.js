@@ -82,6 +82,7 @@ function createInput(id, inputProperties, parent) {
             {
                 input.type = type
                 if ("value" in inputProperties) input.value = inputProperties.value
+                if ("checked" in inputProperties) input.checked = inputProperties.checked
             }
     }
 

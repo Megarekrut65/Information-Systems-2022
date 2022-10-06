@@ -22,7 +22,7 @@ function getAuthor(id) {
     return get(URLS.author, { "id": id })
 }
 
-function createAuthorForm(title, obj, action, toSendData) {
+function createAuthorForm(title, obj, action, toSendData = (data) => {}) {
     const nameKey = "name",
         dateOfBirthKey = "date-of-birth",
         dateOfDeathKey = "date-of-death"

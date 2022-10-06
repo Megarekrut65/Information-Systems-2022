@@ -27,7 +27,7 @@ function getDelivery(id) {
     return get(SERVER_URL + "/delivery", { "id": id })
 }
 
-function createDeliveryForm(title, obj, action, toSendData) {
+function createDeliveryForm(title, obj, action, toSendData = (data) => {}) {
     const dateOfDeliveryKey = "date-of-delivery",
         distributorIdKey = "distributor-id"
     const dateOfDeliveryObjectKey = "dateOfDelivery",
@@ -94,11 +94,12 @@ function createDeliveryView(obj) {
     })
 }
 
-function getDeliveriesForTable(distributorName, minDate, maxDate) {
+function getDeliveriesForTable(item) {
+    item = normalizeItem(item, ["name", "min", "max"])
     return get(URLS.deliveriesByAll, {
-            "distributor-name": distributorName,
-            "date-of-delivery-min": minDate,
-            "date-of-delivery-max": maxDate
+            "distributor-name": item.name,
+            "date-of-delivery-min": item.min,
+            "date-of-delivery-max": item.max
         })
         .sort((a, b) => b.dateOfDelivery.localeCompare(a.dateOfDelivery))
         .map(obj => {
@@ -121,4 +122,35 @@ function getDeliveriesForTable(distributorName, minDate, maxDate) {
                 "Total price": bookDeliveries.map(bookDelivery => bookDelivery.bookCount * bookDelivery.bookPrice).reduce((a, b) => a + b, 0)
             }
         })
+}
+
+function createDeliveriesSearch(createTable, formCreate) {
+    return {
+        "inputs": {
+            "name": {
+                "type": "text",
+                "placeholder": "Distributor name..."
+            },
+            "min": {
+                "type": "date",
+                "label": "Begin"
+            },
+            "max": {
+                "type": "date",
+                "label": "End"
+            }
+        },
+        "createTable": createTable,
+        "formCreate": formCreate,
+        "title": "Deliveries"
+    }
+}
+
+function createDeliveryFunction(toSendData) {
+    return {
+        "buttons": {
+            "Book delivery list": (date) => openNewListPage('BookDelivery', 'BookDeliveries')
+        },
+        "toSendData": toSendData
+    }
 }

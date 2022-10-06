@@ -1,4 +1,4 @@
-function createBookTagForm(title, obj, action, toSendData) {
+function createBookTagForm(title, obj, action, toSendData = (data) => {}) {
     const bookKey = "book-id",
         tagKey = "tag-id"
     return createForm({

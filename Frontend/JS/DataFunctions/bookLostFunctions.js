@@ -26,7 +26,7 @@ function getBookLost(id) {
     return get(SERVER_URL + "/book-lost", { "id": id })
 }
 
-function createBookLostForm(title, obj, action, toSendData) {
+function createBookLostForm(title, obj, action, toSendData = (data) => {}) {
     const bookIdKey = "book-id",
         dateOfLossKey = "date-of-loss",
         bookCountKey = "book-count",
@@ -68,7 +68,7 @@ function createBookLostForm(title, obj, action, toSendData) {
             },
             [wasReturnedKey]: {
                 "type": "checkbox",
-                "value": wasReturnedObjectKey in obj ? obj[wasReturnedObjectKey] : "",
+                "checked": wasReturnedObjectKey in obj ? obj[wasReturnedObjectKey] : "",
                 "name": "Was returned?"
             },
             [causeOfLossKey]: {
@@ -136,11 +136,12 @@ function createBookLostView(obj) {
     })
 }
 
-function getBookLostsForTable(bookTitle, minDate, maxDate) {
+function getBookLostsForTable(item) {
+    item = normalizeItem(item, ["title", "min", "max"])
     return get(URLS.bookLostsByAll, {
-            "book-title": bookTitle,
-            "date-of-loss-min": minDate,
-            "date-of-loss-max": maxDate
+            "book-title": item.title,
+            "date-of-loss-min": item.min,
+            "date-of-loss-max": item.max
         })
         .sort((a, b) => b.dateOfLoss.localeCompare(a.dateOfLoss))
         .map(obj => {
@@ -163,4 +164,30 @@ function getBookLostsForTable(bookTitle, minDate, maxDate) {
                 "Cause of loss": obj.causeOfLoss
             }
         })
+}
+
+function createBookLostsSearch(createTable, formCreate) {
+    return {
+        "inputs": {
+            "title": {
+                "type": "text",
+                "placeholder": "Books title..."
+            },
+            "min": {
+                "type": "date",
+                "label": "Begin"
+            },
+            "max": {
+                "type": "date",
+                "label": "End"
+            }
+        },
+        "createTable": createTable,
+        "formCreate": formCreate,
+        "title": "Book losts"
+    }
+}
+
+function createBookLostFunction(toSendData) {
+    return null
 }

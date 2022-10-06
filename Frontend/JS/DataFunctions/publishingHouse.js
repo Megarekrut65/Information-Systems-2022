@@ -22,7 +22,7 @@ function getPublishingHouse(id) {
     return get(URLS.publishingHouse, { "id": id })
 }
 
-function createPublishingHouseForm(title, obj, action, toSendData) {
+function createPublishingHouseForm(title, obj, action, toSendData = (data) => {}) {
     const nameKey = "name",
         addressKey = "address"
     return createForm({

@@ -30,3 +30,7 @@ function getData(url, key) {
 function openNewPage(id, objectName) {
     window.location.href = "blank.html?object=" + objectName + "&id=" + id
 }
+
+function openNewListPage(objectName, objectsName) {
+    window.location.href = "blank.html?object=" + objectName + "&objects=" + objectsName
+}
