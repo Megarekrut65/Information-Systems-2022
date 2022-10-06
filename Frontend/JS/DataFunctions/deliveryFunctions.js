@@ -96,12 +96,15 @@ function createDeliveryView(obj) {
 
 function getDeliveriesForTable(item) {
     item = normalizeItem(item, ["name", "min", "max"])
-    return get(URLS.deliveriesByAll, {
-            "distributor-name": item.name,
-            "date-of-delivery-min": item.min,
-            "date-of-delivery-max": item.max
-        })
-        .sort((a, b) => b.dateOfDelivery.localeCompare(a.dateOfDelivery))
+    return deliveriesToTableProperties(get(URLS.deliveriesByAll, {
+        "distributor-name": item.name,
+        "date-of-delivery-min": item.min,
+        "date-of-delivery-max": item.max
+    }))
+}
+
+function deliveriesToTableProperties(deliveries) {
+    return deliveries.sort((a, b) => b.dateOfDelivery.localeCompare(a.dateOfDelivery))
         .map(obj => {
             let bookDeliveries = get(URLS.bookDeliveriesByDelivery, { "delivery-id": obj.id });
             return {

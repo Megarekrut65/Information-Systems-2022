@@ -93,6 +93,47 @@ function createDistributorView(obj) {
         "edit": () => {
             addToBody(createDistributorForm("Update the distributor", obj,
                 updateReloadFunction(obj.id, URLS.distributor)))
+        },
+        "tables": {
+            "Deliveries": deliveriesToTableProperties(get(URLS.deliveriesByDistributor, { "distributor-id": obj.id }))
         }
     })
+}
+
+function getDistributorsForTable(item) {
+    item = normalizeItem(item, ["name"])
+    return get(URLS.distributorsByName, {
+            "name": item.name
+        }).sort((a, b) => a.name.localeCompare(b.name))
+        .map(obj => {
+            return {
+                "Id": obj.id,
+                "Name": {
+                    "text": obj.name,
+                    "id": obj.id,
+                    "object": "Distributor",
+                    "type": "reference"
+                },
+                "Phone number": obj.phoneNumber,
+                "Address": obj.address
+            }
+        })
+}
+
+function createDistributorsSearch(createTable, formCreate) {
+    return {
+        "inputs": {
+            "name": {
+                "type": "text",
+                "placeholder": "Distributor name..."
+            }
+        },
+        "createTable": createTable,
+        "formCreate": formCreate,
+        "title": "Distributors"
+    }
+}
+
+function createDistributorFunction(toSendData) {
+    return null
 }
