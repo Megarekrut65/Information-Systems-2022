@@ -33,6 +33,9 @@ function createRow(properties, style) {
                 case "list":
                     td = makeList(item.list)
                     break;
+                case "button":
+                    td = makeButton(item, key)
+                    break;
                 default:
 
             }
@@ -43,11 +46,17 @@ function createRow(properties, style) {
     return tr
 }
 
+function makeButton(item, key) {
+    let div = makeReference(item.text, item.id, "")
+    div.onclick = item.onClick
+    div.id = key + item.id
+    return div
+}
 
 function makeReference(text, id, object) {
     let div = document.createElement("td")
     div.className = "table-reference"
-    div.textContent = textCutter(text, 15)
+    div.textContent = cutTextForTable(text)
     div.onclick = () => {
         openNewPage(id, object)
     }
@@ -69,4 +78,8 @@ function makeList(list) {
 function textCutter(text, length) {
     if (text && text.length > length) return text.slice(0, length - text.length) + "..."
     return text
+}
+
+function cutTextForTable(text) {
+    return textCutter(text, 15)
 }

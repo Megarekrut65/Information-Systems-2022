@@ -78,6 +78,44 @@ function createPublishingHouseView(obj) {
         "edit": () => {
             addToBody(createPublishingHouseForm("Update the publishing house", obj,
                 updateReloadFunction(obj.id, URLS.publishingHouse)))
+        },
+        "tables": {
+            "Books": booksToTableProperties(get(URLS.booksByPublishingHouse, { "publishing-house-id": obj.id }))
         }
     })
+}
+
+function getPublishingHousesForTable(item) {
+    item = normalizeItem(item, ["name"])
+    return get(URLS.publishingHousesByName, item).sort((a, b) => a.name.localeCompare(b.name))
+        .map(obj => {
+            return {
+                "Id": obj.id,
+                "Name": {
+                    "text": obj.name,
+                    "id": obj.id,
+                    "type": "reference",
+                    "object": "PublishingHouse"
+                },
+                "Address": obj.address
+            }
+        })
+}
+
+function createPublishingHousesSearch(createTable, formCreate) {
+    return {
+        "inputs": {
+            "name": {
+                "type": "text",
+                "placeholder": "Publishing house name..."
+            }
+        },
+        "createTable": createTable,
+        "formCreate": formCreate,
+        "title": "Publishing houses"
+    }
+}
+
+function createPublishingHouseFunction(toSendData) {
+    return null
 }

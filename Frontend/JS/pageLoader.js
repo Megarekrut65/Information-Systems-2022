@@ -7,19 +7,25 @@ function loadPage() {
         loadObjectPage("content", objectName, objectsName)
         return
     }
-    let creating = window["create" + objectName + "View"]
-    if (typeof creating !== 'function') {
-        backAndReload()
-        return
-    }
+    let creating = getFunction("create" + objectName + "View")
     document.getElementById("content").appendChild(creating(window["get" + objectName](id)))
 }
 
 function loadObjectPage(parentId, objectName, objectsName) {
-    document.getElementById(parentId).appendChild(createObjectPage(window["create" + objectName + "Function"],
-        window["get" + objectsName + "ForTable"],
-        window["create" + objectsName + "Search"],
-        window["create" + objectName + "FormCreate"]))
+    document.getElementById(parentId).appendChild(createObjectPage(
+        getFunction("create" + objectName + "Function"),
+        getFunction("get" + objectsName + "ForTable"),
+        getFunction("create" + objectsName + "Search"),
+        getFunction("create" + objectName + "FormCreate")))
+}
+
+function getFunction(name) {
+    let func = window[name]
+    if (typeof func !== 'function') {
+        backAndReload()
+        return null
+    }
+    return func
 }
 
 function getData(url, key) {
@@ -32,5 +38,6 @@ function openNewPage(id, objectName) {
 }
 
 function openNewListPage(objectName, objectsName) {
+    if (objectsName === undefined) objectsName = objectName + "s"
     window.location.href = "blank.html?object=" + objectName + "&objects=" + objectsName
 }

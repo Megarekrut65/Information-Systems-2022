@@ -2,13 +2,17 @@ const SERVER_URL = "http://127.0.0.1:8080";
 const URLS = {
     genre: SERVER_URL + "/genre",
     genres: SERVER_URL + "/genres",
+    genresByName: SERVER_URL + "/genres/by-name",
     tag: SERVER_URL + "/tag",
     tags: SERVER_URL + "/tags",
+    tagsByName: SERVER_URL + "/tags/by-name",
     book: SERVER_URL + "/book",
     books: SERVER_URL + "/books",
+    booksByPublishingHouse: SERVER_URL + "/books/by-publishing-house-id",
     booksByTitle: SERVER_URL + "/books/by-title",
     booksByAll: SERVER_URL + "/books/by-all",
     publishingHouses: SERVER_URL + "/publishing-houses",
+    publishingHousesByName: SERVER_URL + "/publishing-houses/by-name",
     publishingHouse: SERVER_URL + "/publishing-house",
     author: SERVER_URL + "/author",
     authors: SERVER_URL + "/authors",
@@ -77,7 +81,7 @@ const indexProperties = [{
         "location": "statistic.html"
     },
     {
-        "title": "Other",
+        "title": "All data lists",
         "img": "../Images/functions.png",
         "list": ["Genres", "Tags", "Publishing houses"],
         "location": "other.html"

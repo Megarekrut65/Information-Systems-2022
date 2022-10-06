@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <title>Smart Library - Data</title>
+    <link rel="shortcut icon" href="../Images/library.png" type="image/png">
+    <link rel="stylesheet" type="text/css" href="../CSS/styles.css">
+    <link rel="stylesheet" type="text/css" href="../CSS/creatingStyles.css">
+    <script src="../JS/data.js"></script>
+    <script src="../JS/pageLoader.js"></script>
+</head>
+
+<body>
+    <div class="header" onclick="window.location='index.html'; return false;">
+        Smart Library
+    </div>
+    <div class="content" id="content">
+        <div class="h-style">Functions</div>
+        <div class="other-box">
+            <div class="functions-style" onclick="openNewListPage('Genre');return false;">Genre list</div>
+            <div class="functions-style" onclick="openNewListPage('Tag');return false;">Tag list</div>
+            <div class="functions-style" onclick="openNewListPage('PublishingHouse');return false;">
+                Publishing house list
+            </div>
+            <div class="functions-style" onclick="openNewListPage('Distributor');return false;">Distributor list</div>
+            <div class="functions-style" onclick="openNewListPage('Book');return false;">Book list</div>
+            <div class="functions-style" onclick="openNewListPage('Author');return false;">Author list</div>
+            <div class="functions-style" onclick="openNewListPage('Customer');return false;">Customer list</div>
+            <div class="functions-style" onclick="openNewListPage('Delivery', 'Deliveries');return false;">Delivery list</div>
+            <div class="functions-style" onclick="openNewListPage('BookDelivery', 'BookDeliveries');return false;">Book delivery list</div>
+            <div class="functions-style" onclick="openNewListPage('BookWriteOff');return false;">Book write-off list</div>
+            <div class="functions-style" onclick="openNewListPage('BookLost');return false;">Book lost list</div>
+            <div class="functions-style" onclick="openNewListPage('BookBorrowing');return false;">Book borrowing list</div>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -44,12 +44,47 @@ function createTagForm(title, obj, action, toSendData = (data) => {}) {
 }
 
 function createTagFormCreate(toSendData) {
-    return createTagForm("Create new tag", {}, (obj) => create(URLS.tag, obj), toSendData)
+    return createTagForm("Create new tag", {}, createFunction(URLS.tag), toSendData)
 }
 
-function createTagFormUpdate(id) {
-    return createTagForm("Update the tag", get(URLS.tag, { "id": id }), (obj) => {
-        obj["id"] = id
-        update(URLS.tag, obj)
-    }, (data) => data)
+function createTagFormUpdate(id, toSendData = (data) => {}) {
+    return createTagForm("Update the tag", get(URLS.tag, { "id": id }), updateFunction(id, URLS.tag), toSendData)
+}
+
+function getTagsForTable(item) {
+    item = normalizeItem(item, ["name"])
+    return get(URLS.tagsByName, item).sort((a, b) => a.name.localeCompare(b.name))
+        .map(obj => {
+            return {
+                "Id": obj.id,
+                "Name": {
+                    "text": obj.name,
+                    "id": obj.id,
+                    "type": "button",
+                    "onClick": () => {
+                        addToBody(createTagFormUpdate(obj.id, (data) => {
+                            document.getElementById("Name" + obj.id).textContent = cutTextForTable(data.name)
+                        }))
+                    }
+                }
+            }
+        })
+}
+
+function createTagsSearch(createTable, formCreate) {
+    return {
+        "inputs": {
+            "name": {
+                "type": "text",
+                "placeholder": "Tag name..."
+            }
+        },
+        "createTable": createTable,
+        "formCreate": formCreate,
+        "title": "Tags"
+    }
+}
+
+function createTagFunction(toSendData) {
+    return null
 }

@@ -30,10 +30,6 @@ function updateReloadFunction(id, url) {
 }
 
 function backAndReload() {
-    if ('referrer' in document) {
-        window.location = document.referrer;
-        return
-    }
     window.history.back();
 }
 

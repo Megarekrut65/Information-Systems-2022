@@ -8,7 +8,9 @@ import ua.boa.smartlibrary.dataclasses.bookmanagement.PublishingHouse;
 import java.util.List;
 
 public interface PublishingHouseRepository extends JpaRepository<PublishingHouse, Integer> {
-    @Query(value = "SELECT * FROM publishing_house WHERE publishing_house.name LIKE CONCAT('%', CONCAT(:name, '%')) OR :name LIKE CONCAT('%', CONCAT(publishing_house.name, '%'))",
+    @Query(value = "SELECT * FROM publishing_house WHERE LOWER(publishing_house.name) " +
+            "LIKE CONCAT('%', CONCAT(LOWER(:name), '%')) OR LOWER(:name) " +
+            "LIKE CONCAT('%', CONCAT(LOWER(publishing_house.name), '%'))",
             nativeQuery = true)
     List<PublishingHouse> findPublishingHousesByNameAdvanced(@Param("name") String name);
 

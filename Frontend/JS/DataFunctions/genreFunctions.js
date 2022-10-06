@@ -44,12 +44,47 @@ function createGenreForm(title, obj, action, toSendData = (data) => {}) {
 }
 
 function createGenreFormCreate(toSendData) {
-    return createGenreForm("Create new genre", {}, (obj) => create(URLS.genre, obj), toSendData)
+    return createGenreForm("Create new genre", {}, createFunction(URLS.genre), toSendData)
 }
 
-function createGenreFormUpdate(id) {
-    return createGenreForm("Update the genre", get(URLS.genre, { "id": id }), (obj) => {
-        obj["id"] = id
-        update(URLS.genre, obj)
-    }, (data) => {})
+function createGenreFormUpdate(id, toSendData = (data) => {}) {
+    return createGenreForm("Update the genre", get(URLS.genre, { "id": id }), updateFunction(id, URLS.genre), toSendData)
+}
+
+function getGenresForTable(item) {
+    item = normalizeItem(item, ["name"])
+    return get(URLS.genresByName, item).sort((a, b) => a.name.localeCompare(b.name))
+        .map(obj => {
+            return {
+                "Id": obj.id,
+                "Name": {
+                    "text": obj.name,
+                    "id": obj.id,
+                    "type": "button",
+                    "onClick": () => {
+                        addToBody(createGenreFormUpdate(obj.id, (data) => {
+                            document.getElementById("Name" + obj.id).textContent = cutTextForTable(data.name)
+                        }))
+                    }
+                }
+            }
+        })
+}
+
+function createGenresSearch(createTable, formCreate) {
+    return {
+        "inputs": {
+            "name": {
+                "type": "text",
+                "placeholder": "Genre name..."
+            }
+        },
+        "createTable": createTable,
+        "formCreate": formCreate,
+        "title": "Genres"
+    }
+}
+
+function createGenreFunction(toSendData) {
+    return null
 }
