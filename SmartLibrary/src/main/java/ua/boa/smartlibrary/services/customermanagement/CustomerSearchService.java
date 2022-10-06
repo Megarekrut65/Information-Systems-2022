@@ -12,7 +12,7 @@ public class CustomerSearchService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    public List<Customer> findCustomersByAll(String name, String phoneNumber, String email){
+    public List<Customer> findCustomersByAll(String name, String phoneNumber, String email) {
         return customerRepository.findCustomersByAllAdvanced(name, phoneNumber, email);
     }
 }

@@ -46,6 +46,7 @@ public class BookGenreController {
     public List<BookGenre> searchByGenre(@RequestParam("genre-id") String genreId) {
         return service.findByGenre(Integer.parseInt(genreId));
     }
+
     @RequestMapping(value = "/book-genre", method = RequestMethod.GET)
     public BookGenre get(@RequestParam("id") String id) {
         return service.get(Integer.parseInt(id));

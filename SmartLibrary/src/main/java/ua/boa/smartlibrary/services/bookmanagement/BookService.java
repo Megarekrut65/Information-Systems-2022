@@ -47,6 +47,7 @@ public class BookService {
     public List<Book> findByTitle(String title) {
         return repository.findBooksByTitleAdvanced(title);
     }
+
     public List<Book> findByPublishingHouse(Integer publishingHouseId) {
         PublishingHouse publishingHouse = publishingHouseService.get(publishingHouseId);
         return repository.findBooksByPublishingHouse(publishingHouse);

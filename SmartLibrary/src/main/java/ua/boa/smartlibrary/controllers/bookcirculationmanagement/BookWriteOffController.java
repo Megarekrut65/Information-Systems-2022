@@ -60,6 +60,7 @@ public class BookWriteOffController {
     public BookWriteOff get(@RequestParam("id") String id) {
         return service.get(Integer.parseInt(id));
     }
+
     @RequestMapping(value = "/book-write-offs/by-all", method = RequestMethod.GET)
     public List<BookWriteOff> searchByAll(@RequestParam("date-of-write-off-min") String dateOfWriteOffMin,
                                           @RequestParam("date-of-write-off-max") String dateOfWriteOffMax,

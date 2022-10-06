@@ -53,9 +53,11 @@ public class BookGenreService {
         Genre genre = genreService.get(genreId);
         return repository.findBookGenresByGenre(genre);
     }
+
     public List<BookGenre> findByGenresAndBooks(List<Genre> genres, List<Book> books) {
         return repository.findBookGenresByGenreInAndBookIn(genres, books);
     }
+
     public BookGenre get(Integer id) {
         Optional<BookGenre> optional = repository.findById(id);
         if (optional.isEmpty()) throw new BookGenreNotFoundException(id);

@@ -18,6 +18,7 @@ public class BookController {
 
     @Autowired
     private BookSearchService bookSearchService;
+
     @RequestMapping(value = "/book", method = RequestMethod.POST)
     public Book create(@RequestParam("title") String title,
                        @RequestParam("publishing-house-id") String publishingHouseId,

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.boa.smartlibrary.dataclasses.bookmanagement.Author;
 import ua.boa.smartlibrary.dataclasses.bookmanagement.Authorship;
-import ua.boa.smartlibrary.dataclasses.bookmanagement.Book;
 
 import java.util.HashSet;
 import java.util.List;
@@ -19,9 +18,9 @@ public class AuthorSearchService {
     @Autowired
     private BookService bookService;
 
-    public List<Author> findAuthorByAll(String authorName, String bookTitle){
-        List<Author> authors = authorName.equals("")?authorService.getAll():authorService.findByName(authorName);
-        if(!bookTitle.equals("")){
+    public List<Author> findAuthorByAll(String authorName, String bookTitle) {
+        List<Author> authors = authorName.equals("") ? authorService.getAll() : authorService.findByName(authorName);
+        if (!bookTitle.equals("")) {
             List<Authorship> authorships = authorshipService
                     .findByAuthorsAndBooks(authors, bookService.findByTitle(bookTitle));
             authors.clear();

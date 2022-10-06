@@ -51,9 +51,10 @@ public class AuthorController {
     public Author get(@RequestParam("id") String id) {
         return service.get(Integer.parseInt(id));
     }
+
     @RequestMapping(value = "/authors/by-all", method = RequestMethod.GET)
     public List<Author> searchByAll(@RequestParam("author-name") String authorName,
-                                    @RequestParam("book-title")String bookTitle) {
+                                    @RequestParam("book-title") String bookTitle) {
         return authorSearchService.findAuthorByAll(authorName, bookTitle);
     }
 }

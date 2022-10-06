@@ -151,20 +151,22 @@ public class MonthStatisticService {
     }
 
     public List<MonthStatistic> findByMonthDatePeriod(Date monthDateMin, Date monthDateMax) {
-        if(monthDateMin != null && monthDateMax != null)
+        if (monthDateMin != null && monthDateMax != null)
             return repository.findMonthStatisticsByMonthDateBetween(monthDateMin, monthDateMax);
-        if(monthDateMin != null)
+        if (monthDateMin != null)
             return repository.findMonthStatisticsByMonthDateGreaterThanEqual(monthDateMin);
-        if(monthDateMax != null)
+        if (monthDateMax != null)
             return repository.findMonthStatisticsByMonthDateLessThanEqual(monthDateMax);
         return repository.getAllOrdered();
     }
+
     public MonthStatistic findClosestStatisticByDate(Date monthDate) {
         List<MonthStatistic> closestStatistics = repository.findClosestMonthStatistics(monthDate);
         return closestStatistics.size() > 0
                 ? closestStatistics.get(0)
                 : new MonthStatistic(monthDate);
     }
+
     public MonthStatistic get(Integer id) {
         Optional<MonthStatistic> optional = repository.findById(id);
         if (optional.isEmpty()) throw new MonthStatisticNotFoundException(id);

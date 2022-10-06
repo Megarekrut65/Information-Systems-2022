@@ -17,17 +17,17 @@ public class BookLostSearchService {
     @Autowired
     private BookLostRepository bookLostRepository;
 
-    public List<BookLost> findBookLostsByAll(String bookTitle, Date minDate, Date maxDate){
-        List<Book> books = bookTitle.equals("")?bookService.getAll():bookService.findByTitle(bookTitle);
-        if(minDate != null && maxDate != null)
+    public List<BookLost> findBookLostsByAll(String bookTitle, Date minDate, Date maxDate) {
+        List<Book> books = bookTitle.equals("") ? bookService.getAll() : bookService.findByTitle(bookTitle);
+        if (minDate != null && maxDate != null)
             return bookLostRepository
                     .findBooksLostByDateOfLossBetweenAndBookIn(minDate, maxDate,
                             books);
-        if(minDate != null)
+        if (minDate != null)
             return bookLostRepository
                     .findBooksLostByDateOfLossGreaterThanAndBookIn(minDate,
                             books);
-        if(maxDate != null)
+        if (maxDate != null)
             return bookLostRepository
                     .findBooksLostByDateOfLossLessThanAndBookIn(maxDate,
                             books);

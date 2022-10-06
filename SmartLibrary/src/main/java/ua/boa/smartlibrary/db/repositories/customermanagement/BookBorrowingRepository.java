@@ -18,15 +18,19 @@ public interface BookBorrowingRepository extends JpaRepository<BookBorrowing, In
                                                                                Date actualDateOfReturn);
 
     List<BookBorrowing> findBookBorrowingByDateOfBorrowingBetween(Date dateOfBorrowingMin, Date dateOfBorrowingMax);
+
     List<BookBorrowing> findBookBorrowingByDateOfBorrowingBetweenAndBookInAndCustomerIn(Date dateOfBorrowing,
                                                                                         Date dateOfBorrowing2,
                                                                                         Collection<Book> book,
                                                                                         Collection<Customer> customer);
+
     List<BookBorrowing> findBookBorrowingByDateOfBorrowingGreaterThanAndBookInAndCustomerIn(Date dateOfBorrowing,
                                                                                             Collection<Book> book,
                                                                                             Collection<Customer> customer);
+
     List<BookBorrowing> findBookBorrowingByDateOfBorrowingLessThanAndBookInAndCustomerIn(Date dateOfBorrowing,
                                                                                          Collection<Book> book,
                                                                                          Collection<Customer> customer);
+
     List<BookBorrowing> findBookBorrowingByBookInAndCustomerIn(Collection<Book> book, Collection<Customer> customer);
 }

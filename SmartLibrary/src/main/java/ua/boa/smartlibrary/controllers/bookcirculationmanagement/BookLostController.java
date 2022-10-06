@@ -64,6 +64,7 @@ public class BookLostController {
     public BookLost get(@RequestParam("id") String id) {
         return service.get(Integer.parseInt(id));
     }
+
     @RequestMapping(value = "/book-losts/by-all", method = RequestMethod.GET)
     public List<BookLost> searchByAll(@RequestParam("book-title") String bookTitle,
                                       @RequestParam("date-of-loss-min") String dateOfLossMin,

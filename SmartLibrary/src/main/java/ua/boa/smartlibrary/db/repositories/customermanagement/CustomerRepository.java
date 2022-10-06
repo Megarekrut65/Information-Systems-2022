@@ -25,12 +25,13 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
             "LIKE CONCAT('%', CONCAT(customer.email, '%'))",
             nativeQuery = true)
     List<Customer> findCustomersByEmailAdvanced(@Param("email") String email);
+
     @Query(value = "SELECT * FROM customer WHERE (customer.email " +
             "LIKE CONCAT('%', CONCAT(:email, '%')) OR :email " +
-            "LIKE CONCAT('%', CONCAT(customer.email, '%'))) AND"+
+            "LIKE CONCAT('%', CONCAT(customer.email, '%'))) AND" +
             "(customer.name " +
             "LIKE CONCAT('%', CONCAT(:name, '%')) OR :name " +
-            "LIKE CONCAT('%', CONCAT(customer.name, '%'))) AND"+
+            "LIKE CONCAT('%', CONCAT(customer.name, '%'))) AND" +
             "(customer.phone_number " +
             "LIKE CONCAT('%', CONCAT(:phone_number, '%')) OR :phone_number " +
             "LIKE CONCAT('%', CONCAT(customer.phone_number, '%')))",

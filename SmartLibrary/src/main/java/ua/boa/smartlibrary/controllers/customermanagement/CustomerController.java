@@ -67,6 +67,7 @@ public class CustomerController {
     public Customer get(@RequestParam("id") String id) {
         return service.get(Integer.parseInt(id));
     }
+
     @RequestMapping(value = "/customers/by-all", method = RequestMethod.GET)
     public List<Customer> searchByAll(@RequestParam("name") String name,
                                       @RequestParam("phone-number") String phoneNumber,

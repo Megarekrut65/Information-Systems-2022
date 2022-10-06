@@ -54,9 +54,11 @@ public class AuthorshipService {
         Author author = authorService.get(authorId);
         return repository.findAuthorshipsByAuthor(author);
     }
+
     public List<Authorship> findByAuthorsAndBooks(List<Author> authors, List<Book> books) {
         return repository.findAuthorshipsByAuthorInAndBookIn(authors, books);
     }
+
     public Authorship get(Integer id) {
         Optional<Authorship> optional = repository.findById(id);
         if (optional.isEmpty()) throw new AuthorshipNotFoundException(id);

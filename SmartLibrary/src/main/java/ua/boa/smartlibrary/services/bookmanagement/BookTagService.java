@@ -53,6 +53,7 @@ public class BookTagService {
         Tag tag = tagService.get(tagId);
         return repository.findBookTagsByTag(tag);
     }
+
     public List<BookTag> findByTagsAndBooks(List<Tag> tags, List<Book> books) {
         return repository.findBookTagsByTagInAndBookIn(tags, books);
     }
