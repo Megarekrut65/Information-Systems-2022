@@ -11,7 +11,7 @@ function createObjectPage(createObjectFunction, createObjectSearch) {
     let titleDiv = document.createElement("div")
     titleDiv.textContent = searchProperties.title
     titleDiv.className = "h-style"
-    let functions = createObjectFunction(data => recreateTable({}))
+    let functions = createObjectFunction(data => searchProperties.createTable({}))
     let functionDiv = createAddToBodyButtons(functions)
     div.appendChild(functionDiv)
     div.appendChild(titleDiv)

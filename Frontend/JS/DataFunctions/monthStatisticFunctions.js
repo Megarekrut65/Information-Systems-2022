@@ -48,6 +48,8 @@ function createMonthStatisticView(statistic) {
     startDate.setDate(1)
     let endDate = statistic.monthDate
     let item = { "min": getTextDate(startDate), "max": endDate }
+    let borrowed = statistic.booksBorrowingCount - prevMonth.booksBorrowingCount;
+    let borrowedTitle = borrowed >= 0?"Borrowed":"Returned"
     return createObjectView({
         "title": "Statistic for " + getMonthYearDate(statistic.monthDate),
         "fields": {
@@ -58,7 +60,7 @@ function createMonthStatisticView(statistic) {
             "Book write-off count": statistic.booksWriteOffCount,
             "Book lost count": statistic.booksLostCount,
             "Purchased": statistic.booksPurchasingCount - prevMonth.booksPurchasingCount,
-            "Borrowed": statistic.booksBorrowingCount - prevMonth.booksBorrowingCount,
+            [borrowedTitle]: Math.abs(borrowed),
             "Write-offed": statistic.booksWriteOffCount - prevMonth.booksWriteOffCount,
             "Lost": statistic.booksLostCount - prevMonth.booksLostCount
         },

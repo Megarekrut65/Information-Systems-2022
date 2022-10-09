@@ -100,7 +100,7 @@ function createBookView(obj) {
         bookGenreKey = "book-genre",
         bookTagKey = "book-tag",
         authorshipKey = "authorship",
-        bookInfo = "book-info"
+        bookInfo = "bookInfo"
     const publishingHouseKey = "publishingHouse",
         publishYearBookKey = "publishYear"
     return createObjectView({
@@ -135,6 +135,14 @@ function createBookView(obj) {
         },
         "edit": () => {
             addToBody(createBookForm("Update the book", obj, updateReloadFunction(obj.id, URLS.book)))
+        },
+        "tables":{
+            "Count":[{
+                "Total":obj[bookInfo].totalCount,
+                "Available":obj[bookInfo].availableCount,
+                "Purchased":obj[bookInfo].purchasingCount,
+                "Wrote-off":obj[bookInfo].writeOffCount,
+                "Lost":obj[bookInfo].lostCount}]
         }
     })
 }

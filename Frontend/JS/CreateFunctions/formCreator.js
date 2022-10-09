@@ -1,5 +1,8 @@
 function createForm(properties) {
+    let formContainer = document.createElement("div")
+    formContainer.className = "form-container"
     let formBox = document.createElement("div")
+    formContainer.appendChild(formBox)
     formBox.className = "form-box"
     let title = document.createElement("div")
     formBox.appendChild(title)
@@ -9,13 +12,13 @@ function createForm(properties) {
     formBox.appendChild(form)
     form.className = "form-style"
     form.appendChild(createTablePart(properties))
-    form.appendChild(createSubmitPart(() => { formBox.remove() }))
+    form.appendChild(createSubmitPart(() => { formContainer.remove() }))
     form.onsubmit = () => {
         properties.ok()
-        formBox.remove()
+        formContainer.remove()
         return false
     }
-    return formBox
+    return formContainer
 }
 
 
