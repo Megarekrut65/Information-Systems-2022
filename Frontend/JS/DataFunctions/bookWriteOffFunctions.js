@@ -136,7 +136,7 @@ function getBookWriteOffsForTable(item) {
         })
 }
 
-function createBookWriteOffsSearch(createTable, formCreate) {
+function createBookWriteOffsSearch(recreateTable) {
     return {
         "inputs": {
             "title": {
@@ -152,8 +152,8 @@ function createBookWriteOffsSearch(createTable, formCreate) {
                 "label": "End"
             }
         },
-        "createTable": createTable,
-        "formCreate": formCreate,
+        "createTable": (item)=>recreateTable(getBookWriteOffsForTable(item)),
+        "formCreate": createBookWriteOffFormCreate,
         "title": "Book write-offs"
     }
 }

@@ -49,7 +49,6 @@ function addToBody(obj) {
 }
 
 function normalizeItem(item, keys) {
-    console.log(item)
     for (let i in keys) {
         if (!(keys[i] in item)) item[keys[i]] = ""
     }

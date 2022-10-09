@@ -169,7 +169,7 @@ function getCustomersForTable(item) {
         })
 }
 
-function createCustomersSearch(createTable, formCreate) {
+function createCustomersSearch(recreateTable) {
     return {
         "inputs": {
             "name": {
@@ -185,8 +185,8 @@ function createCustomersSearch(createTable, formCreate) {
                 "placeholder": "Email..."
             }
         },
-        "createTable": createTable,
-        "formCreate": formCreate,
+        "createTable": (item)=>recreateTable(getCustomersForTable(item)),
+        "formCreate": createCustomerFormCreate,
         "title": "Customers"
     }
 }

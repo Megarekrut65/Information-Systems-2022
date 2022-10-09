@@ -166,7 +166,7 @@ function getBookLostsForTable(item) {
         })
 }
 
-function createBookLostsSearch(createTable, formCreate) {
+function createBookLostsSearch(recreateTable) {
     return {
         "inputs": {
             "title": {
@@ -182,8 +182,8 @@ function createBookLostsSearch(createTable, formCreate) {
                 "label": "End"
             }
         },
-        "createTable": createTable,
-        "formCreate": formCreate,
+        "createTable": (item)=>recreateTable(getBookLostsForTable(item)),
+        "formCreate": createBookLostFormCreate,
         "title": "Book losts"
     }
 }

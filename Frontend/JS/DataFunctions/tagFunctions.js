@@ -71,7 +71,7 @@ function getTagsForTable(item) {
         })
 }
 
-function createTagsSearch(createTable, formCreate) {
+function createTagsSearch(recreateTable) {
     return {
         "inputs": {
             "name": {
@@ -79,8 +79,8 @@ function createTagsSearch(createTable, formCreate) {
                 "placeholder": "Tag name..."
             }
         },
-        "createTable": createTable,
-        "formCreate": formCreate,
+        "createTable": (item)=>recreateTable(getTagsForTable(item)),
+        "formCreate": createTagFormCreate,
         "title": "Tags"
     }
 }

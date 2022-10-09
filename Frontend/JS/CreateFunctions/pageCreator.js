@@ -1,12 +1,12 @@
-function createObjectPage(createObjectFunction, getObjectsForTable, createObjectSearch, createObjectForm) {
+function createObjectPage(createObjectFunction, createObjectSearch) {
     let div = document.createElement("div")
     let tableDiv = document.createElement("div")
-    let recreateTable = item => {
+    let recreateTable = (tableProperties) => {
         tableDiv.innerHTML = ""
-        tableDiv.appendChild(createTable(getObjectsForTable(item)))
+        tableDiv.appendChild(createTable(tableProperties))
     }
-    recreateTable({})
-    let searchProperties = createObjectSearch(recreateTable, createObjectForm)
+    let searchProperties = createObjectSearch(recreateTable)
+    searchProperties.createTable({})
     let searches = createSearches(searchProperties)
     let titleDiv = document.createElement("div")
     titleDiv.textContent = searchProperties.title

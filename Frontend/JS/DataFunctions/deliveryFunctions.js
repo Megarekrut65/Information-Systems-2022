@@ -127,7 +127,7 @@ function deliveriesToTableProperties(deliveries) {
         })
 }
 
-function createDeliveriesSearch(createTable, formCreate) {
+function createDeliveriesSearch(recreateTable) {
     return {
         "inputs": {
             "name": {
@@ -143,8 +143,8 @@ function createDeliveriesSearch(createTable, formCreate) {
                 "label": "End"
             }
         },
-        "createTable": createTable,
-        "formCreate": formCreate,
+        "createTable": (item)=>recreateTable(getDeliveriesForTable(item)),
+        "formCreate": createDeliveryFormCreate,
         "title": "Deliveries"
     }
 }

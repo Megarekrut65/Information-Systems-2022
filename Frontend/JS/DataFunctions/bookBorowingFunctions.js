@@ -194,7 +194,7 @@ function getBookBorrowingsForTable(item) {
         })
 }
 
-function createBookBorrowingsSearch(createTable, formCreate) {
+function createBookBorrowingsSearch(recreateTable) {
     return {
         "inputs": {
             "title": {
@@ -214,8 +214,8 @@ function createBookBorrowingsSearch(createTable, formCreate) {
                 "label": "End"
             }
         },
-        "createTable": createTable,
-        "formCreate": formCreate,
+        "createTable": (item)=>recreateTable(getBookBorrowingsForTable(item)),
+        "formCreate": createBookBorrowingFormCreate,
         "title": "Book write-offs"
     }
 }

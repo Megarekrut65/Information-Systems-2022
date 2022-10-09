@@ -71,7 +71,7 @@ function createMonthStatisticView(statistic) {
     })
 }
 
-function createMonthStatisticsSearch(createTable, formCreate) {
+function createMonthStatisticsSearch(recreateTable) {
     return {
         "inputs": {
             "min": {
@@ -83,7 +83,7 @@ function createMonthStatisticsSearch(createTable, formCreate) {
                 "label": "End"
             }
         },
-        "createTable": createTable,
+        "createTable": (item)=>recreateTable(getMonthStatisticsForTable(item)),
         "title": "Statistics"
     }
 }

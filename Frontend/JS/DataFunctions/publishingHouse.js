@@ -102,7 +102,7 @@ function getPublishingHousesForTable(item) {
         })
 }
 
-function createPublishingHousesSearch(createTable, formCreate) {
+function createPublishingHousesSearch(recreateTable) {
     return {
         "inputs": {
             "name": {
@@ -110,8 +110,8 @@ function createPublishingHousesSearch(createTable, formCreate) {
                 "placeholder": "Publishing house name..."
             }
         },
-        "createTable": createTable,
-        "formCreate": formCreate,
+        "createTable": (item)=>recreateTable(getPublishingHousesForTable(item)),
+        "formCreate": createPublishingHouseFormCreate,
         "title": "Publishing houses"
     }
 }

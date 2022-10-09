@@ -1,4 +1,4 @@
-function loadPage() {
+async function loadPage() {
     let url = new URL(window.location)
     let objectName = getData(url, "object")
     let id = getData(url, "id")
@@ -11,17 +11,16 @@ function loadPage() {
     document.getElementById("content").appendChild(creating(window["get" + objectName](id)))
 }
 
-function loadObjectPage(parentId, objectName, objectsName) {
+async function loadObjectPage(parentId, objectName, objectsName) {
     document.getElementById(parentId).appendChild(createObjectPage(
         getFunction("create" + objectName + "Function"),
-        getFunction("get" + objectsName + "ForTable"),
-        getFunction("create" + objectsName + "Search"),
-        getFunction("create" + objectName + "FormCreate")))
+        getFunction("create" + objectsName + "Search")))
 }
 
 function getFunction(name) {
     let func = window[name]
     if (typeof func !== 'function') {
+        console.log(name)
         backAndReload()
         return null
     }

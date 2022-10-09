@@ -184,7 +184,7 @@ function booksToTableProperties(books) {
         })
 }
 
-function createBooksSearch(createTable, formCreate) {
+function createBooksSearch(recreateTable) {
     return {
         "inputs": {
             "title": {
@@ -204,8 +204,8 @@ function createBooksSearch(createTable, formCreate) {
                 "placeholder": "Authors name..."
             }
         },
-        "createTable": createTable,
-        "formCreate": formCreate,
+        "createTable": (item)=>recreateTable(getBooksForTable(item)),
+        "formCreate": createBookFormCreate,
         "title": "Books"
     }
 }

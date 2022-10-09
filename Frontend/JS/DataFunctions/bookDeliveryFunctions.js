@@ -171,7 +171,7 @@ function bookDeliveriesToTableProperties(bookDeliveries) {
         })
 }
 
-function createBookDeliveriesSearch(createTable, formCreate) {
+function createBookDeliveriesSearch(recreateTable) {
     return {
         "inputs": {
             "title": {
@@ -187,8 +187,8 @@ function createBookDeliveriesSearch(createTable, formCreate) {
                 "label": "End"
             }
         },
-        "createTable": createTable,
-        "formCreate": formCreate,
+        "createTable": (item)=>recreateTable(getBookDeliveriesForTable(item)),
+        "formCreate": createBookDeliveryFormCreate,
         "title": "Book deliveries"
     }
 }

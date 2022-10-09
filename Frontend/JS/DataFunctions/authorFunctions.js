@@ -127,7 +127,7 @@ function authorsToTableProperties(authors) {
         })
 }
 
-function createAuthorsSearch(createTable, formCreate) {
+function createAuthorsSearch(recreateTable) {
     return {
         "inputs": {
             "name": {
@@ -139,8 +139,8 @@ function createAuthorsSearch(createTable, formCreate) {
                 "placeholder": "Books title..."
             }
         },
-        "createTable": createTable,
-        "formCreate": formCreate,
+        "createTable": (item)=>recreateTable(getAuthorsForTable(item)),
+        "formCreate": createAuthorFormCreate,
         "title": "Authors"
     }
 }

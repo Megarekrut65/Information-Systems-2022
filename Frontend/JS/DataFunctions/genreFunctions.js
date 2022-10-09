@@ -71,7 +71,7 @@ function getGenresForTable(item) {
         })
 }
 
-function createGenresSearch(createTable, formCreate) {
+function createGenresSearch(recreateTable) {
     return {
         "inputs": {
             "name": {
@@ -79,8 +79,8 @@ function createGenresSearch(createTable, formCreate) {
                 "placeholder": "Genre name..."
             }
         },
-        "createTable": createTable,
-        "formCreate": formCreate,
+        "createTable": (item)=>recreateTable(getGenresForTable(item)),
+        "formCreate": createGenreFormCreate,
         "title": "Genres"
     }
 }

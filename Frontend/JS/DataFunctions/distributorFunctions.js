@@ -120,7 +120,7 @@ function getDistributorsForTable(item) {
         })
 }
 
-function createDistributorsSearch(createTable, formCreate) {
+function createDistributorsSearch(recreateTable) {
     return {
         "inputs": {
             "name": {
@@ -128,8 +128,8 @@ function createDistributorsSearch(createTable, formCreate) {
                 "placeholder": "Distributor name..."
             }
         },
-        "createTable": createTable,
-        "formCreate": formCreate,
+        "createTable": (item)=>recreateTable(getDistributorsForTable(item)),
+        "formCreate": createDistributorFormCreate,
         "title": "Distributors"
     }
 }
