@@ -55,7 +55,10 @@ function createAuthorshipForm(title, obj, action, toSendData = (data) => {}) {
         }
     })
 }
-
-function createAuthorshipFormCreate(obj, toSendData) {
+function createAuthorshipFormCreateForBook(obj, toSendData){
+    return createAuthorshipFormCreate(toSendData, obj)
+}
+function createAuthorshipFormCreate(toSendData, obj) {
+    if(obj === undefined) obj = {}
     return createAuthorshipForm("Create new authorship", obj, createFunction(URLS.authorship), toSendData)
 }

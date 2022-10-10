@@ -116,7 +116,7 @@ function createBookView(obj) {
             [bookTagKey]: createList("Tags", obj, get(URLS.bookTagByBook, { "book-id": obj["id"] }),
                 URLS.bookTag, createBookTagFormCreate, data => { return { "id": data.id, "name": data.tag.name } }),
             [authorshipKey]: createList("Authorship", obj, get(URLS.authorshipByBook, { "book-id": obj["id"] }),
-                URLS.authorship, createAuthorshipFormCreate,
+                URLS.authorship, createAuthorshipFormCreateForBook,
                 data => { return { "id": data.id, "name": data.author.name + " - " + data.authorRole, "referenceId": data.author.id } },
                 id => openNewPage(id, "Author")
             ),
@@ -141,6 +141,7 @@ function createBookView(obj) {
                 "Total":obj[bookInfo].totalCount,
                 "Available":obj[bookInfo].availableCount,
                 "Purchased":obj[bookInfo].purchasingCount,
+                "Borrowed":obj[bookInfo].borrowingCount,
                 "Wrote-off":obj[bookInfo].writeOffCount,
                 "Lost":obj[bookInfo].lostCount}]
         }

@@ -74,4 +74,9 @@ public class BookController {
                                   @RequestParam("author-name") String authorName) {
         return bookSearchService.findBookByAll(title, genreName, tagName, authorName);
     }
+    @RequestMapping(value = "/books/part", method = RequestMethod.GET)
+    public List<Book> getBookPart(@RequestParam("per-page") String perPage,
+                                  @RequestParam("page") String page) {
+        return service.getBookPart(Integer.parseInt(perPage), Integer.parseInt(page));
+    }
 }

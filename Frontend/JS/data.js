@@ -57,6 +57,7 @@ const URLS = {
     bookLost: SERVER_URL + "/book-lost",
     bookLosts: SERVER_URL + "/book-losts",
     bookLostsByAll: SERVER_URL + "/book-losts/by-all",
+    part:"/part"
 }
 const indexProperties = [{
         "title": "Book management",

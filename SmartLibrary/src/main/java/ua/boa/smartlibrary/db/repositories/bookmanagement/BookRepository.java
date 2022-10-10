@@ -18,6 +18,6 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     List<Book> findBooksByPublishYearBetween(Integer publishYearMin, Integer publishYearMax);
 
-    @Query(value = "SELECT * FROM book ORDER BY book.title;", nativeQuery = true)
-    List<Book> getAllOrdered();
+    @Query(value = "SELECT * FROM book ORDER BY book.title LIMIT :limit OFFSET :offset;", nativeQuery = true)
+    List<Book> getPartOrdered(@Param("offset")int offset, @Param("limit")int limit);
 }

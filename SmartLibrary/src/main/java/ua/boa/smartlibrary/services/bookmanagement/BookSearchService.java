@@ -2,10 +2,9 @@ package ua.boa.smartlibrary.services.bookmanagement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.boa.smartlibrary.dataclasses.bookmanagement.Authorship;
-import ua.boa.smartlibrary.dataclasses.bookmanagement.Book;
-import ua.boa.smartlibrary.dataclasses.bookmanagement.BookGenre;
-import ua.boa.smartlibrary.dataclasses.bookmanagement.BookTag;
+import ua.boa.smartlibrary.dataclasses.bookmanagement.*;
+import ua.boa.smartlibrary.dataclasses.customermanagement.BookBorrowing;
+import ua.boa.smartlibrary.services.customermanagement.BookBorrowingService;
 
 import java.util.HashSet;
 import java.util.List;
@@ -27,6 +26,8 @@ public class BookSearchService {
     private AuthorshipService authorshipService;
     @Autowired
     private AuthorService authorService;
+    @Autowired
+    private BookBorrowingService bookBorrowingService;
 
     public List<Book> findBookByAll(String bookTitle, String genreName, String tagName, String authorName) {
         List<Book> books = bookTitle.equals("") ? bookService.getAll() : bookService.findByTitle(bookTitle);
@@ -48,6 +49,15 @@ public class BookSearchService {
         Set<Book> set = new HashSet<>(books);
         books.clear();
         books.addAll(set);
+        return books;
+    }
+    public List<Book> getBooksToPurchase(){
+        List<Book> books = bookService.getAll();
+        for(Book book:books){
+            BookInfo bookInfo = book.getBookInfo();
+            List<BookBorrowing> bookBorrowings = bookBorrowingService.findByBook(book.getId());
+
+        }
         return books;
     }
 }
