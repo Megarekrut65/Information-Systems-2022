@@ -1,7 +1,12 @@
 .view-box {
     width: 100%;
+    position: relative;
 }
-
+.rightSide{
+    position: absolute;
+    right: 0%;
+    top:0%;
+}
 .view-table {
     width: 100%;
 }

@@ -8,7 +8,11 @@ async function loadPage() {
         return
     }
     let creating = getFunction("create" + objectName + "View")
-    document.getElementById("content").appendChild(creating(window["get" + objectName](id)))
+    let obj = window["get" + objectName](id)
+    document.getElementById("content").appendChild(creating(obj))
+    if(objectName = "MonthStatistic"){
+        createPieChart("rightSide", getStatisticPieChartProperties(obj))
+    }
 }
 
 async function loadObjectPage(parentId, objectName, objectsName) {

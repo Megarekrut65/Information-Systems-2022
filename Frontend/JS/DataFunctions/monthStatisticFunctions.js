@@ -39,17 +39,12 @@ function getMonthStatisticsForTable(item) {
 }
 
 function createMonthStatisticView(statistic) {
-    let prevDate = new Date(statistic.monthDate)
-    prevDate.setDate(0)
-    let prevMonth = get(URLS.monthStatisticClosest, {
-        "month-date": getTextDate(prevDate)
-    })
     let startDate = new Date(statistic.monthDate)
     startDate.setDate(1)
     let endDate = statistic.monthDate
     let item = { "min": getTextDate(startDate), "max": endDate }
-    let borrowed = statistic.booksBorrowingCount - prevMonth.booksBorrowingCount;
-    let borrowedTitle = borrowed >= 0?"Borrowed":"Returned"
+    let delta = getDeltaMonthStatistic(statistic)
+    let borrowedTitle = delta["Borrowed/Returned"] >= 0?"Borrowed":"Returned"
     return createObjectView({
         "title": "Statistic for " + getMonthYearDate(statistic.monthDate),
         "fields": {
@@ -59,10 +54,10 @@ function createMonthStatisticView(statistic) {
             "Book borrowing count": statistic.booksBorrowingCount,
             "Book write-off count": statistic.booksWriteOffCount,
             "Book lost count": statistic.booksLostCount,
-            "Purchased": statistic.booksPurchasingCount - prevMonth.booksPurchasingCount,
-            [borrowedTitle]: Math.abs(borrowed),
-            "Write-offed": statistic.booksWriteOffCount - prevMonth.booksWriteOffCount,
-            "Lost": statistic.booksLostCount - prevMonth.booksLostCount
+            "Purchased": delta["Purchased"],
+            [borrowedTitle]: Math.abs(delta["Borrowed/Returned"]),
+            "Write-offed": delta["Write-offed"],
+            "Lost": delta["Lost"]
         },
         "tables": {
             "Deliveries": getDeliveriesForTable(item),
@@ -93,6 +88,19 @@ function createMonthStatisticsSearch(recreateTable) {
 function createMonthStatisticFunction(toSendData) {
     return null
 }
+function getDeltaMonthStatistic(statistic){
+    let prevDate = new Date(statistic.monthDate)
+    prevDate.setDate(0)
+    let prevMonth = get(URLS.monthStatisticClosest, {
+        "month-date": getTextDate(prevDate)
+    })
+    return{
+        "Purchased": statistic.booksPurchasingCount - prevMonth.booksPurchasingCount,
+        "Borrowed/Returned": statistic.booksBorrowingCount - prevMonth.booksBorrowingCount,
+        "Write-offed": statistic.booksWriteOffCount - prevMonth.booksWriteOffCount,
+        "Lost": statistic.booksLostCount - prevMonth.booksLostCount
+    }
+}
 function getStatisticChartProperties(){
     var now = new Date();
     let today = new Date(now.getFullYear(), now.getMonth()+1, 1);
@@ -106,16 +114,9 @@ function getStatisticChartProperties(){
         let statistic = data[i]
         let prevDate = new Date(statistic.monthDate)
         labels.push(prevDate.toLocaleString('en-GB', { month: 'short' }))
-        prevDate.setDate(0)
-        let prevMonth = get(URLS.monthStatisticClosest, {
-            "month-date": getTextDate(prevDate)
-        })
-        deltas.push({
-            "Purchased": statistic.booksPurchasingCount - prevMonth.booksPurchasingCount,
-            "Borrowed/Returned": Math.abs(statistic.booksBorrowingCount - prevMonth.booksBorrowingCount),
-            "Write-offed": statistic.booksWriteOffCount - prevMonth.booksWriteOffCount,
-            "Lost": statistic.booksLostCount - prevMonth.booksLostCount
-        })
+        let del = getDeltaMonthStatistic(statistic)
+        del["Borrowed/Returned"] = Math.abs(del["Borrowed/Returned"])
+        deltas.push(del)
     }
     let lists = {}
     for(let i in deltas){
@@ -125,9 +126,17 @@ function getStatisticChartProperties(){
             lists[key].push(statistic[key])
         }
     }
+    let firstDate = new Date(data[0].monthDate)
+    firstDate.setDate(1)
     return {
-        "title": "Statistic from " + data[0].monthDate + " to " + data[data.length - 1].monthDate,
+        "title": "Statistic from " + getTextDate(firstDate) + " to " + data[data.length - 1].monthDate,
         "lists":lists,
         "labels":labels
+    }
+}
+function getStatisticPieChartProperties(statistic){
+    return {
+        "title": "Statistic for " + getMonthYearDate(statistic.monthDate),
+        "lists":getDeltaMonthStatistic(statistic)
     }
 }
