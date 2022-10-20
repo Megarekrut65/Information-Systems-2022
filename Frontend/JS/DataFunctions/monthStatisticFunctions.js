@@ -93,3 +93,41 @@ function createMonthStatisticsSearch(recreateTable) {
 function createMonthStatisticFunction(toSendData) {
     return null
 }
+function getStatisticChartProperties(){
+    var now = new Date();
+    let today = new Date(now.getFullYear(), now.getMonth()+1, 1);
+    let prevYear = new Date(today)
+    prevYear.setFullYear(prevYear.getFullYear() - 1)
+    let data = get(URLS.monthStatisticsByPeriod, { "month-date-min":  getTextDate(prevYear), "month-date-max": getTextDate(today) })
+    .sort((a, b) => a.monthDate.localeCompare(b.monthDate))
+    if(data.length == 0) return {}
+    let deltas = [], labels = []
+    for(let i in data){
+        let statistic = data[i]
+        let prevDate = new Date(statistic.monthDate)
+        labels.push(prevDate.toLocaleString('en-GB', { month: 'short' }))
+        prevDate.setDate(0)
+        let prevMonth = get(URLS.monthStatisticClosest, {
+            "month-date": getTextDate(prevDate)
+        })
+        deltas.push({
+            "Purchased": statistic.booksPurchasingCount - prevMonth.booksPurchasingCount,
+            "Borrowed/Returned": Math.abs(statistic.booksBorrowingCount - prevMonth.booksBorrowingCount),
+            "Write-offed": statistic.booksWriteOffCount - prevMonth.booksWriteOffCount,
+            "Lost": statistic.booksLostCount - prevMonth.booksLostCount
+        })
+    }
+    let lists = {}
+    for(let i in deltas){
+        let statistic = deltas[i]
+        for(let key in statistic){
+            if(!(key in lists)) lists[key] = []
+            lists[key].push(statistic[key])
+        }
+    }
+    return {
+        "title": "Statistic from " + data[0].monthDate + " to " + data[data.length - 1].monthDate,
+        "lists":lists,
+        "labels":labels
+    }
+}

@@ -23,14 +23,20 @@
     <script src="../JS/DataFunctions/bookWriteOffFunctions.js"></script>
     <script src="../JS/DataFunctions/bookLostFunctions.js"></script>
     <script src="../JS/DataFunctions/monthStatisticFunctions.js"></script>
+    <script src="../JS/chart.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </head>
 
-<body onload="loadObjectPage('content', 'MonthStatistic', 'MonthStatistics')">
+<body onload="loadObjectPage('content', 'MonthStatistic', 'MonthStatistics'); loadChart(); return false">
     <div class="header" onclick="window.location='index.html'; return false;">
         Smart Library
     </div>
     <div class="content" id="content">
         <div>
+            <details open="true">
+                <summary class="h-style">This year statistic</summary>
+                <div id="chartContainer" style="height: 40vh;"></div>
+            </details>
             <div class="h-style">Functions</div>
             <div class="functions-list-style">
                 <div class="functions-style" onclick="openNewListPage('Delivery', 'Deliveries');return false;">Delivery list</div>
