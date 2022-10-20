@@ -32,7 +32,6 @@ function columnChartPropertyBuilder(properties){
     return pr
 }
 function createPieChart(parentId, properties){
-    console.log(pieChartPropertyBuilder(properties))
     var chart = new CanvasJS.Chart(parentId, pieChartPropertyBuilder(properties));
     chart.render()
 }

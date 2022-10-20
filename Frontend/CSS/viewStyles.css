@@ -6,6 +6,8 @@
     position: absolute;
     right: 0%;
     top:0%;
+    width: 40vw; 
+    height: 30vw;
 }
 .view-table {
     width: 100%;

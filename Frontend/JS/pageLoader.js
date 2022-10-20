@@ -11,10 +11,19 @@ async function loadPage() {
     let obj = window["get" + objectName](id)
     document.getElementById("content").appendChild(creating(obj))
     if(objectName = "MonthStatistic"){
+        let rightSide = document.createElement("div")
+        rightSide.className = "rightSide"
+        rightSide.id = "rightSide"
+        document.getElementById("content").appendChild(rightSide)
         createPieChart("rightSide", getStatisticPieChartProperties(obj))
     }
 }
-
+async function loadPrintPage() {
+    let url = new URL(window.location)
+    let objectsName = getData(url, "objects")
+    let creating = getFunction("get" + objectsName + "ForTable")
+    document.getElementById("content").appendChild(createTable(creating({})))
+}
 async function loadObjectPage(parentId, objectName, objectsName) {
     document.getElementById(parentId).appendChild(createObjectPage(
         getFunction("create" + objectName + "Function"),

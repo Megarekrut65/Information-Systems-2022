@@ -51,6 +51,10 @@ function createButtons(container, properties) {
             properties.createTable(getSearchResult(properties.inputs))
         ))
     }))
+    container.appendChild(createSearchButton("../../Images/print.png", "Print", () => {
+        if(window.location.search.length > 0) window.location = "print.html" + window.location.search
+        else window.location = "print.html?objects=MonthStatistics"
+    }))
 }
 
 function createSearchButton(img, title, onClick) {
