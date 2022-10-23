@@ -2,6 +2,8 @@ package ua.boa.smartlibrary.services.customermanagement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ua.boa.smartlibrary.PageGetter;
+import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.BookWriteOff;
 import ua.boa.smartlibrary.dataclasses.bookmanagement.Book;
 import ua.boa.smartlibrary.dataclasses.customermanagement.BookBorrowing;
 import ua.boa.smartlibrary.dataclasses.customermanagement.Customer;
@@ -9,10 +11,12 @@ import ua.boa.smartlibrary.db.repositories.customermanagement.BookBorrowingRepos
 import ua.boa.smartlibrary.services.bookmanagement.BookService;
 
 import java.sql.Date;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
-public class BookBorrowingSearchService {
+public class BookBorrowingSearchService extends PageGetter<BookBorrowing> {
     @Autowired
     private BookBorrowingRepository bookBorrowingRepository;
     @Autowired
@@ -37,5 +41,11 @@ public class BookBorrowingSearchService {
                     .findBookBorrowingByDateOfBorrowingLessThanAndBookInAndCustomerIn(maxDate,
                             books, customers);
         return bookBorrowingRepository.findBookBorrowingByBookInAndCustomerIn(books, customers);
+    }
+    public List<BookBorrowing> getPage(int page, int perPage, List<BookBorrowing> bookBorrowings){
+        List<BookBorrowing> list = getPart(bookBorrowings, page, perPage,
+                Comparator.comparing(BookBorrowing::getDateOfBorrowing));
+        Collections.reverse(list);
+        return list;
     }
 }

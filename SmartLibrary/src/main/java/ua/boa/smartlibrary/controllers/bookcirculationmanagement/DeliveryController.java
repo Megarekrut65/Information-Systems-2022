@@ -59,7 +59,16 @@ public class DeliveryController {
         return deliverySearchService.findDeliveriesByAll(distributorName,
                 Utilities.getDate(dateOfDeliveryMin), Utilities.getDate(dateOfDeliveryMax));
     }
-
+    @RequestMapping(value = "/deliveries/by-all/page", method = RequestMethod.GET)
+    public List<Delivery> searchByAllPage(@RequestParam("page") String page,
+                                          @RequestParam("per-page") String perPage,
+                                          @RequestParam("distributor-name") String distributorName,
+                                      @RequestParam("date-of-delivery-min") String dateOfDeliveryMin,
+                                      @RequestParam("date-of-delivery-max") String dateOfDeliveryMax) {
+        return deliverySearchService.getPage(Integer.parseInt(page), Integer.parseInt(perPage),
+                deliverySearchService.findDeliveriesByAll(distributorName,
+                Utilities.getDate(dateOfDeliveryMin), Utilities.getDate(dateOfDeliveryMax)));
+    }
     @RequestMapping(value = "/delivery", method = RequestMethod.GET)
     public Delivery get(@RequestParam("id") String id) {
         return service.get(Integer.parseInt(id));

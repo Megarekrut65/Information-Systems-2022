@@ -3,63 +3,84 @@ const URLS = {
     genre: SERVER_URL + "/genre",
     genres: SERVER_URL + "/genres",
     genresByName: SERVER_URL + "/genres/by-name",
+
     tag: SERVER_URL + "/tag",
     tags: SERVER_URL + "/tags",
     tagsByName: SERVER_URL + "/tags/by-name",
+
     book: SERVER_URL + "/book",
     books: SERVER_URL + "/books",
     booksByPublishingHouse: SERVER_URL + "/books/by-publishing-house-id",
     booksByTitle: SERVER_URL + "/books/by-title",
     booksByAll: SERVER_URL + "/books/by-all",
     booksByAllPage: SERVER_URL + "/books/by-all/page",
+
     publishingHouses: SERVER_URL + "/publishing-houses",
     publishingHousesByName: SERVER_URL + "/publishing-houses/by-name",
     publishingHouse: SERVER_URL + "/publishing-house",
+
     author: SERVER_URL + "/author",
     authors: SERVER_URL + "/authors",
     authorsByAll: SERVER_URL + "/authors/by-all",
     authorsByAllPage: SERVER_URL + "/authors/by-all/page",
+
     authorship: SERVER_URL + "/authorship",
     authorships: SERVER_URL + "/authorships",
+    authorshipByBook: SERVER_URL + "/authorships/by-book-id",
+    authorshipByAuthor: SERVER_URL + "/authorships/by-author-id",
+
     bookGenreByBook: SERVER_URL + "/book-genres/by-book-id",
     bookGenre: SERVER_URL + "/book-genre",
     bookGenres: SERVER_URL + "/book-genres",
+
     bookTag: SERVER_URL + "/book-tag",
     bookTags: SERVER_URL + "/book-tags",
     bookTagByBook: SERVER_URL + "/book-tags/by-book-id",
-    authorshipByBook: SERVER_URL + "/authorships/by-book-id",
-    authorshipByAuthor: SERVER_URL + "/authorships/by-author-id",
+
     bookDelivery: SERVER_URL + "/book-delivery",
     bookDeliveries: SERVER_URL + "/book-deliveries",
     bookDeliveriesByDelivery: SERVER_URL + "/book-deliveries/by-delivery-id",
     bookDeliveriesByBook: SERVER_URL + "/book-deliveries/by-book-id",
     bookDeliveriesByAll: SERVER_URL + "/book-deliveries/by-all",
+    bookDeliveriesByAllPage: SERVER_URL + "/book-deliveries/by-all/page",
+
     delivery: SERVER_URL + "/delivery",
     deliveries: SERVER_URL + "/deliveries",
     deliveriesByAll: SERVER_URL + "/deliveries/by-all",
+    deliveriesByAllPage: SERVER_URL + "/deliveries/by-all/page",
     deliveriesByDistributor: SERVER_URL + "/deliveries/by-distributor-id",
+
     distributor: SERVER_URL + "/distributor",
     distributors: SERVER_URL + "/distributors",
     distributorsByName: SERVER_URL + "/distributors/by-name",
+
     bookBorrowing: SERVER_URL + "/book-borrowing",
     bookBorrowings: SERVER_URL + "/book-borrowings",
     bookBorrowingsByCustomer: SERVER_URL + "/book-borrowings/by-customer-id",
     bookBorrowingsNotReturnedByCustomer: SERVER_URL + "/book-borrowings/not-returned/by-customer-id",
     bookBorrowingsByAll: SERVER_URL + "/book-borrowings/by-all",
+    bookBorrowingsByAllPage: SERVER_URL + "/book-borrowings/by-all/page",
+
     customer: SERVER_URL + "/customer",
     customers: SERVER_URL + "/customers",
     customersByAll: SERVER_URL + "/customers/by-all",
     customersByAllPage: SERVER_URL + "/customers/by-all/page",
+
     monthStatistic: SERVER_URL + "/month-statistic",
     monthStatisticClosest: SERVER_URL + "/month-statistic/closest-statistic/by-month-date",
     monthStatistics: SERVER_URL + "/month-statistics",
     monthStatisticsByPeriod: SERVER_URL + "/month-statistics/by-month-date-period",
+    monthStatisticsByPeriodPage: SERVER_URL + "/month-statistics/by-month-date-period/page",
+
     bookWriteOff: SERVER_URL + "/book-write-off",
     bookWriteOffs: SERVER_URL + "/book-write-offs",
     bookWriteOffsByAll: SERVER_URL + "/book-write-offs/by-all",
+    bookWriteOffsByAllPage: SERVER_URL + "/book-write-offs/by-all/page",
+
     bookLost: SERVER_URL + "/book-lost",
     bookLosts: SERVER_URL + "/book-losts",
-    bookLostsByAll: SERVER_URL + "/book-losts/by-all"
+    bookLostsByAll: SERVER_URL + "/book-losts/by-all",
+    bookLostsByAllPage: SERVER_URL + "/book-losts/by-all/page"
 }
 const indexProperties = [{
         "title": "Book management",

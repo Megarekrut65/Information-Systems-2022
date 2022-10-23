@@ -89,4 +89,15 @@ public class BookBorrowingController {
         return bookBorrowingSearchService.findBookBorrowingsByAll(bookTitle, customerName, Utilities.getDate(dateOfBorrowingMin),
                 Utilities.getDate(dateOfBorrowingMax));
     }
+    @RequestMapping(value = "/book-borrowings/by-all/page", method = RequestMethod.GET)
+    public List<BookBorrowing> searchByAllPage(@RequestParam("page") String page,
+                                               @RequestParam("per-page") String perPage,
+                                               @RequestParam("book-title") String bookTitle,
+                                           @RequestParam("customer-name") String customerName,
+                                           @RequestParam("date-of-borrowing-min") String dateOfBorrowingMin,
+                                           @RequestParam("date-of-borrowing-max") String dateOfBorrowingMax) {
+        return bookBorrowingSearchService.getPage(Integer.parseInt(page), Integer.parseInt(perPage),
+                bookBorrowingSearchService.findBookBorrowingsByAll(bookTitle, customerName, Utilities.getDate(dateOfBorrowingMin),
+                Utilities.getDate(dateOfBorrowingMax)));
+    }
 }

@@ -2,6 +2,7 @@ package ua.boa.smartlibrary.services.bookcirculationmanagement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ua.boa.smartlibrary.PageGetter;
 import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.BookDelivery;
 import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.BookLost;
 import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.BookWriteOff;
@@ -13,11 +14,10 @@ import ua.boa.smartlibrary.exceptions.bookcirculationmanagement.MonthStatisticNo
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
-public class MonthStatisticService {
+public class MonthStatisticService extends PageGetter<MonthStatistic> {
     @Autowired
     private MonthStatisticRepository repository;
 
@@ -32,12 +32,8 @@ public class MonthStatisticService {
         int count = bookDelivery.getBookCount();
         for (MonthStatistic statistic : toChange) {
             int newAvailable = statistic.getBooksAvailableCount() + count;
-//            if (newAvailable < 0) throw new BadDatabaseOperationException("Can't change delivery date " +
-//                    "because available book count will be < 0");
             statistic.setBooksAvailableCount(newAvailable);
             int newTotal = statistic.getBooksTotalCount() + count;
-//            if (newTotal < 0) throw new BadDatabaseOperationException("Can't change delivery date " +
-//                    "because total book count will be < 0");
             statistic.setBooksTotalCount(newTotal);
             statistic.setBooksPurchasingCount(statistic.getBooksPurchasingCount() + count);
         }
@@ -159,7 +155,12 @@ public class MonthStatisticService {
             return repository.findMonthStatisticsByMonthDateLessThanEqual(monthDateMax);
         return repository.getAllOrdered();
     }
-
+    public List<MonthStatistic> getPage(int page, int perPage, List<MonthStatistic> monthStatistics){
+        List<MonthStatistic> list =  getPart(monthStatistics, page, perPage,
+                Comparator.comparing(MonthStatistic::getMonthDate));
+        Collections.reverse(list);
+        return list;
+    }
     public MonthStatistic findClosestStatisticByDate(Date monthDate) {
         List<MonthStatistic> closestStatistics = repository.findClosestMonthStatistics(monthDate);
         return closestStatistics.size() > 0

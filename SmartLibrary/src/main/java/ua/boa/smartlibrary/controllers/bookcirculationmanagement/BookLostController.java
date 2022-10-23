@@ -72,4 +72,14 @@ public class BookLostController {
         return bookLostSearchService.findBookLostsByAll(bookTitle, Utilities.getDate(dateOfLossMin),
                 Utilities.getDate(dateOfLossMax));
     }
+    @RequestMapping(value = "/book-losts/by-all/page", method = RequestMethod.GET)
+    public List<BookLost> searchByAllPage(@RequestParam("page") String page,
+                                          @RequestParam("per-page") String perPage,
+                                          @RequestParam("book-title") String bookTitle,
+                                      @RequestParam("date-of-loss-min") String dateOfLossMin,
+                                      @RequestParam("date-of-loss-max") String dateOfLossMax) {
+        return bookLostSearchService.getPage(Integer.parseInt(page), Integer.parseInt(perPage),
+                bookLostSearchService.findBookLostsByAll(bookTitle, Utilities.getDate(dateOfLossMin),
+                Utilities.getDate(dateOfLossMax)));
+    }
 }

@@ -84,18 +84,28 @@
     justify-content: center;
 }
 .page-buttons{
-    margin: 1vw;
+    padding: 1vw;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
 }
-.page-button{
+.page-button,.page-button-count{
     background-color: whitesmoke;
     width: 2vw;
     height: 2vw;
-    text-align: center;
     border: 0.1vw solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.page-button{
+    border-radius: 0.2vw;
+    font-size: 1vw;
+}
+.page-button-count{
+    border-radius: 0.2vw 0 0.2vw 0;
+    font-size: 1.2vw;
 }
 .page-button:hover{
-    background-color: gray;
+    background-color: rgb(194, 192, 192);
 }

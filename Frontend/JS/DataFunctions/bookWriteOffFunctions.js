@@ -110,32 +110,39 @@ function createBookWriteOffView(obj) {
 
 function getBookWriteOffsForTable(item) {
     item = normalizeItem(item, ["title", "min", "max"])
-    return get(URLS.bookWriteOffsByAll, {
+    return bookWriteOffsToTableProperties((page, perPage)=>getPage(URLS.bookWriteOffsByAllPage,page, perPage, {
             "book-title": item.title,
             "date-of-write-off-min": item.min,
             "date-of-write-off-max": item.max
-        })
-        .sort((a, b) => b.dateOfWriteOff.localeCompare(a.dateOfWriteOff))
-        .map(obj => {
-            return {
-                "Id": obj.id,
-                "Write-off date": {
-                    "text": obj.dateOfWriteOff,
-                    "id": obj.id,
-                    "object": "BookWriteOff",
-                    "type": "reference"
-                },
-                "Book": {
-                    "text": obj.book.title,
-                    "id": obj.book.id,
-                    "object": "Book",
-                    "type": "reference"
-                },
-                "Book count": obj.bookCount
-            }
-        })
+        }))
 }
-
+function getAllBookWriteOffsForTable() {
+    return bookWriteOffsToTableProperties(()=>getAll(URLS.bookWriteOffs))
+}
+function bookWriteOffsToTableProperties(getter) {
+    let convector = obj => {
+        return {
+            "Id": obj.id,
+            "Write-off date": {
+                "text": obj.dateOfWriteOff,
+                "id": obj.id,
+                "object": "BookWriteOff",
+                "type": "reference"
+            },
+            "Book": {
+                "text": obj.book.title,
+                "id": obj.book.id,
+                "object": "Book",
+                "type": "reference"
+            },
+            "Book count": obj.bookCount
+        }
+    }
+    return {
+        "convector":convector,
+        "getter":getter
+    }
+}
 function createBookWriteOffsSearch(recreateTable) {
     return {
         "inputs": {

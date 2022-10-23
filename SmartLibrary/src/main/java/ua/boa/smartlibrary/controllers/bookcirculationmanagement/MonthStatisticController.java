@@ -26,7 +26,14 @@ public class MonthStatisticController {
                                                    @RequestParam("month-date-max") String monthDateMax) {
         return service.findByMonthDatePeriod(Utilities.getDate(monthDateMin), Utilities.getDate(monthDateMax));
     }
-
+    @RequestMapping(value = "/month-statistics/by-month-date-period/page", method = RequestMethod.GET)
+    public List<MonthStatistic> searchByDatePeriodPage(@RequestParam("page") String page,
+                                                       @RequestParam("per-page") String perPage,
+                                                       @RequestParam("month-date-min") String monthDateMin,
+                                                   @RequestParam("month-date-max") String monthDateMax) {
+        return service.getPage(Integer.parseInt(page), Integer.parseInt(perPage),
+                service.findByMonthDatePeriod(Utilities.getDate(monthDateMin), Utilities.getDate(monthDateMax)));
+    }
     @RequestMapping(value = "/month-statistic/closest-statistic/by-month-date", method = RequestMethod.GET)
     public MonthStatistic searchClosestByDate(@RequestParam("month-date") String monthDate) {
         return service.findClosestStatisticByDate(Utilities.getDate(monthDate));

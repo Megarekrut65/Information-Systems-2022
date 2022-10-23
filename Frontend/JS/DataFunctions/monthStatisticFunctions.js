@@ -17,27 +17,35 @@ function getMonthYearDate(date) {
 
 function getMonthStatisticsForTable(item) {
     item = normalizeItem(item, ["min", "max"])
-    return get(URLS.monthStatisticsByPeriod, { "month-date-min": item.min, "month-date-max": item.max })
-        .sort((a, b) => b.monthDate.localeCompare(a.monthDate))
-        .map(obj => {
-            return {
-                "Id": obj.id,
-                "Date": {
-                    "text": getMonthYearDate(obj.monthDate),
-                    "id": obj.id,
-                    "object": "MonthStatistic",
-                    "type": "reference"
-                },
-                "Book total": obj.booksTotalCount,
-                "Book available": obj.booksAvailableCount,
-                "Book purchasing": obj.booksPurchasingCount,
-                "Book borrowing": obj.booksBorrowingCount,
-                "Book write-off": obj.booksWriteOffCount,
-                "Book lost": obj.booksLostCount,
-            }
-        })
+    return monthStatisticsToTableProperties((page, perPage)=>
+    getPage(URLS.monthStatisticsByPeriodPage, page, perPage, { "month-date-min": item.min, "month-date-max": item.max }))
 }
-
+function getAllMonthStatisticsForTable() {
+    return monthStatisticsToTableProperties((page, perPage)=>getAll(URLS.monthStatistics))
+}
+function monthStatisticsToTableProperties(getter) {
+    let convector = obj=> {{
+        return {
+            "Id": obj.id,
+            "Date": {
+                "text": getMonthYearDate(obj.monthDate),
+                "id": obj.id,
+                "object": "MonthStatistic",
+                "type": "reference"
+            },
+            "Book total": obj.booksTotalCount,
+            "Book available": obj.booksAvailableCount,
+            "Book purchasing": obj.booksPurchasingCount,
+            "Book borrowing": obj.booksBorrowingCount,
+            "Book write-off": obj.booksWriteOffCount,
+            "Book lost": obj.booksLostCount,
+        }
+    }}
+    return {
+        "convector":convector,
+        "getter":getter
+    }
+}
 function createMonthStatisticView(statistic) {
     let startDate = new Date(statistic.monthDate)
     startDate.setDate(1)

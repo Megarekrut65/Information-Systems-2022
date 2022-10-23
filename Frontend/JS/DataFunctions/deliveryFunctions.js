@@ -96,35 +96,40 @@ function createDeliveryView(obj) {
 
 function getDeliveriesForTable(item) {
     item = normalizeItem(item, ["name", "min", "max"])
-    return deliveriesToTableProperties(get(URLS.deliveriesByAll, {
+    return deliveriesToTableProperties((page, perPage)=>getPage(URLS.deliveriesByAllPage, page, perPage, {
         "distributor-name": item.name,
         "date-of-delivery-min": item.min,
         "date-of-delivery-max": item.max
     }))
 }
-
-function deliveriesToTableProperties(deliveries) {
-    return deliveries.sort((a, b) => b.dateOfDelivery.localeCompare(a.dateOfDelivery))
-        .map(obj => {
-            let bookDeliveries = get(URLS.bookDeliveriesByDelivery, { "delivery-id": obj.id });
-            return {
-                "Id": obj.id,
-                "Date": {
-                    "text": obj.dateOfDelivery,
-                    "id": obj.id,
-                    "object": "Delivery",
-                    "type": "reference"
-                },
-                "Distributor": {
-                    "text": obj.distributor.name,
-                    "id": obj.distributor.id,
-                    "object": "Distributor",
-                    "type": "reference"
-                },
-                "Book count": bookDeliveries.map(bookDelivery => bookDelivery.bookCount).reduce((a, b) => a + b, 0),
-                "Total price": bookDeliveries.map(bookDelivery => bookDelivery.bookCount * bookDelivery.bookPrice).reduce((a, b) => a + b, 0)
-            }
-        })
+function getAllDeliveriesForTable(){
+    return deliveriesToTableProperties(()=>getAll(URLS.deliveries))
+}
+function deliveriesToTableProperties(getter) {
+    let convector = obj => {
+        let bookDeliveries = get(URLS.bookDeliveriesByDelivery, { "delivery-id": obj.id });
+        return {
+            "Id": obj.id,
+            "Date": {
+                "text": obj.dateOfDelivery,
+                "id": obj.id,
+                "object": "Delivery",
+                "type": "reference"
+            },
+            "Distributor": {
+                "text": obj.distributor.name,
+                "id": obj.distributor.id,
+                "object": "Distributor",
+                "type": "reference"
+            },
+            "Book count": bookDeliveries.map(bookDelivery => bookDelivery.bookCount).reduce((a, b) => a + b, 0),
+            "Total price": bookDeliveries.map(bookDelivery => bookDelivery.bookCount * bookDelivery.bookPrice).reduce((a, b) => a + b, 0)
+        }
+    }
+    return {
+        "convector":convector,
+        "getter":getter
+    }
 }
 
 function createDeliveriesSearch(recreateTable) {

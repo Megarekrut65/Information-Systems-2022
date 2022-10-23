@@ -39,7 +39,7 @@ function createPageButtons(createPage, perPage, table){
     }
     let count = document.createElement("div")
     buttons.appendChild(count)
-    count.className = "page-button"
+    count.className = "page-button-count"
     count.textContent = page
     let next = document.createElement("div")
     buttons.appendChild(next)

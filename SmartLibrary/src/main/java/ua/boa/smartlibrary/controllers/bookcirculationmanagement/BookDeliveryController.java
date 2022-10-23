@@ -63,10 +63,20 @@ public class BookDeliveryController {
     }
 
     @RequestMapping(value = "/book-deliveries/by-all", method = RequestMethod.GET)
-    public List<BookDelivery> searchByPublishYearPeriod(@RequestParam("date-of-delivery-min") String deliveryDateMin,
+    public List<BookDelivery> searchByAll(@RequestParam("date-of-delivery-min") String deliveryDateMin,
                                                         @RequestParam("date-of-delivery-max") String deliveryDateMax,
                                                         @RequestParam("book-title") String bookTitle) {
         return bookDeliverySearchService.findBookDeliveriesByAll(bookTitle,
                 Utilities.getDate(deliveryDateMin), Utilities.getDate(deliveryDateMax));
+    }
+    @RequestMapping(value = "/book-deliveries/by-all/page", method = RequestMethod.GET)
+    public List<BookDelivery> searchByAllPage(@RequestParam("page") String page,
+                                              @RequestParam("per-page") String perPage,
+                                              @RequestParam("date-of-delivery-min") String deliveryDateMin,
+                                          @RequestParam("date-of-delivery-max") String deliveryDateMax,
+                                          @RequestParam("book-title") String bookTitle) {
+        return bookDeliverySearchService.getPage(Integer.parseInt(page), Integer.parseInt(perPage),
+                bookDeliverySearchService.findBookDeliveriesByAll(bookTitle,
+                Utilities.getDate(deliveryDateMin), Utilities.getDate(deliveryDateMax)));
     }
 }

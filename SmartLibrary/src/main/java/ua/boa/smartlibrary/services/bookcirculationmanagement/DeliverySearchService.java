@@ -2,15 +2,19 @@ package ua.boa.smartlibrary.services.bookcirculationmanagement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ua.boa.smartlibrary.PageGetter;
 import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.Delivery;
 import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.Distributor;
+import ua.boa.smartlibrary.dataclasses.customermanagement.BookBorrowing;
 import ua.boa.smartlibrary.db.repositories.bookcirculationmanagement.DeliveryRepository;
 
 import java.sql.Date;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
-public class DeliverySearchService {
+public class DeliverySearchService extends PageGetter<Delivery> {
     @Autowired
     private DeliveryRepository deliveryRepository;
     @Autowired
@@ -27,5 +31,11 @@ public class DeliverySearchService {
         if (maxDate != null)
             return deliveryRepository.findDeliveriesByDateOfDeliveryLessThanAndDistributorIn(maxDate, distributors);
         return deliveryRepository.findDeliveriesByDistributorIn(distributors);
+    }
+    public List<Delivery> getPage(int page, int perPage, List<Delivery> deliveries){
+        List<Delivery> list = getPart(deliveries, page, perPage,
+                Comparator.comparing(Delivery::getDateOfDelivery));
+        Collections.reverse(list);
+        return list;
     }
 }

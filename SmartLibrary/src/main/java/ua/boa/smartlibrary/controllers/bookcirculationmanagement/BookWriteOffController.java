@@ -68,4 +68,14 @@ public class BookWriteOffController {
         return bookWriteOffSearchService.findBookWriteOffsByAll(bookTitle, Utilities.getDate(dateOfWriteOffMin),
                 Utilities.getDate(dateOfWriteOffMax));
     }
+    @RequestMapping(value = "/book-write-offs/by-all/page", method = RequestMethod.GET)
+    public List<BookWriteOff> searchByAllPage(@RequestParam("page") String page,
+                                              @RequestParam("per-page") String perPage,
+                                              @RequestParam("date-of-write-off-min") String dateOfWriteOffMin,
+                                          @RequestParam("date-of-write-off-max") String dateOfWriteOffMax,
+                                          @RequestParam("book-title") String bookTitle) {
+        return bookWriteOffSearchService.getPage(Integer.parseInt(page), Integer.parseInt(perPage),
+                bookWriteOffSearchService.findBookWriteOffsByAll(bookTitle, Utilities.getDate(dateOfWriteOffMin),
+                Utilities.getDate(dateOfWriteOffMax)));
+    }
 }

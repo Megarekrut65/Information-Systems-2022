@@ -135,16 +135,17 @@ function createBookDeliveryView(obj) {
 
 function getBookDeliveriesForTable(item) {
     item = normalizeItem(item, ["title", "min", "max"])
-    return bookDeliveriesToTableProperties(get(URLS.bookDeliveriesByAll, {
+    return bookDeliveriesToTableProperties((page, perPage)=>getPage(URLS.bookDeliveriesByAllPage,page, perPage, {
         "book-title": item.title,
         "date-of-delivery-min": item.min,
         "date-of-delivery-max": item.max
     }))
 }
-
-function bookDeliveriesToTableProperties(bookDeliveries) {
-    return bookDeliveries.sort((a, b) => b.delivery.dateOfDelivery.localeCompare(a.delivery.dateOfDelivery))
-        .map(obj => {
+function getAllBookDeliveriesForTable() {
+    return bookDeliveriesToTableProperties(()=>getAll(URLS.bookDeliveries))
+}
+function bookDeliveriesToTableProperties(getter) {
+    let convector = obj=>  {
             return {
                 "Id": {
                     "text": obj.id,
@@ -168,7 +169,11 @@ function bookDeliveriesToTableProperties(bookDeliveries) {
                 "Book price": obj.bookPrice,
                 "Total price": obj.bookCount * obj.bookPrice
             }
-        })
+    }
+    return {
+        "convector":convector,
+        "getter":getter
+    }
 }
 
 function createBookDeliveriesSearch(recreateTable) {

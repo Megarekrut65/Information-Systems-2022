@@ -138,34 +138,41 @@ function createBookLostView(obj) {
 
 function getBookLostsForTable(item) {
     item = normalizeItem(item, ["title", "min", "max"])
-    return get(URLS.bookLostsByAll, {
+    return bookLostsToTableProperties((page, perPage)=>getPage(URLS.bookLostsByAllPage,page, perPage, {
             "book-title": item.title,
             "date-of-loss-min": item.min,
             "date-of-loss-max": item.max
-        })
-        .sort((a, b) => b.dateOfLoss.localeCompare(a.dateOfLoss))
-        .map(obj => {
-            return {
-                "Id": obj.id,
-                "Loss date": {
-                    "text": obj.dateOfLoss,
-                    "id": obj.id,
-                    "object": "BookLost",
-                    "type": "reference"
-                },
-                "Book": {
-                    "text": obj.book.title,
-                    "id": obj.book.id,
-                    "object": "Book",
-                    "type": "reference"
-                },
-                "Book count": obj.bookCount,
-                "Was Returned": obj.wasReturned ? "Yes" : "No",
-                "Cause of loss": obj.causeOfLoss
-            }
-        })
+        }))
 }
-
+function getAllBookLostsForTable(){
+    return bookLostsToTableProperties(()=>getAll(URLS.bookLosts))
+}
+function bookLostsToTableProperties(getter) {
+    let convector = obj => {
+        return {
+            "Id": obj.id,
+            "Loss date": {
+                "text": obj.dateOfLoss,
+                "id": obj.id,
+                "object": "BookLost",
+                "type": "reference"
+            },
+            "Book": {
+                "text": obj.book.title,
+                "id": obj.book.id,
+                "object": "Book",
+                "type": "reference"
+            },
+            "Book count": obj.bookCount,
+            "Was Returned": obj.wasReturned ? "Yes" : "No",
+            "Cause of loss": obj.causeOfLoss
+        }
+    }
+    return {
+        "convector":convector,
+        "getter":getter
+    }
+}
 function createBookLostsSearch(recreateTable) {
     return {
         "inputs": {

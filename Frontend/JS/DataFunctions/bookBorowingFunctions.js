@@ -160,40 +160,47 @@ function createBookBorrowingView(obj) {
 
 function getBookBorrowingsForTable(item) {
     item = normalizeItem(item, ["title", "name", "min", "max"])
-    return get(URLS.bookBorrowingsByAll, {
+    return bookBorrowingsToTableProperties((page, perPage)=>getPage(URLS.bookBorrowingsByAllPage, page, perPage, {
             "book-title": item.title,
             "customer-name": item.name,
             "date-of-borrowing-min": item.min,
             "date-of-borrowing-max": item.max
-        })
-        .sort((a, b) => b.dateOfBorrowing.localeCompare(a.dateOfBorrowing))
-        .map(obj => {
-            return {
-                "Id": obj.id,
-                "Borrowing date": {
-                    "text": obj.dateOfBorrowing,
-                    "id": obj.id,
-                    "object": "BookBorrowing",
-                    "type": "reference"
-                },
-                "Estimated return date": obj.estimatedDateOfReturn,
-                "Actual return date": obj.actualDateOfReturn,
-                "Book": {
-                    "text": obj.book.title,
-                    "id": obj.book.id,
-                    "object": "Book",
-                    "type": "reference"
-                },
-                "Customer": {
-                    "text": obj.customer.name,
-                    "id": obj.customer.id,
-                    "object": "Customer",
-                    "type": "reference"
-                }
-            }
-        })
+        }))
 }
-
+function getAllBookBorrowingsForTable() {
+    return bookBorrowingsToTableProperties(()=>getAll(URLS.bookBorrowings))
+}
+function bookBorrowingsToTableProperties(getter) {
+    let convector = obj => {
+        return {
+            "Id": obj.id,
+            "Borrowing date": {
+                "text": obj.dateOfBorrowing,
+                "id": obj.id,
+                "object": "BookBorrowing",
+                "type": "reference"
+            },
+            "Estimated return date": obj.estimatedDateOfReturn,
+            "Actual return date": obj.actualDateOfReturn,
+            "Book": {
+                "text": obj.book.title,
+                "id": obj.book.id,
+                "object": "Book",
+                "type": "reference"
+            },
+            "Customer": {
+                "text": obj.customer.name,
+                "id": obj.customer.id,
+                "object": "Customer",
+                "type": "reference"
+            }
+        }
+    }
+    return {
+        "convector":convector,
+        "getter":getter
+    }
+}
 function createBookBorrowingsSearch(recreateTable) {
     return {
         "inputs": {
