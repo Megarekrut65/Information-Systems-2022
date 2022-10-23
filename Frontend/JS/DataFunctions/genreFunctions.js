@@ -53,24 +53,32 @@ function createGenreFormUpdate(id, toSendData = (data) => {}) {
 
 function getGenresForTable(item) {
     item = normalizeItem(item, ["name"])
-    return get(URLS.genresByName, item).sort((a, b) => a.name.localeCompare(b.name))
-        .map(obj => {
-            return {
-                "Id": obj.id,
-                "Name": {
-                    "text": obj.name,
-                    "id": obj.id,
-                    "type": "button",
-                    "onClick": () => {
-                        addToBody(createGenreFormUpdate(obj.id, (data) => {
-                            document.getElementById("Name" + obj.id).textContent = cutTextForTable(data.name)
-                        }))
-                    }
+    return genresToTableProperties((page, perPage)=>getPage(URLS.genresByAllPage, page, perPage, item))
+}
+function getAllGenresForTable() {
+    return genresToTableProperties(()=>getAll(URLS.genres))
+}
+function genresToTableProperties(getter) {
+    let convector = obj => {
+        return {
+            "Id": obj.id,
+            "Name": {
+                "text": obj.name,
+                "id": obj.id,
+                "type": "button",
+                "onClick": () => {
+                    addToBody(createGenreFormUpdate(obj.id, (data) => {
+                        document.getElementById("Name" + obj.id).textContent = cutTextForTable(data.name)
+                    }))
                 }
             }
-        })
+        }
+    }
+    return {
+        "convector":convector,
+        "getter":getter
+    }
 }
-
 function createGenresSearch(recreateTable) {
     return {
         "inputs": {

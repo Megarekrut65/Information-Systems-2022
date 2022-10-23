@@ -40,7 +40,12 @@ public class PublishingHouseController {
     public List<PublishingHouse> search(@RequestParam("name") String name) {
         return service.findByName(name);
     }
-
+    @RequestMapping(value = "/publishing-houses/by-all/page", method = RequestMethod.GET)
+    public List<PublishingHouse> searchByAllPage(@RequestParam("page") String page,
+                                                 @RequestParam("per-page") String perPage,
+                                                 @RequestParam("name") String name) {
+        return service.getPage(Integer.parseInt(page), Integer.parseInt(perPage),service.findByName(name));
+    }
     @RequestMapping(value = "/publishing-house", method = RequestMethod.GET)
     public PublishingHouse get(@RequestParam("id") String id) {
         return service.get(Integer.parseInt(id));

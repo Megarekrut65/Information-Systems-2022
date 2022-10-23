@@ -44,4 +44,10 @@ public class GenreController {
     public List<Genre> searchByName(@RequestParam("name") String name) {
         return service.findByName(name);
     }
+    @RequestMapping(value = "/genres/by-all/page", method = RequestMethod.GET)
+    public List<Genre> searchByAllPage(@RequestParam("page") String page,
+                                       @RequestParam("per-page") String perPage,
+                                       @RequestParam("name") String name) {
+        return service.getPage(Integer.parseInt(page), Integer.parseInt(perPage),service.findByName(name));
+    }
 }

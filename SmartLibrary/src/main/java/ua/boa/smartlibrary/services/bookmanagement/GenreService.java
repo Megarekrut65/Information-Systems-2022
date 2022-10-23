@@ -2,15 +2,17 @@ package ua.boa.smartlibrary.services.bookmanagement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ua.boa.smartlibrary.PageGetter;
 import ua.boa.smartlibrary.dataclasses.bookmanagement.Genre;
 import ua.boa.smartlibrary.db.repositories.bookmanagement.GenreRepository;
 import ua.boa.smartlibrary.exceptions.bookmanagement.GenreNotFoundException;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class GenreService {
+public class GenreService extends PageGetter<Genre> {
     @Autowired
     private GenreRepository repository;
 
@@ -41,5 +43,8 @@ public class GenreService {
 
     public List<Genre> findByName(String name) {
         return repository.findGenresByNameAdvanced(name);
+    }
+    public List<Genre> getPage(int page, int perPage, List<Genre> genres) {
+        return getPart(genres, page, perPage, Comparator.comparing(Genre::getName));
     }
 }

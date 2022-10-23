@@ -53,24 +53,32 @@ function createTagFormUpdate(id, toSendData = (data) => {}) {
 
 function getTagsForTable(item) {
     item = normalizeItem(item, ["name"])
-    return get(URLS.tagsByName, item).sort((a, b) => a.name.localeCompare(b.name))
-        .map(obj => {
-            return {
-                "Id": obj.id,
-                "Name": {
-                    "text": obj.name,
-                    "id": obj.id,
-                    "type": "button",
-                    "onClick": () => {
-                        addToBody(createTagFormUpdate(obj.id, (data) => {
-                            document.getElementById("Name" + obj.id).textContent = cutTextForTable(data.name)
-                        }))
-                    }
+    return tagsToTableProperties((page, perPage)=>getPage(URLS.tagsByAllPage, page, perPage, item))
+}
+function getAllTagsForTable(){
+    return tagsToTableProperties(()=>getAll(URLS.tags))
+}
+function tagsToTableProperties(getter) {
+    let convector = obj => {
+        return {
+            "Id": obj.id,
+            "Name": {
+                "text": obj.name,
+                "id": obj.id,
+                "type": "button",
+                "onClick": () => {
+                    addToBody(createTagFormUpdate(obj.id, (data) => {
+                        document.getElementById("Name" + obj.id).textContent = cutTextForTable(data.name)
+                    }))
                 }
             }
-        })
+        }
+    }
+    return {
+        "convector":convector,
+        "getter":getter
+    }
 }
-
 function createTagsSearch(recreateTable) {
     return {
         "inputs": {

@@ -87,21 +87,29 @@ function createPublishingHouseView(obj) {
 
 function getPublishingHousesForTable(item) {
     item = normalizeItem(item, ["name"])
-    return get(URLS.publishingHousesByName, item).sort((a, b) => a.name.localeCompare(b.name))
-        .map(obj => {
-            return {
-                "Id": obj.id,
-                "Name": {
-                    "text": obj.name,
-                    "id": obj.id,
-                    "type": "reference",
-                    "object": "PublishingHouse"
-                },
-                "Address": obj.address
-            }
-        })
+    return publishingHousesToTableProperties((page, perPage)=>getPage(URLS.publishingHousesByAllPage,page, perPage, item))
 }
-
+function getAllPublishingHousesForTable(){
+    return publishingHousesToTableProperties(()=>getAll(URLS.publishingHouses))
+}
+function publishingHousesToTableProperties(getter) {
+    let convector = obj => {
+        return {
+            "Id": obj.id,
+            "Name": {
+                "text": obj.name,
+                "id": obj.id,
+                "type": "reference",
+                "object": "PublishingHouse"
+            },
+            "Address": obj.address
+        }
+    }
+    return {
+        "convector":convector,
+        "getter":getter
+    }
+}
 function createPublishingHousesSearch(recreateTable) {
     return {
         "inputs": {

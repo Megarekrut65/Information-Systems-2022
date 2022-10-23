@@ -3,10 +3,12 @@ const URLS = {
     genre: SERVER_URL + "/genre",
     genres: SERVER_URL + "/genres",
     genresByName: SERVER_URL + "/genres/by-name",
+    genresByAllPage: SERVER_URL + "/genres/by-all/page",
 
     tag: SERVER_URL + "/tag",
     tags: SERVER_URL + "/tags",
     tagsByName: SERVER_URL + "/tags/by-name",
+    tagsByAllPage: SERVER_URL + "/tags/by-all/page",
 
     book: SERVER_URL + "/book",
     books: SERVER_URL + "/books",
@@ -18,6 +20,7 @@ const URLS = {
     publishingHouses: SERVER_URL + "/publishing-houses",
     publishingHousesByName: SERVER_URL + "/publishing-houses/by-name",
     publishingHouse: SERVER_URL + "/publishing-house",
+    publishingHousesByAllPage: SERVER_URL + "/publishing-houses/by-all/page",
 
     author: SERVER_URL + "/author",
     authors: SERVER_URL + "/authors",
@@ -53,6 +56,8 @@ const URLS = {
     distributor: SERVER_URL + "/distributor",
     distributors: SERVER_URL + "/distributors",
     distributorsByName: SERVER_URL + "/distributors/by-name",
+    distributorsByAllPage: SERVER_URL + "/distributors/by-all/page",
+
 
     bookBorrowing: SERVER_URL + "/book-borrowing",
     bookBorrowings: SERVER_URL + "/book-borrowings",

@@ -102,24 +102,30 @@ function createDistributorView(obj) {
 
 function getDistributorsForTable(item) {
     item = normalizeItem(item, ["name"])
-    return get(URLS.distributorsByName, {
-            "name": item.name
-        }).sort((a, b) => a.name.localeCompare(b.name))
-        .map(obj => {
-            return {
-                "Id": obj.id,
-                "Name": {
-                    "text": obj.name,
-                    "id": obj.id,
-                    "object": "Distributor",
-                    "type": "reference"
-                },
-                "Phone number": obj.phoneNumber,
-                "Address": obj.address
-            }
-        })
+    return distributorsToTableProperties((page, perPage)=>getPage(URLS.distributorsByAllPage, page, perPage, item))
 }
-
+function getAllDistributorsForTable(){
+    return distributorsToTableProperties(()=>getAll(URLS.distributors))
+}
+function distributorsToTableProperties(getter) {
+    let convector = obj => {
+        return {
+            "Id": obj.id,
+            "Name": {
+                "text": obj.name,
+                "id": obj.id,
+                "object": "Distributor",
+                "type": "reference"
+            },
+            "Phone number": obj.phoneNumber,
+            "Address": obj.address
+        }
+    }
+    return {
+        "convector":convector,
+        "getter":getter
+    }
+}
 function createDistributorsSearch(recreateTable) {
     return {
         "inputs": {
