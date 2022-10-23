@@ -25,10 +25,7 @@ public class BookService {
     }
 
     public List<Book> getAll() {
-        return repository.findAll();
-    }
-    public List<Book> getBookPart(Integer perPage, Integer page){
-        return repository.getPartOrdered((page - 1)*perPage, perPage*page);
+        return repository.getAllOrdered();
     }
 
     public Book update(Integer id, String title, Integer publishingHouseId, Integer publishYear, String comment) {

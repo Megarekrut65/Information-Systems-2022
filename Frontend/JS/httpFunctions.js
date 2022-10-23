@@ -4,7 +4,14 @@ function getAll(url) {
     xmlHttpReq.send(null)
     return normalizeHttpResponse(xmlHttpReq.responseText)
 }
-
+function getPage(url, page, perPage, obj){
+    obj["page"] = page
+    obj["per-page"] = perPage
+    let xmlHttpReq = new XMLHttpRequest()
+    xmlHttpReq.open("GET", makeParametersUrl(url, obj), false)
+    xmlHttpReq.send(null)
+    return normalizeHttpResponse(xmlHttpReq.responseText)
+}
 function create(url, obj) {
     return getPostPut(url, obj, "POST")
 }

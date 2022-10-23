@@ -2,6 +2,7 @@ function generateData(count){
     //generateName(count)
     //generateHouse()
     //generateBook()
+    //generateBook()
 }
   
   function pickRandom(list) {
@@ -55,20 +56,18 @@ function createAdress() {
     })  
   }
   function generateBook(){
-    fetch(`../books.json`)
+    fetch(`../books2.json`)
         .then(response => {
            return response.json()
         }).then(books=>{
             let names = [] 
-            let years = []
             for(let i in books){
                 names.push(books[i].title)
-                years.push(books[i].year)
             }
             let houses = getAll(URLS.publishingHouses)
             for(let i = 0; i < books.length; i++){
-                let name = names[i]
-                let year = years[i]
+                let name = names[i].substring(0, 49)
+                let year = randomDate(new Date(1800, 1, 1), new Date()).getFullYear()
                 let house = pickRandom(houses)
                 create(URLS.book, {"title":name,
                  "publish-year":year,

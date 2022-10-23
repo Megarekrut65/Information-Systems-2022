@@ -21,7 +21,7 @@ async function loadPage() {
 async function loadPrintPage() {
     let url = new URL(window.location)
     let objectsName = getData(url, "objects")
-    let creating = getFunction("get" + objectsName + "ForTable")
+    let creating = getFunction("getAll" + objectsName + "ForTable")
     document.getElementById("content").appendChild(createTable(creating({})))
 }
 async function loadObjectPage(parentId, objectName, objectsName) {

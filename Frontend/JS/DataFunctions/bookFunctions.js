@@ -150,47 +150,50 @@ function createBookView(obj) {
 
 function getBooksForTable(item) {
     item = normalizeItem(item, ["title", "genre", "tag", "author"])
-    return booksToTableProperties(get(URLS.booksByAll, {
+    return booksToTableProperties((page, perPage) => getPage(URLS.booksByAllPage,page, perPage, {
         "title": item.title,
         "genre-name": item.genre,
         "tag-name": item.tag,
         "author-name": item.author,
-    }))
+    }), ()=>getAll(URLS.books))
 }
-
-function booksToTableProperties(books) {
-    return books.sort((a, b) => a.title.localeCompare(b.title))
-        .map(obj => {
-            return {
-                "Id": obj.id,
-                "Title": {
-                    "text": obj.title,
-                    "id": obj.id,
-                    "object": "Book",
-                    "type": "reference"
-                },
-                "Genres": {
-                    "type": "list",
-                    "list": get(URLS.bookGenreByBook, { "book-id": obj.id }).map(item => item.genre.name)
-                },
-                "Tags": {
-                    "type": "list",
-                    "list": get(URLS.bookTagByBook, { "book-id": obj.id }).map(item => item.tag.name)
-                },
-                "Authorship": {
-                    "type": "list",
-                    "list": get(URLS.authorshipByBook, { "book-id": obj.id }).map(item => item.author.name)
-                },
-                "Available": obj.bookInfo.availableCount,
-                "Publishing House": {
-                    "text": obj.publishingHouse.name,
-                    "id": obj.publishingHouse.id,
-                    "object": "PublishingHouse",
-                    "type": "reference"
-                },
-                "Publish Year": obj.publishYear
-            }
-        })
+function getAllBooksForTable() {
+    return booksToTableProperties(()=>getAll(URLS.books))
+}
+function booksToTableProperties(getPage, getter) {
+    let convector = obj=> {return{
+        "Id": obj.id,
+        "Title": {
+            "text": obj.title,
+            "id": obj.id,
+            "object": "Book",
+            "type": "reference"
+        },
+        "Genres": {
+            "type": "list",
+            "list": get(URLS.bookGenreByBook, { "book-id": obj.id }).map(item => item.genre.name)
+        },
+        "Tags": {
+            "type": "list",
+            "list": get(URLS.bookTagByBook, { "book-id": obj.id }).map(item => item.tag.name)
+        },
+        "Authorship": {
+            "type": "list",
+            "list": get(URLS.authorshipByBook, { "book-id": obj.id }).map(item => item.author.name)
+        },
+        "Available": obj.bookInfo.availableCount,
+        "Publishing House": {
+            "text": obj.publishingHouse.name,
+            "id": obj.publishingHouse.id,
+            "object": "PublishingHouse",
+            "type": "reference"
+        },
+        "Publish Year": obj.publishYear
+    }}
+    return {
+        "convector":convector,
+        "getter":getPage
+    }
 }
 
 function createBooksSearch(recreateTable) {

@@ -21,3 +21,6 @@ font-weight: bold;
 .table-reference {
     text-decoration: none;
 }
+.page-buttons{
+    display: none;
+}

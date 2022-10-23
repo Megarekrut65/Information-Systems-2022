@@ -83,3 +83,19 @@
     grid-template-columns: 20% 20% 20%;
     justify-content: center;
 }
+.page-buttons{
+    margin: 1vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.page-button{
+    background-color: whitesmoke;
+    width: 2vw;
+    height: 2vw;
+    text-align: center;
+    border: 0.1vw solid black;
+}
+.page-button:hover{
+    background-color: gray;
+}
