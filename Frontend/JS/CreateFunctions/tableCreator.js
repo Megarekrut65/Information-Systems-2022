@@ -3,9 +3,9 @@ function createTable(properties) {
     let table = document.createElement("table")
     container.appendChild(table)
     table.className = "table-style"
-    table.appendChild(createHead(properties[0]))
     let createPage = (page, perPage)=>{
         let list = properties.getter(page, perPage)
+        if(list.length > 0) table.appendChild(createHead(properties.convector(list[0])))
         for (let i in list) {
             table.appendChild(createRow(properties.convector(list[i]), i % 2 === 0 ? "tr-style1" : "tr-style2"))
         }

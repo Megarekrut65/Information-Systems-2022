@@ -61,7 +61,6 @@ public class BookSearchService extends PageGetter<Book> {
     }
 
     public List<Book> getPage(int page, int perPage, List<Book> books) {
-        books.sort(Comparator.comparing(Book::getTitle));
-        return getPart(books, page, perPage);
+        return getPart(books, page, perPage, Comparator.comparing(Book::getTitle));
     }
 }

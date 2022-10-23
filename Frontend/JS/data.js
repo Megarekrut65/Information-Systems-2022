@@ -18,6 +18,7 @@ const URLS = {
     author: SERVER_URL + "/author",
     authors: SERVER_URL + "/authors",
     authorsByAll: SERVER_URL + "/authors/by-all",
+    authorsByAllPage: SERVER_URL + "/authors/by-all/page",
     authorship: SERVER_URL + "/authorship",
     authorships: SERVER_URL + "/authorships",
     bookGenreByBook: SERVER_URL + "/book-genres/by-book-id",
@@ -58,8 +59,7 @@ const URLS = {
     bookWriteOffsByAll: SERVER_URL + "/book-write-offs/by-all",
     bookLost: SERVER_URL + "/book-lost",
     bookLosts: SERVER_URL + "/book-losts",
-    bookLostsByAll: SERVER_URL + "/book-losts/by-all",
-    part:"/part"
+    bookLostsByAll: SERVER_URL + "/book-losts/by-all"
 }
 const indexProperties = [{
         "title": "Book management",

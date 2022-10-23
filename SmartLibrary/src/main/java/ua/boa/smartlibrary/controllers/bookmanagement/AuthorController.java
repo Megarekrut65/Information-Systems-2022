@@ -57,4 +57,12 @@ public class AuthorController {
                                     @RequestParam("book-title") String bookTitle) {
         return authorSearchService.findAuthorByAll(authorName, bookTitle);
     }
+    @RequestMapping(value = "/authors/by-all/page", method = RequestMethod.GET)
+    public List<Author> searchByAllPage(@RequestParam("page") String page,
+                                        @RequestParam("per-page") String perPage,
+                                        @RequestParam("author-name") String authorName,
+                                    @RequestParam("book-title") String bookTitle) {
+        return authorSearchService.getPage(Integer.parseInt(page), Integer.parseInt(perPage),
+                authorSearchService.findAuthorByAll(authorName, bookTitle));
+    }
 }

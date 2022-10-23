@@ -103,12 +103,14 @@ function createAuthorView(obj) {
 
 function getAuthorsForTable(item) {
     item = normalizeItem(item, ["name", "title"])
-    return authorsToTableProperties(get(URLS.authorsByAll, { "author-name": item.name, "book-title": item.title }))
+    return authorsToTableProperties((page, perPage)=>
+    getPage(URLS.authorsByAllPage, page, perPage, { "author-name": item.name, "book-title": item.title }))
 }
-
-function authorsToTableProperties(authors) {
-    return authors.sort((a, b) => a.name.localeCompare(b.name))
-        .map(obj => {
+function getAllAuthorsForTable() {
+    return authorsToTableProperties(()=>getAll(URLS.authors))
+}
+function authorsToTableProperties(getter) {
+    let convector = obj => {
             return {
                 "Id": obj.id,
                 "Name": {
@@ -124,7 +126,11 @@ function authorsToTableProperties(authors) {
                     "list": get(URLS.authorshipByAuthor, { "author-id": obj.id }).map(item => item.book.title)
                 }
             }
-        })
+        }
+    return {
+        "convector":convector,
+        "getter":getter
+    }
 }
 
 function createAuthorsSearch(recreateTable) {

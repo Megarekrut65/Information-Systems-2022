@@ -18,7 +18,6 @@ public class CustomerSearchService extends PageGetter<Customer> {
         return customerRepository.findCustomersByAllAdvanced(name, phoneNumber, email);
     }
     public List<Customer> getPage(int page, int perPage, List<Customer> customers) {
-        customers.sort(Comparator.comparing(Customer::getName));
-        return getPart(customers, page, perPage);
+        return getPart(customers, page, perPage, Comparator.comparing(Customer::getName));
     }
 }

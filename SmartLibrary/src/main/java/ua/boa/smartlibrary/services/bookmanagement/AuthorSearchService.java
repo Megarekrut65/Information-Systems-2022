@@ -2,15 +2,17 @@ package ua.boa.smartlibrary.services.bookmanagement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ua.boa.smartlibrary.PageGetter;
 import ua.boa.smartlibrary.dataclasses.bookmanagement.Author;
 import ua.boa.smartlibrary.dataclasses.bookmanagement.Authorship;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Service
-public class AuthorSearchService {
+public class AuthorSearchService extends PageGetter<Author> {
     @Autowired
     private AuthorService authorService;
     @Autowired
@@ -30,5 +32,8 @@ public class AuthorSearchService {
         authors.clear();
         authors.addAll(set);
         return authors;
+    }
+    public List<Author> getPage(int page, int perPage, List<Author> authors){
+        return getPart(authors, page, perPage, Comparator.comparing(Author::getName));
     }
 }
