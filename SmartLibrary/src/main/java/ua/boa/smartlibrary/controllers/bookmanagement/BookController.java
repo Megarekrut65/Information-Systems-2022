@@ -81,7 +81,7 @@ public class BookController {
                                   @RequestParam("genre-name") String genreName,
                                   @RequestParam("tag-name") String tagName,
                                   @RequestParam("author-name") String authorName) {
-        return bookSearchService.findBookByAllPage(Integer.parseInt(page), Integer.parseInt(perPage),
-                title, genreName, tagName, authorName);
+        return bookSearchService.getPage(Integer.parseInt(page), Integer.parseInt(perPage),
+                bookSearchService.findBookByAll(title, genreName, tagName, authorName));
     }
 }

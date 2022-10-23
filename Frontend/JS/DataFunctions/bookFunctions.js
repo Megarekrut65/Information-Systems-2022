@@ -160,7 +160,7 @@ function getBooksForTable(item) {
 function getAllBooksForTable() {
     return booksToTableProperties(()=>getAll(URLS.books))
 }
-function booksToTableProperties(getPage, getter) {
+function booksToTableProperties(getter) {
     let convector = obj=> {return{
         "Id": obj.id,
         "Title": {
@@ -192,7 +192,7 @@ function booksToTableProperties(getPage, getter) {
     }}
     return {
         "convector":convector,
-        "getter":getPage
+        "getter":getter
     }
 }
 

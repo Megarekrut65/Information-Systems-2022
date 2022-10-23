@@ -2,6 +2,7 @@ package ua.boa.smartlibrary.services.bookmanagement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ua.boa.smartlibrary.PageGetter;
 import ua.boa.smartlibrary.dataclasses.bookmanagement.*;
 import ua.boa.smartlibrary.dataclasses.customermanagement.BookBorrowing;
 import ua.boa.smartlibrary.services.customermanagement.BookBorrowingService;
@@ -9,7 +10,7 @@ import ua.boa.smartlibrary.services.customermanagement.BookBorrowingService;
 import java.util.*;
 
 @Service
-public class BookSearchService {
+public class BookSearchService extends PageGetter<Book> {
     @Autowired
     private BookService bookService;
     @Autowired
@@ -59,11 +60,8 @@ public class BookSearchService {
         return books;
     }
 
-    public List<Book> findBookByAllPage(int page, int perPage, String title, String genreName,
-                                        String tagName, String authorName) {
-        List<Book> books = findBookByAll(title, genreName, tagName, authorName);
-        int start = Math.min(books.size(),Math.max((page-1)*perPage, 0)), end = Math.min(books.size(), page * perPage);
+    public List<Book> getPage(int page, int perPage, List<Book> books) {
         books.sort(Comparator.comparing(Book::getTitle));
-        return books.subList(start, end);
+        return getPart(books, page, perPage);
     }
 }

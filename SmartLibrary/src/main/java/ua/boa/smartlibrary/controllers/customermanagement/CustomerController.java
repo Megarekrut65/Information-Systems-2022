@@ -74,4 +74,13 @@ public class CustomerController {
                                       @RequestParam("email") String email) {
         return customerSearchService.findCustomersByAll(name, phoneNumber, email);
     }
+    @RequestMapping(value = "/customers/by-all/page", method = RequestMethod.GET)
+    public List<Customer> searchByAllPage(@RequestParam("page") String page,
+                                          @RequestParam("per-page") String perPage,
+                                          @RequestParam("name") String name,
+                                      @RequestParam("phone-number") String phoneNumber,
+                                      @RequestParam("email") String email) {
+        return customerSearchService.getPage(Integer.parseInt(page), Integer.parseInt(perPage),
+                customerSearchService.findCustomersByAll(name, phoneNumber, email));
+    }
 }

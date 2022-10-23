@@ -150,25 +150,33 @@ function createCustomerView(obj) {
 
 function getCustomersForTable(item) {
     item = normalizeItem(item, ["name", "phone", "email"])
-    return get(URLS.customersByAll, { "name": item.name, "phone-number": item.phone, "email": item.email })
-        .sort((a, b) => a.name.localeCompare(b.name))
-        .map(obj => {
-            return {
-                "Id": obj.id,
-                "Name": {
-                    "text": obj.name,
-                    "id": obj.id,
-                    "object": "Customer",
-                    "type": "reference"
-                },
-                "Phone number": obj.phoneNumber,
-                "Email": obj.email,
-                "Address": obj.address,
-                "Birth date": obj.dateOfBirth
-            }
-        })
+    return customersToTableProperties((page, perPage) => getPage(URLS.customersByAllPage,page, perPage, 
+        { "name": item.name, "phone-number": item.phone, "email": item.email }))
 }
-
+function getAllCustomersForTable(){
+    return customersToTableProperties(()=>getAll(URLS.customers))
+}
+function customersToTableProperties(getter){
+    let convector = obj=>{
+        return {
+            "Id": obj.id,
+            "Name": {
+                "text": obj.name,
+                "id": obj.id,
+                "object": "Customer",
+                "type": "reference"
+            },
+            "Phone number": obj.phoneNumber,
+            "Email": obj.email,
+            "Address": obj.address,
+            "Birth date": obj.dateOfBirth
+        }
+    }
+    return {
+        "convector":convector,
+        "getter":getter
+    }
+}
 function createCustomersSearch(recreateTable) {
     return {
         "inputs": {
