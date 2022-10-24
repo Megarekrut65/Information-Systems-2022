@@ -3,6 +3,10 @@ function generateData(count){
     //generateHouse()
     //generateBook()
     //generateBook()
+    let houses = getAll(URLS.publishingHouses)
+    for(let i in houses){
+        remove(URLS.publishingHouse, houses[i].id)
+    }
 }
   
   function pickRandom(list) {

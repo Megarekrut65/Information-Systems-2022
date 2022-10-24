@@ -137,17 +137,25 @@ function createBookView(obj) {
             addToBody(createBookForm("Update the book", obj, updateReloadFunction(obj.id, URLS.book)))
         },
         "tables":{
-            "Count":[{
-                "Total":obj[bookInfo].totalCount,
-                "Available":obj[bookInfo].availableCount,
-                "Purchased":obj[bookInfo].purchasingCount,
-                "Borrowed":obj[bookInfo].borrowingCount,
-                "Wrote-off":obj[bookInfo].writeOffCount,
-                "Lost":obj[bookInfo].lostCount}]
+            "Count":getBookInfoTableProperties(obj)
         }
     })
 }
-
+function getBookInfoTableProperties(book){
+    return {
+        convector:obj=>{
+            return {
+                "Total":obj.totalCount,
+                "Available":obj.availableCount,
+                "Purchased":obj.purchasingCount,
+                "Borrowed":obj.borrowingCount,
+                "Wrote-off":obj.writeOffCount,
+                "Lost":obj.lostCount
+            }
+        },
+        getter: ()=> [book.bookInfo]
+    }
+}
 function getBooksForTable(item) {
     item = normalizeItem(item, ["title", "genre", "tag", "author"])
     return booksToTableProperties((page, perPage) => getPage(URLS.booksByAllPage,page, perPage, {

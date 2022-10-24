@@ -51,7 +51,13 @@ public class BookDeliveryController {
     public List<BookDelivery> searchByDelivery(@RequestParam("delivery-id") String deliveryId) {
         return service.findByDelivery(Integer.parseInt(deliveryId));
     }
-
+    @RequestMapping(value = "/book-deliveries/by-delivery-id/page", method = RequestMethod.GET)
+    public List<BookDelivery> searchByDeliveryPage(@RequestParam("page") String page,
+                                                   @RequestParam("per-page") String perPage,
+                                                   @RequestParam("delivery-id") String deliveryId) {
+        return bookDeliverySearchService.getPage(Integer.parseInt(page), Integer.parseInt(perPage),
+                service.findByDelivery(Integer.parseInt(deliveryId)));
+    }
     @RequestMapping(value = "/book-deliveries/by-book-id", method = RequestMethod.GET)
     public List<BookDelivery> searchByPublishYearPeriod(@RequestParam("book-id") String bookId) {
         return service.findByBook(Integer.parseInt(bookId));

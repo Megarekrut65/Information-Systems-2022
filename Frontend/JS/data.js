@@ -13,6 +13,7 @@ const URLS = {
     book: SERVER_URL + "/book",
     books: SERVER_URL + "/books",
     booksByPublishingHouse: SERVER_URL + "/books/by-publishing-house-id",
+    booksByPublishingHousePage: SERVER_URL + "/books/by-publishing-house-id/page",
     booksByTitle: SERVER_URL + "/books/by-title",
     booksByAll: SERVER_URL + "/books/by-all",
     booksByAllPage: SERVER_URL + "/books/by-all/page",
@@ -31,6 +32,7 @@ const URLS = {
     authorships: SERVER_URL + "/authorships",
     authorshipByBook: SERVER_URL + "/authorships/by-book-id",
     authorshipByAuthor: SERVER_URL + "/authorships/by-author-id",
+    authorshipByAuthorPage: SERVER_URL + "/authorships/by-author-id/page",
 
     bookGenreByBook: SERVER_URL + "/book-genres/by-book-id",
     bookGenre: SERVER_URL + "/book-genre",
@@ -43,6 +45,7 @@ const URLS = {
     bookDelivery: SERVER_URL + "/book-delivery",
     bookDeliveries: SERVER_URL + "/book-deliveries",
     bookDeliveriesByDelivery: SERVER_URL + "/book-deliveries/by-delivery-id",
+    bookDeliveriesByDeliveryPage: SERVER_URL + "/book-deliveries/by-delivery-id/page",
     bookDeliveriesByBook: SERVER_URL + "/book-deliveries/by-book-id",
     bookDeliveriesByAll: SERVER_URL + "/book-deliveries/by-all",
     bookDeliveriesByAllPage: SERVER_URL + "/book-deliveries/by-all/page",
@@ -52,6 +55,8 @@ const URLS = {
     deliveriesByAll: SERVER_URL + "/deliveries/by-all",
     deliveriesByAllPage: SERVER_URL + "/deliveries/by-all/page",
     deliveriesByDistributor: SERVER_URL + "/deliveries/by-distributor-id",
+    deliveriesByDistributorPage: SERVER_URL + "/deliveries/by-distributor-id/page",
+
 
     distributor: SERVER_URL + "/distributor",
     distributors: SERVER_URL + "/distributors",

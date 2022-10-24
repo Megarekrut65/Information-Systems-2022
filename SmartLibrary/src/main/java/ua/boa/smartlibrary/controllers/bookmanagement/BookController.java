@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ua.boa.smartlibrary.PageGetter;
 import ua.boa.smartlibrary.dataclasses.bookmanagement.Book;
 import ua.boa.smartlibrary.services.bookmanagement.BookSearchService;
 import ua.boa.smartlibrary.services.bookmanagement.BookService;
@@ -12,7 +13,7 @@ import ua.boa.smartlibrary.services.bookmanagement.BookService;
 import java.util.List;
 
 @RestController
-public class BookController {
+public class BookController{
     @Autowired
     private BookService service;
 
@@ -55,7 +56,13 @@ public class BookController {
     public List<Book> searchByPublishingHouse(@RequestParam("publishing-house-id") String publishingHouseId) {
         return service.findByPublishingHouse(Integer.parseInt(publishingHouseId));
     }
-
+    @RequestMapping(value = "/books/by-publishing-house-id/page", method = RequestMethod.GET)
+    public List<Book> searchByPublishingHousePage(@RequestParam("page") String page,
+                                                  @RequestParam("per-page") String perPage,
+                                                  @RequestParam("publishing-house-id") String publishingHouseId) {
+        return bookSearchService.getPage(Integer.parseInt(page), Integer.parseInt(perPage),
+                service.findByPublishingHouse(Integer.parseInt(publishingHouseId)));
+    }
     @RequestMapping(value = "/books/by-publish-year-period", method = RequestMethod.GET)
     public List<Book> searchByPublishYearPeriod(@RequestParam("publish-year-min") String publishYearMin,
                                                 @RequestParam("publish-year-max") String publishYearMax) {

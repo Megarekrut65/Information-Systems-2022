@@ -2,6 +2,7 @@ package ua.boa.smartlibrary.services.bookmanagement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ua.boa.smartlibrary.PageGetter;
 import ua.boa.smartlibrary.dataclasses.bookmanagement.Book;
 import ua.boa.smartlibrary.dataclasses.bookmanagement.PublishingHouse;
 import ua.boa.smartlibrary.db.repositories.bookmanagement.BookRepository;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class BookService {
+public class BookService{
     @Autowired
     private BookRepository repository;
     @Autowired
@@ -52,7 +53,6 @@ public class BookService {
         PublishingHouse publishingHouse = publishingHouseService.get(publishingHouseId);
         return repository.findBooksByPublishingHouse(publishingHouse);
     }
-
     public List<Book> findByPublishYearPeriod(Integer publishYearMin, Integer publishYearMax) {
         return repository.findBooksByPublishYearBetween(publishYearMin, publishYearMax);
     }

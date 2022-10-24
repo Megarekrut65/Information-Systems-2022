@@ -88,8 +88,8 @@ function createDeliveryView(obj) {
             addToBody(createDeliveryForm("Update the delivery", obj, updateReloadFunction(obj.id, URLS.delivery)))
         },
         "tables": {
-            "Book deliveries": bookDeliveriesToTableProperties(
-                get(URLS.bookDeliveriesByDelivery, { "delivery-id": obj.id }))
+            "Book deliveries": bookDeliveriesToTableProperties((page, perPage)=>
+                getPage(URLS.bookDeliveriesByDeliveryPage,page, perPage, { "delivery-id": obj.id }))
         }
     })
 }

@@ -45,7 +45,13 @@ public class DeliveryController {
     public List<Delivery> searchByDistributor(@RequestParam("distributor-id") String distributorId) {
         return service.findByDistributor(Integer.parseInt(distributorId));
     }
-
+    @RequestMapping(value = "/deliveries/by-distributor-id/page", method = RequestMethod.GET)
+    public List<Delivery> searchByDistributorPage(@RequestParam("page") String page,
+                                                  @RequestParam("per-page") String perPage,
+                                                  @RequestParam("distributor-id") String distributorId) {
+        return deliverySearchService.getPage(Integer.parseInt(page), Integer.parseInt(perPage),
+                service.findByDistributor(Integer.parseInt(distributorId)));
+    }
     @RequestMapping(value = "/deliveries/by-date-of-delivery-period", method = RequestMethod.GET)
     public List<Delivery> searchByDatePeriod(@RequestParam("date-of-delivery-min") String dateOfDeliveryMin,
                                              @RequestParam("date-of-delivery-max") String dateOfDeliveryMax) {

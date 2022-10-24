@@ -2,17 +2,19 @@ package ua.boa.smartlibrary.services.bookmanagement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ua.boa.smartlibrary.PageGetter;
 import ua.boa.smartlibrary.dataclasses.bookmanagement.Author;
 import ua.boa.smartlibrary.dataclasses.bookmanagement.Authorship;
 import ua.boa.smartlibrary.dataclasses.bookmanagement.Book;
 import ua.boa.smartlibrary.db.repositories.bookmanagement.AuthorshipRepository;
 import ua.boa.smartlibrary.exceptions.bookmanagement.AuthorshipNotFoundException;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AuthorshipService {
+public class AuthorshipService extends PageGetter<Authorship> {
     @Autowired
     private AuthorshipRepository repository;
     @Autowired
@@ -54,7 +56,10 @@ public class AuthorshipService {
         Author author = authorService.get(authorId);
         return repository.findAuthorshipsByAuthor(author);
     }
-
+    public List<Authorship> getPage(int page, int perPage, List<Authorship> authorships) {
+        return getPart(authorships, page, perPage,
+                Comparator.comparing((Authorship authorship)->authorship.getBook().getTitle()));
+    }
     public List<Authorship> findByAuthorsAndBooks(List<Author> authors, List<Book> books) {
         return repository.findAuthorshipsByAuthorInAndBookIn(authors, books);
     }

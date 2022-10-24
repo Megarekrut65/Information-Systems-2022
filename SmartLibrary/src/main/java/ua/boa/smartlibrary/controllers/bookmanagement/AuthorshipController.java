@@ -48,7 +48,13 @@ public class AuthorshipController {
     public List<Authorship> searchByAuthor(@RequestParam("author-id") String authorId) {
         return service.findByAuthor(Integer.parseInt(authorId));
     }
-
+    @RequestMapping(value = "/authorships/by-author-id/page", method = RequestMethod.GET)
+    public List<Authorship> searchByAuthorPage(@RequestParam("page") String page,
+                                               @RequestParam("per-page") String perPage,
+                                               @RequestParam("author-id") String authorId) {
+        return service.getPage(Integer.parseInt(page), Integer.parseInt(perPage),
+                service.findByAuthor(Integer.parseInt(authorId)));
+    }
     @RequestMapping(value = "/authorship", method = RequestMethod.GET)
     public Authorship get(@RequestParam("id") String id) {
         return service.get(Integer.parseInt(id));

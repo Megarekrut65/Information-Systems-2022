@@ -95,7 +95,8 @@ function createDistributorView(obj) {
                 updateReloadFunction(obj.id, URLS.distributor)))
         },
         "tables": {
-            "Deliveries": deliveriesToTableProperties(get(URLS.deliveriesByDistributor, { "distributor-id": obj.id }))
+            "Deliveries": deliveriesToTableProperties((page, perPage)=>getPage(URLS.deliveriesByDistributorPage, page, perPage,
+                { "distributor-id": obj.id }))
         }
     })
 }

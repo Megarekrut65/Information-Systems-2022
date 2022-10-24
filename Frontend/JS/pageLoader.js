@@ -10,7 +10,7 @@ async function loadPage() {
     let creating = getFunction("create" + objectName + "View")
     let obj = window["get" + objectName](id)
     document.getElementById("content").appendChild(creating(obj))
-    if(objectName = "MonthStatistic"){
+    if(objectName === "MonthStatistic"){
         let rightSide = document.createElement("div")
         rightSide.className = "rightSide"
         rightSide.id = "rightSide"

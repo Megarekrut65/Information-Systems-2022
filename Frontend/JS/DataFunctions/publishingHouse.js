@@ -80,7 +80,8 @@ function createPublishingHouseView(obj) {
                 updateReloadFunction(obj.id, URLS.publishingHouse)))
         },
         "tables": {
-            "Books": booksToTableProperties(get(URLS.booksByPublishingHouse, { "publishing-house-id": obj.id }))
+            "Books": booksToTableProperties((page, perPage)=>getPage(URLS.booksByPublishingHousePage,page, perPage,
+                { "publishing-house-id": obj.id }))
         }
     })
 }

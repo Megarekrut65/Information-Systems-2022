@@ -96,7 +96,8 @@ function createAuthorView(obj) {
             addToBody(createAuthorForm("Update the author", obj, updateReloadFunction(obj.id, URLS.author)))
         },
         "tables": {
-            "Books": booksToTableProperties(get(URLS.authorshipByAuthor, { "author-id": obj.id }).map(item => item.book))
+            "Books": booksToTableProperties((page, perPage)=>
+            getPage(URLS.authorshipByAuthorPage, page, perPage, { "author-id": obj.id }).map(item => item.book))
         }
     })
 }
