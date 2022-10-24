@@ -75,7 +75,20 @@ public class BookBorrowingController {
     public List<BookBorrowing> searchNotReturnedByCustomer(@RequestParam("customer-id") String customerId) {
         return service.findNotReturnedByCustomer(Integer.parseInt(customerId));
     }
-
+    @RequestMapping(value = "/book-borrowings/by-customer-id/returned/page", method = RequestMethod.GET)
+    public List<BookBorrowing> searchReturnedByCustomerPage(@RequestParam("page") String page,
+                                               @RequestParam("per-page") String perPage,
+                                               @RequestParam("customer-id") String customerId) {
+        return bookBorrowingSearchService.getPage(Integer.parseInt(page), Integer.parseInt(perPage),
+                service.findReturnedByCustomer(Integer.parseInt(customerId)));
+    }
+    @RequestMapping(value = "/book-borrowings/by-customer-id/not-returned/page", method = RequestMethod.GET)
+    public List<BookBorrowing> searchNotReturnedByCustomerPage(@RequestParam("page") String page,
+                                                            @RequestParam("per-page") String perPage,
+                                                            @RequestParam("customer-id") String customerId) {
+        return bookBorrowingSearchService.getPage(Integer.parseInt(page), Integer.parseInt(perPage),
+                service.findNotReturnedByCustomer(Integer.parseInt(customerId)));
+    }
     @RequestMapping(value = "/book-borrowing", method = RequestMethod.GET)
     public BookBorrowing get(@RequestParam("id") String id) {
         return service.get(Integer.parseInt(id));

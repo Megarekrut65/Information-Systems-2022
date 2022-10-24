@@ -102,13 +102,7 @@ function createCustomerView(obj) {
         emailKey = "email",
         addressKey = "address",
         dateOfBirthKey = "dateOfBirth"
-    let borrowings = get(URLS.bookBorrowingsByCustomer, { "customer-id": obj.id })
-    let borrowed = [],
-        returned = []
-    borrowings.forEach(item => {
-        if (item.actualDateOfReturn === null) borrowed.push(item.book)
-        else returned.push(item.book)
-    })
+    let urlFunction = url=>(page, perPage)=>getPage(url, page, perPage, {"customer-id":obj.id}).map(item=>item.book)
     return createObjectView({
         "title": "Customer",
         "fields": {
@@ -142,8 +136,8 @@ function createCustomerView(obj) {
             addToBody(createCustomerForm("Update the customer", obj, updateReloadFunction(obj.id, URLS.customer)))
         },
         "tables": {
-            "Borrowed books": booksToTableProperties(borrowed),
-            "Returned books": booksToTableProperties(returned)
+            "Borrowed books": booksToTableProperties(urlFunction(URLS.bookBorrowingsNotReturnedByCustomerPage)),
+            "Returned books": booksToTableProperties(urlFunction(URLS.bookBorrowingsReturnedByCustomerPage))
         }
     })
 }

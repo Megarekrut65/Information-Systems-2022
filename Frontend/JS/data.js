@@ -70,6 +70,8 @@ const URLS = {
     bookBorrowingsNotReturnedByCustomer: SERVER_URL + "/book-borrowings/not-returned/by-customer-id",
     bookBorrowingsByAll: SERVER_URL + "/book-borrowings/by-all",
     bookBorrowingsByAllPage: SERVER_URL + "/book-borrowings/by-all/page",
+    bookBorrowingsReturnedByCustomerPage: SERVER_URL + "/book-borrowings/by-customer-id/returned/page",
+    bookBorrowingsNotReturnedByCustomerPage: SERVER_URL + "/book-borrowings/by-customer-id/not-returned/page",
 
     customer: SERVER_URL + "/customer",
     customers: SERVER_URL + "/customers",
