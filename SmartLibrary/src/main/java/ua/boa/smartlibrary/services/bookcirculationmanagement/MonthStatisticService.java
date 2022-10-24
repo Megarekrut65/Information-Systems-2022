@@ -156,10 +156,9 @@ public class MonthStatisticService extends PageGetter<MonthStatistic> {
         return repository.getAllOrdered();
     }
     public List<MonthStatistic> getPage(int page, int perPage, List<MonthStatistic> monthStatistics){
-        List<MonthStatistic> list =  getPart(monthStatistics, page, perPage,
-                Comparator.comparing(MonthStatistic::getMonthDate));
-        Collections.reverse(list);
-        return list;
+        return getPart(monthStatistics, page, perPage,
+                (MonthStatistic monthStatistic, MonthStatistic monthStatistic1)->
+                        monthStatistic1.getMonthDate().compareTo(monthStatistic.getMonthDate()));
     }
     public MonthStatistic findClosestStatisticByDate(Date monthDate) {
         List<MonthStatistic> closestStatistics = repository.findClosestMonthStatistics(monthDate);

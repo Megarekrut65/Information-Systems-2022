@@ -38,9 +38,8 @@ public class BookWriteOffSearchService extends PageGetter<BookWriteOff> {
         return bookWriteOffRepository.findBookWriteOffsByBookIn(books);
     }
     public List<BookWriteOff> getPage(int page, int perPage, List<BookWriteOff> bookWriteOffs){
-        List<BookWriteOff> list = getPart(bookWriteOffs, page, perPage,
-                Comparator.comparing(BookWriteOff::getDateOfWriteOff));
-        Collections.reverse(list);
-        return list;
+        return getPart(bookWriteOffs, page, perPage,
+                (BookWriteOff bookWriteOff, BookWriteOff bookWriteOff1)->
+                        bookWriteOff1.getDateOfWriteOff().compareTo(bookWriteOff.getDateOfWriteOff()));
     }
 }

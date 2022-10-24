@@ -1,11 +1,59 @@
-function generateData(count){
+function generateData(){
     //generateName(count)
     //generateHouse()
     //generateBook()
-    //generateBook()
-    let houses = getAll(URLS.publishingHouses)
-    for(let i in houses){
-        remove(URLS.publishingHouse, houses[i].id)
+    // generateBook()
+    // let books = getAll(URLS.books)
+    // for(let i in books){
+    //     remove(URLS.book, books[i].id)
+    // }
+    // let houses = getAll(URLS.publishingHouses)
+    // for(let i in houses){
+    //     remove(URLS.publishingHouse, houses[i].id)
+    // }
+    // let books = getAll(URLS.books)
+    // let genres = getAll(URLS.genres)
+    // let tags = getAll(URLS.tags)
+    // for(let i in books){
+    //     let book = books[i]
+    //     let count = Math.floor((Math.random() * 5))
+    //     for(let j = 0; j < count; j++){
+    //         let genre = pickRandom(genres)
+    //         create(URLS.bookGenre, {"book-id":book.id, "genre-id":genre.id})
+    //     }
+    //     count = Math.floor((Math.random() * 3))
+    //     for(let j = 0; j < count; j++){
+    //         let tag = pickRandom(tags)
+    //         create(URLS.bookTag, {"book-id":book.id, "tag-id":tag.id})
+    //     }
+    // }
+    // let books = getAll(URLS.books)
+    // let authors = getAll(URLS.authors)
+    // for(let i in books){
+    //     let book = books[i]
+    //     let count = Math.floor((Math.random() * 3))
+    //     for(let j = 0; j < count; j++){
+    //         let author = pickRandom(authors)
+    //         create(URLS.authorship, {"book-id":book.id, "author-id":author.id, "author-role":pickRandom(["Main", "Other"])})
+    //     }
+    // }
+    // let nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+    // fetch(`../names-surnames.json`)
+    //     .then(response => {
+    //        return response.json()
+    //     }).then(surname=>{
+    //         for(let i = 0; i < 15; i++){
+    //             let name = pickRandom(surname.data) + pickRandom([" AM", " PR", " Corparation", " TMK", "-Shop"])
+    //             create(URLS.distributor, {"name":name,
+    //              "phone-number":createPhoneNumber([3,8,0,pickRandom(nums),pickRandom(nums),pickRandom(nums),pickRandom(nums),pickRandom(nums),pickRandom(nums),pickRandom(nums),pickRandom(nums),pickRandom(nums)]),
+    //             "address":createAdress()})
+    //         }
+    //     }) 
+    let distributors = getAll(URLS.distributors)
+    for(let i = 0; i < 100;i++){
+        let distributor = pickRandom(distributors)
+        let date = getTextDate(randomDate(new Date(2020, 1, 1), new Date()))
+        create(URLS.delivery, {"distributor-id":distributor.id, "date-of-delivery": date})
     }
 }
   

@@ -38,9 +38,8 @@ public class BookLostSearchService extends PageGetter<BookLost> {
         return bookLostRepository.findBooksLostByBookIn(books);
     }
     public List<BookLost> getPage(int page, int perPage, List<BookLost> bookLosts){
-        List<BookLost> list = getPart(bookLosts, page, perPage,
-                Comparator.comparing(BookLost::getDateOfLoss));
-        Collections.reverse(list);
-        return list;
+        return getPart(bookLosts, page, perPage,
+                (BookLost bookLost, BookLost bookLost1)->
+                        bookLost1.getDateOfLoss().compareTo(bookLost.getDateOfLoss()));
     }
 }

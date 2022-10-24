@@ -33,9 +33,7 @@ public class DeliverySearchService extends PageGetter<Delivery> {
         return deliveryRepository.findDeliveriesByDistributorIn(distributors);
     }
     public List<Delivery> getPage(int page, int perPage, List<Delivery> deliveries){
-        List<Delivery> list = getPart(deliveries, page, perPage,
-                Comparator.comparing(Delivery::getDateOfDelivery));
-        Collections.reverse(list);
-        return list;
+        return getPart(deliveries, page, perPage,(Delivery delivery1, Delivery delivery2)->
+                        delivery2.getDateOfDelivery().compareTo(delivery1.getDateOfDelivery()));
     }
 }

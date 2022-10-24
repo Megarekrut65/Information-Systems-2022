@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.boa.smartlibrary.PageGetter;
 import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.BookDelivery;
+import ua.boa.smartlibrary.dataclasses.bookcirculationmanagement.Delivery;
 import ua.boa.smartlibrary.dataclasses.bookmanagement.Book;
 import ua.boa.smartlibrary.db.repositories.bookcirculationmanagement.BookDeliveryRepository;
 import ua.boa.smartlibrary.services.bookmanagement.BookService;
@@ -37,9 +38,8 @@ public class BookDeliverySearchService extends PageGetter<BookDelivery> {
         return bookDeliveryRepository.findBookDeliveriesByBookIn(books);
     }
     public List<BookDelivery> getPage(int page, int perPage, List<BookDelivery> bookDeliveries){
-        List<BookDelivery> list = getPart(bookDeliveries, page, perPage,
-                Comparator.comparing((BookDelivery bookDelivery) -> bookDelivery.getDelivery().getDateOfDelivery()));
-        Collections.reverse(list);
-        return list;
+        return getPart(bookDeliveries, page, perPage,
+                (BookDelivery bookDelivery, BookDelivery bookDelivery1)->
+                        bookDelivery1.getDelivery().getDateOfDelivery().compareTo(bookDelivery.getDelivery().getDateOfDelivery()));
     }
 }
