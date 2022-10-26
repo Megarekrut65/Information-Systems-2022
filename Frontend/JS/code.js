@@ -1,4 +1,8 @@
 function generateData(){
+    // let bookBorrowings = getAll(URLS.bookBorrowings)
+    // for(let i in bookBorrowings){
+    //     remove(URLS.bookBorrowing, bookBorrowings[i].id)
+    // }
     //generateName(count)
     //generateHouse()
     //generateBook()
@@ -49,14 +53,56 @@ function generateData(){
     //             "address":createAdress()})
     //         }
     //     }) 
-    let distributors = getAll(URLS.distributors)
-    for(let i = 0; i < 100;i++){
-        let distributor = pickRandom(distributors)
-        let date = getTextDate(randomDate(new Date(2020, 1, 1), new Date()))
-        create(URLS.delivery, {"distributor-id":distributor.id, "date-of-delivery": date})
-    }
+    // let distributors = getAll(URLS.distributors)
+    // for(let i = 0; i < 100;i++){
+    //     let distributor = pickRandom(distributors)
+    //     let date = getTextDate(randomDate(new Date(2020, 1, 1), new Date()))
+    //     create(URLS.delivery, {"distributor-id":distributor.id, "date-of-delivery": date})
+    // }
+    // let deliveries = getAll(URLS.deliveries)
+    // let books = getAll(URLS.books)
+    // for(let i in books){
+    //     let times = 1 + Math.floor(Math.random() * 4)
+    //     for(let j = 0; j < times; j++){
+    //         let count = 1 + Math.floor(Math.random() * 100)
+    //         let price = 30 + Math.floor(Math.random() * 500)
+    //         let delivery = pickRandom(deliveries)
+    //         create(URLS.bookDelivery, {"book-id":books[i].id, "delivery-id": delivery.id, "book-count": count, "book-price": price})
+    //     }
+    // }
+    // let books = getAll(URLS.books)
+    // let customers = getAll(URLS.customers)
+    // for(let i in books){
+    //     let delivery = get(URLS.bookDeliveriesByBook, {"book-id": books[i].id})
+    //     if(delivery.length == 0) continue
+    //     for(let j = 0; j < delivery[0].bookCount/2; j++){
+    //         if(Math.floor(Math.random() * 5) == 0) continue
+    //         let customer = pickRandom(customers)
+    //         let dateOfBorrowing = getTextDate(randomDate(new Date(delivery[0].delivery.dateOfDelivery), new Date()))
+    //         let dateOfActualReturn = new Date(dateOfBorrowing)
+    //         dateOfActualReturn.setDate(35)
+    //         dateOfActualReturn = getTextDate(dateOfActualReturn)
+    //         let dateOfReturn = dateDelta(new Date(dateOfBorrowing), new Date(dateOfActualReturn)) > 30?dateOfActualReturn:null
+    //         if(Math.floor(Math.random() * 40) == 0) dateOfReturn = null
+    //         create(URLS.bookBorrowing, {"book-id": books[i].id, "customer-id": customer.id, "date-of-borrowing": dateOfBorrowing,
+    //     "estimated-date-of-return": dateOfActualReturn, "actual-date-of-return": dateOfReturn, "comment":""})
+    //     }
+    // }
+    // let borrowings = getAll(URLS.bookBorrowings)
+    // for(let i in borrowings){
+    //     let bor = borrowings[i]
+    //     let estimated = new Date(bor.estimatedDateOfReturn)
+    //     let dateOfActualReturn = dateDelta(new Date(bor.dateOfBorrowing), new Date()) > 30?getTextDate(estimated):null
+    //     bor.actualDateOfReturn = dateOfActualReturn
+    //     if(Math.floor(Math.random() * 100) == 0) bor.actualDateOfReturn = null
+    //     update(URLS.bookBorrowing, {"id":bor.id, "book-id": bor.book.id, "customer-id": bor.customer.id, 
+    //     "date-of-borrowing": bor.dateOfBorrowing,
+    //          "estimated-date-of-return": bor.estimatedDateOfReturn, "actual-date-of-return": bor.actualDateOfReturn, "comment":bor.comment})
+    // }
 }
-  
+  function dateDelta(date1, date2){
+    return Math.ceil(Math.abs(date2.getTime() - date1.getTime()) / (1000 * 3600 * 24))
+  }
   function pickRandom(list) {
     return list[Math.floor(Math.random() * list.length)];
   }

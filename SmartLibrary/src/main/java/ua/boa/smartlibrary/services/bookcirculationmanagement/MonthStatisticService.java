@@ -93,29 +93,26 @@ public class MonthStatisticService extends PageGetter<MonthStatistic> {
         return toChange.get(0);
     }
 
-    public MonthStatistic startBookBorrowing(BookBorrowing bookBorrowing) {
+    public MonthStatistic addBookBorrowing(BookBorrowing bookBorrowing, int value) {
         List<MonthStatistic> toChange = getMonthStatisticsToChangeByDate(bookBorrowing.getDateOfBorrowing());
         for (MonthStatistic statistic : toChange) {
             int available = statistic.getBooksAvailableCount();
-            if (available == 0)
+            if (available - value < 0)
                 throw new BadDatabaseOperationException("Can't borrow book because there is not any book!");
-            statistic.setBooksAvailableCount(available - 1);
-            statistic.setBooksBorrowingCount(statistic.getBooksBorrowingCount() + 1);
+            statistic.setBooksAvailableCount(available - value);
+            statistic.setBooksBorrowingCount(statistic.getBooksBorrowingCount() + value);
         }
         repository.saveAll(toChange);
         return toChange.get(0);
     }
 
-    public MonthStatistic finishBookBorrowing(BookBorrowing bookBorrowing) {
+    public MonthStatistic addBookReturned(BookBorrowing bookBorrowing, int value) {
         Date date = bookBorrowing.getActualDateOfReturn();
         if (date == null) throw new BadDatabaseOperationException("Can't finish borrowing without date of return!");
         List<MonthStatistic> toChange = getMonthStatisticsToChangeByDate(date);
         for (MonthStatistic statistic : toChange) {
-            int borrowing = statistic.getBooksBorrowingCount();
-            if (borrowing == 0)
-                throw new BadDatabaseOperationException("Can't return book because there is not any borrowed book!");
-            statistic.setBooksAvailableCount(statistic.getBooksAvailableCount() + 1);
-            statistic.setBooksBorrowingCount(borrowing - 1);
+            statistic.setBooksAvailableCount(statistic.getBooksAvailableCount() + value);
+            statistic.setBooksReturnedCount(statistic.getBooksReturnedCount() + value);
         }
         repository.saveAll(toChange);
         return toChange.get(0);

@@ -38,7 +38,7 @@ public class BookBorrowingService {
         BookBorrowing bookBorrowing = new BookBorrowing(dateOfBorrowing, customer, book,
                 estimatedDateOfReturn, actualDateOfReturn, comment);
         try {
-            statisticService.startBorrowing(bookBorrowing);
+            statisticService.addBookBorrowing(bookBorrowing, 1);
         } catch (BadDatabaseOperationException e) {
             e.printStackTrace();
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
@@ -46,7 +46,7 @@ public class BookBorrowingService {
         }
         if (actualDateOfReturn != null) {
             try {
-                statisticService.finishBorrowing(bookBorrowing);
+                statisticService.addBookReturned(bookBorrowing, 1);
             } catch (BadDatabaseOperationException e) {
                 e.printStackTrace();
                 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
@@ -66,78 +66,37 @@ public class BookBorrowingService {
         Customer customer = customerService.get(customerId);
         Book book = bookService.get(bookId);
         BookBorrowing bookBorrowing = get(id);
-        boolean needToStart = false, needToFinish = false;
-        if (!Objects.equals(bookBorrowing.getActualDateOfReturn(), actualDateOfReturn)
-                || !bookBorrowing.getBook().equals(book)) {
-            needToFinish = true;
-            undoFinishBorrowing(bookBorrowing);
+        boolean otherBook = !bookBorrowing.getBook().equals(book);
+        if(!Objects.equals(bookBorrowing.getDateOfBorrowing(), dateOfBorrowing) || otherBook){
+            statisticService.addBookBorrowing(bookBorrowing, -1);
+            Book save = bookBorrowing.getBook();
+            bookBorrowing.setBook(book);
+            bookBorrowing.setDateOfBorrowing(dateOfBorrowing);
+            statisticService.addBookBorrowing(bookBorrowing, 1);
+            bookBorrowing.setBook(save);
         }
-        if (!bookBorrowing.getDateOfBorrowing().equals(dateOfBorrowing)
-                || !bookBorrowing.getBook().equals(book)) {
-            needToStart = true;
-            undoStartBorrowing(bookBorrowing);
+        if(!Objects.equals(bookBorrowing.getActualDateOfReturn(),actualDateOfReturn) || otherBook){
+            if(bookBorrowing.getActualDateOfReturn() != null){
+                statisticService.addBookReturned(bookBorrowing, -1);
+            }
+            Book save = bookBorrowing.getBook();
+            bookBorrowing.setBook(book);
+            bookBorrowing.setActualDateOfReturn(actualDateOfReturn);
+            statisticService.addBookReturned(bookBorrowing, 1);
+            bookBorrowing.setBook(save);
         }
-        bookBorrowing.setDateOfBorrowing(dateOfBorrowing);
-        bookBorrowing.setCustomer(customer);
         bookBorrowing.setBook(book);
-        bookBorrowing.setEstimatedDateOfReturn(estimatedDateOfReturn);
-        bookBorrowing.setActualDateOfReturn(actualDateOfReturn);
+        bookBorrowing.setCustomer(customer);
         bookBorrowing.setComment(comment);
-        if (needToStart) {
-            try {
-                statisticService.startBorrowing(bookBorrowing);
-            } catch (BadDatabaseOperationException e) {
-                e.printStackTrace();
-                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-                throw new BadDatabaseOperationException(e.getMessage());
-            }
-        }
-        if (needToFinish && bookBorrowing.getActualDateOfReturn() != null) {
-            try {
-                statisticService.finishBorrowing(bookBorrowing);
-            } catch (BadDatabaseOperationException e) {
-                e.printStackTrace();
-                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-                throw new BadDatabaseOperationException(e.getMessage());
-            }
-        }
+        bookBorrowing.setEstimatedDateOfReturn(estimatedDateOfReturn);
         return repository.save(bookBorrowing);
-    }
-
-    private void undoStartBorrowing(BookBorrowing bookBorrowing) {
-        BookBorrowing toFinish = new BookBorrowing();
-        toFinish.setActualDateOfReturn(bookBorrowing.getDateOfBorrowing());
-        toFinish.setBook(bookBorrowing.getBook());
-        try {
-            if (bookBorrowing.getActualDateOfReturn() == null) statisticService.finishBorrowing(toFinish);
-            else statisticService.finishBorrowingStatisticOnly(toFinish);
-        } catch (BadDatabaseOperationException e) {
-            e.printStackTrace();
-            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-            throw new BadDatabaseOperationException(e.getMessage());
-        }
-    }
-
-    private void undoFinishBorrowing(BookBorrowing bookBorrowing) {
-        if (bookBorrowing.getActualDateOfReturn() != null) {
-            BookBorrowing toStart = new BookBorrowing();
-            toStart.setDateOfBorrowing(bookBorrowing.getActualDateOfReturn());
-            toStart.setBook(bookBorrowing.getBook());
-            try {
-                statisticService.startBorrowing(toStart);
-            } catch (BadDatabaseOperationException e) {
-                e.printStackTrace();
-                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-                throw new BadDatabaseOperationException(e.getMessage());
-            }
-        }
     }
 
     @Transactional
     public void remove(Integer id) {
         BookBorrowing bookBorrowing = get(id);
-        undoFinishBorrowing(bookBorrowing);
-        undoStartBorrowing(bookBorrowing);
+        statisticService.addBookBorrowing(bookBorrowing, -1);
+        statisticService.addBookReturned(bookBorrowing, -1);
         repository.delete(bookBorrowing);
     }
 

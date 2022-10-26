@@ -31,6 +31,8 @@ public class BookInfo {
     private Integer lostCount;
     @Column(name = "borrowing_count", nullable = false)
     private Integer borrowingCount;
+    @Column(name = "returned_count", nullable = false)
+    private Integer returnedCount;
 
     public BookInfo() {
         this.totalCount = 0;
@@ -39,5 +41,6 @@ public class BookInfo {
         this.writeOffCount = 0;
         this.lostCount = 0;
         this.borrowingCount = 0;
+        this.returnedCount = 0;
     }
 }

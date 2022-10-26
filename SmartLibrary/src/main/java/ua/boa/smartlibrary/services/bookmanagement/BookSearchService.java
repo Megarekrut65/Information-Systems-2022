@@ -50,14 +50,20 @@ public class BookSearchService extends PageGetter<Book> {
         books.addAll(set);
         return books;
     }
-    public List<Book> getBooksToPurchase(){
-        List<Book> books = bookService.getAll();
-        for(Book book:books){
-            BookInfo bookInfo = book.getBookInfo();
-            List<BookBorrowing> bookBorrowings = bookBorrowingService.findByBook(book.getId());
-
-        }
-        return books;
+    private int getPurchasingStatus(Book book){
+        int status = 0;
+        BookInfo bookInfo = book.getBookInfo();
+        if(bookInfo.getTotalCount() == 0) status++;
+        else if(bookInfo.getAvailableCount() == 0) status += bookInfo.getTotalCount();
+        List<BookBorrowing> bookBorrowings = bookBorrowingService.findByBook(book.getId());
+        if(bookInfo.getTotalCount() != 0) status += bookBorrowings.size()/bookInfo.getTotalCount();
+        return status;
+    }
+    public List<Book> getBooksToPurchase(int count){
+        List<Book> books = bookService.getBookToPurchase();
+        books.sort(Comparator.comparing(this::getPurchasingStatus));
+        Collections.reverse(books);
+        return books.subList(0, Math.min(count, books.size()));
     }
 
     public List<Book> getPage(int page, int perPage, List<Book> books) {

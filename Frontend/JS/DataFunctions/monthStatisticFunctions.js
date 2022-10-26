@@ -37,6 +37,7 @@ function monthStatisticsToTableProperties(getter) {
             "Book available": obj.booksAvailableCount,
             "Book purchasing": obj.booksPurchasingCount,
             "Book borrowing": obj.booksBorrowingCount,
+            "Book returning": obj.booksReturnedCount,
             "Book write-off": obj.booksWriteOffCount,
             "Book lost": obj.booksLostCount,
         }
@@ -52,7 +53,6 @@ function createMonthStatisticView(statistic) {
     let endDate = statistic.monthDate
     let item = { "min": getTextDate(startDate), "max": endDate }
     let delta = getDeltaMonthStatistic(statistic)
-    let borrowedTitle = delta["Borrowed/Returned"] >= 0?"Borrowed":"Returned"
     return createObjectView({
         "title": "Statistic for " + getMonthYearDate(statistic.monthDate),
         "fields": {
@@ -60,10 +60,12 @@ function createMonthStatisticView(statistic) {
             "Book available count": statistic.booksAvailableCount,
             "Book purchasing count": statistic.booksPurchasingCount,
             "Book borrowing count": statistic.booksBorrowingCount,
+            "Book returning count": statistic.booksReturnedCount,
             "Book write-off count": statistic.booksWriteOffCount,
             "Book lost count": statistic.booksLostCount,
             "Purchased": delta["Purchased"],
-            [borrowedTitle]: Math.abs(delta["Borrowed/Returned"]),
+            "Borrowed": delta["Borrowed"],
+            "Returned": delta["Returned"],
             "Write-offed": delta["Write-offed"],
             "Lost": delta["Lost"]
         },
@@ -104,7 +106,8 @@ function getDeltaMonthStatistic(statistic){
     })
     return{
         "Purchased": statistic.booksPurchasingCount - prevMonth.booksPurchasingCount,
-        "Borrowed/Returned": statistic.booksBorrowingCount - prevMonth.booksBorrowingCount,
+        "Borrowed": statistic.booksBorrowingCount - prevMonth.booksBorrowingCount,
+        "Returned": statistic.booksReturnedCount - prevMonth.booksReturnedCount,
         "Write-offed": statistic.booksWriteOffCount - prevMonth.booksWriteOffCount,
         "Lost": statistic.booksLostCount - prevMonth.booksLostCount
     }
@@ -123,7 +126,6 @@ function getStatisticChartProperties(){
         let prevDate = new Date(statistic.monthDate)
         labels.push(prevDate.toLocaleString('en-GB', { month: 'short' }))
         let del = getDeltaMonthStatistic(statistic)
-        del["Borrowed/Returned"] = Math.abs(del["Borrowed/Returned"])
         deltas.push(del)
     }
     let lists = {}

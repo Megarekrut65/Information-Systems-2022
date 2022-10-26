@@ -20,4 +20,8 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     @Query(value = "SELECT * FROM book ORDER BY book.title;", nativeQuery = true)
     List<Book> getAllOrdered();
+    @Query(value = "SELECT * FROM book INNER JOIN book_info ON book.id = book_info.id " +
+            "WHERE book_info.available_count != book_info.total_count;",
+            nativeQuery = true)
+    List<Book> findBooksToPurchase();
 }

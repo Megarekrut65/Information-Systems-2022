@@ -30,21 +30,13 @@ public class StatisticService {
         monthStatisticService.addBookLost(bookLost);
     }
 
-    public void startBorrowing(BookBorrowing bookBorrowing) {
-        bookInfoService.startBookBorrowing(bookBorrowing);
-        monthStatisticService.startBookBorrowing(bookBorrowing);
+    public void addBookBorrowing(BookBorrowing bookBorrowing, int value) {
+        bookInfoService.addBookBorrowing(bookBorrowing, value);
+        monthStatisticService.addBookBorrowing(bookBorrowing, value);
     }
 
-    public void finishBorrowing(BookBorrowing bookBorrowing) {
-        bookInfoService.finishBookBorrowing(bookBorrowing);
-        monthStatisticService.finishBookBorrowing(bookBorrowing);
-    }
-
-    public void finishBorrowingStatisticOnly(BookBorrowing bookBorrowing) {
-        monthStatisticService.finishBookBorrowing(bookBorrowing);
-    }
-
-    public void startBorrowingStatisticOnly(BookBorrowing bookBorrowing) {
-        monthStatisticService.startBookBorrowing(bookBorrowing);
+    public void addBookReturned(BookBorrowing bookBorrowing, int value) {
+        bookInfoService.addBookReturned(bookBorrowing, value);
+        monthStatisticService.addBookReturned(bookBorrowing, value);
     }
 }

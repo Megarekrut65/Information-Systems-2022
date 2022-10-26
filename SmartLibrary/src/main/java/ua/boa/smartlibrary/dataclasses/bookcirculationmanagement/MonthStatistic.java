@@ -32,18 +32,8 @@ public class MonthStatistic {
     private Integer booksLostCount;
     @Column(name = "books_borrowing_count", nullable = false)
     private Integer booksBorrowingCount;
-
-    public MonthStatistic(Date monthDate, Integer booksTotalCount,
-                          Integer booksAvailableCount, Integer booksPurchasingCount,
-                          Integer booksWriteOffCount, Integer booksLostCount, Integer booksBorrowingCount) {
-        this.monthDate = monthDate;
-        this.booksTotalCount = booksTotalCount;
-        this.booksAvailableCount = booksAvailableCount;
-        this.booksPurchasingCount = booksPurchasingCount;
-        this.booksWriteOffCount = booksWriteOffCount;
-        this.booksLostCount = booksLostCount;
-        this.booksBorrowingCount = booksBorrowingCount;
-    }
+    @Column(name = "books_returned_count", nullable = false)
+    private Integer booksReturnedCount;
 
     public MonthStatistic(Date monthDate) {
         this.monthDate = monthDate;
@@ -53,6 +43,7 @@ public class MonthStatistic {
         this.booksWriteOffCount = 0;
         this.booksLostCount = 0;
         this.booksBorrowingCount = 0;
+        this.booksReturnedCount = 0;
     }
 
     public MonthStatistic(Date monthDate, MonthStatistic monthStatistic) {
@@ -63,5 +54,6 @@ public class MonthStatistic {
         this.booksWriteOffCount = monthStatistic.getBooksWriteOffCount();
         this.booksLostCount = monthStatistic.getBooksLostCount();
         this.booksBorrowingCount = monthStatistic.getBooksBorrowingCount();
+        this.booksReturnedCount = monthStatistic.getBooksReturnedCount();
     }
 }

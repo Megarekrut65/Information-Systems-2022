@@ -11,6 +11,7 @@ import ua.boa.smartlibrary.db.repositories.bookmanagement.BookInfoRepository;
 import ua.boa.smartlibrary.exceptions.BadDatabaseOperationException;
 import ua.boa.smartlibrary.exceptions.bookmanagement.BookInfoNotFoundException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,23 +27,17 @@ public class BookInfoService {
         BookInfo bookInfo = get(id);
         repository.delete(bookInfo);
     }
-
     public BookInfo get(Integer id) {
         Optional<BookInfo> optional = repository.findById(id);
         if (optional.isEmpty()) throw new BookInfoNotFoundException(id);
         return optional.get();
     }
-
     public BookInfo addBookDelivery(BookDelivery bookDelivery) {
         BookInfo bookInfo = get(bookDelivery.getBook().getBookInfo().getId());
         int count = bookDelivery.getBookCount();
         int newTotal = bookInfo.getTotalCount() + count;
-//        if (newTotal < 0) throw new BadDatabaseOperationException("Can't change delivery date " +
-//                "because total book count will be < 0");
         bookInfo.setTotalCount(newTotal);
         int newAvailable = bookInfo.getAvailableCount() + count;
-//        if (newAvailable < 0) throw new BadDatabaseOperationException("Can't change delivery date " +
-//                "because available book count will be < 0");
         bookInfo.setAvailableCount(newAvailable);
         bookInfo.setPurchasingCount(bookInfo.getPurchasingCount() + count);
         return repository.save(bookInfo);
@@ -91,22 +86,19 @@ public class BookInfoService {
         return repository.save(bookInfo);
     }
 
-    public BookInfo startBookBorrowing(BookBorrowing bookBorrowing) {
+    public BookInfo addBookBorrowing(BookBorrowing bookBorrowing, int value) {
         BookInfo bookInfo = get(bookBorrowing.getBook().getBookInfo().getId());
         int available = bookInfo.getAvailableCount();
-        if (available == 0) throw new BadDatabaseOperationException("Can't borrow book because there is not any book!");
-        bookInfo.setAvailableCount(available - 1);
-        bookInfo.setBorrowingCount(bookInfo.getBorrowingCount() + 1);
+        if (available - value < 0) throw new BadDatabaseOperationException("Can't borrow book because there is not any book!");
+        bookInfo.setAvailableCount(available - value);
+        bookInfo.setBorrowingCount(bookInfo.getBorrowingCount() + value);
         return repository.save(bookInfo);
     }
 
-    public BookInfo finishBookBorrowing(BookBorrowing bookBorrowing) {
+    public BookInfo addBookReturned(BookBorrowing bookBorrowing, int value) {
         BookInfo bookInfo = get(bookBorrowing.getBook().getBookInfo().getId());
-        int borrowing = bookInfo.getBorrowingCount();
-        if (borrowing == 0)
-            throw new BadDatabaseOperationException("Can't return book because there is not any borrowed book!");
-        bookInfo.setAvailableCount(bookInfo.getAvailableCount() + 1);
-        bookInfo.setBorrowingCount(borrowing - 1);
+        bookInfo.setAvailableCount(bookInfo.getAvailableCount() + value);
+        bookInfo.setReturnedCount(bookInfo.getReturnedCount() + value);
         return repository.save(bookInfo);
     }
 }

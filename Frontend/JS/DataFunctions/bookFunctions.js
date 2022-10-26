@@ -149,6 +149,7 @@ function getBookInfoTableProperties(book){
                 "Available":obj.availableCount,
                 "Purchased":obj.purchasingCount,
                 "Borrowed":obj.borrowingCount,
+                "Returned":obj.returnedCount,
                 "Wrote-off":obj.writeOffCount,
                 "Lost":obj.lostCount
             }
@@ -203,9 +204,11 @@ function booksToTableProperties(getter) {
         "getter":getter
     }
 }
-
 function createBooksSearch(recreateTable) {
-    return {
+    return createTheBooksSearch("Books",recreateTable, getBooksForTable, createBookFormCreate)
+}
+function createTheBooksSearch(title, recreateTable, getMethod, createMethod) {
+    let obj = {
         "inputs": {
             "title": {
                 "type": "text",
@@ -224,12 +227,12 @@ function createBooksSearch(recreateTable) {
                 "placeholder": "Authors name..."
             }
         },
-        "createTable": (item)=>recreateTable(getBooksForTable(item)),
-        "formCreate": createBookFormCreate,
-        "title": "Books"
+        "createTable": (item)=>recreateTable(getMethod(item)),
+        "title": title
     }
+    if(createMethod !== undefined) obj["formCreate"] = createMethod
+    return obj
 }
-
 function createBookFunction(toSendData) {
     return {
         "buttons": {
@@ -237,7 +240,18 @@ function createBookFunction(toSendData) {
             "Write-off book": createBookWriteOffFormCreate,
             "Add lost book": createBookLostFormCreate,
             "Borrow book": createBookBorrowingFormCreate,
+            "Books to purchase": ()=>openNewListPage('BookPurchase', 'BookPurchases')
         },
         "toSendData": toSendData
     }
+}
+function createBookPurchaseFunction() {
+    return null
+}
+function getAllBookPurchasesForTable() {
+    let books = get(URLS.booksToPurchase, {"count": 20})
+    return booksToTableProperties((page, perPage)=>page == 1?books:[])
+}
+function createBookPurchasesSearch(recreateTable) {
+    return createTheBooksSearch("Books recommended to purchase", recreateTable, getAllBookPurchasesForTable)
 }

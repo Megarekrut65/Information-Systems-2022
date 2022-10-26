@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.boa.smartlibrary.PageGetter;
 import ua.boa.smartlibrary.dataclasses.bookmanagement.Book;
+import ua.boa.smartlibrary.dataclasses.bookmanagement.BookInfo;
 import ua.boa.smartlibrary.dataclasses.bookmanagement.PublishingHouse;
 import ua.boa.smartlibrary.db.repositories.bookmanagement.BookRepository;
 import ua.boa.smartlibrary.exceptions.bookmanagement.BookNotFoundException;
@@ -28,7 +29,9 @@ public class BookService{
     public List<Book> getAll() {
         return repository.getAllOrdered();
     }
-
+    public List<Book> getBookToPurchase(){
+        return repository.findBooksToPurchase();
+    }
     public Book update(Integer id, String title, Integer publishingHouseId, Integer publishYear, String comment) {
         PublishingHouse publishingHouse = publishingHouseService.get(publishingHouseId);
         Book book = get(id);
