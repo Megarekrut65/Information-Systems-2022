@@ -64,8 +64,8 @@ function generateData(){
     // for(let i in books){
     //     let times = 1 + Math.floor(Math.random() * 4)
     //     for(let j = 0; j < times; j++){
-    //         let count = 1 + Math.floor(Math.random() * 100)
-    //         let price = 30 + Math.floor(Math.random() * 500)
+    //         let count = 1 + Math.floor(Math.random() * 20)
+    //         let price = 30 + Math.floor(Math.random() * 300)
     //         let delivery = pickRandom(deliveries)
     //         create(URLS.bookDelivery, {"book-id":books[i].id, "delivery-id": delivery.id, "book-count": count, "book-price": price})
     //     }
@@ -81,6 +81,7 @@ function generateData(){
     //         let dateOfBorrowing = getTextDate(randomDate(new Date(delivery[0].delivery.dateOfDelivery), new Date()))
     //         let dateOfActualReturn = new Date(dateOfBorrowing)
     //         dateOfActualReturn.setDate(35)
+    //         dateOfActualReturn.setDate(new Date(dateOfBorrowing).getDate())
     //         dateOfActualReturn = getTextDate(dateOfActualReturn)
     //         let dateOfReturn = dateDelta(new Date(dateOfBorrowing), new Date(dateOfActualReturn)) > 30?dateOfActualReturn:null
     //         if(Math.floor(Math.random() * 40) == 0) dateOfReturn = null
@@ -98,6 +99,17 @@ function generateData(){
     //     update(URLS.bookBorrowing, {"id":bor.id, "book-id": bor.book.id, "customer-id": bor.customer.id, 
     //     "date-of-borrowing": bor.dateOfBorrowing,
     //          "estimated-date-of-return": bor.estimatedDateOfReturn, "actual-date-of-return": bor.actualDateOfReturn, "comment":bor.comment})
+    // }
+    // let books = getAll(URLS.books)
+    // for(let i in books){
+    //     let delivery = get(URLS.bookDeliveriesByBook, {"book-id": books[i].id})
+    //     if(delivery.length == 0 || delivery[0].bookCount < 2 || books[i].bookInfo.availableCount < 2) continue
+    //     let times = Math.floor((Math.random() * 2)) + 1
+    //     if(Math.floor((Math.random() * 2)) == 1) continue
+    //     let dateOfWriteOff = getTextDate(randomDate(new Date(delivery[0].delivery.dateOfDelivery), new Date()))
+    //     create(URLS.bookLost, {"book-id": books[i].id, "date-of-loss": dateOfWriteOff,
+    //     "book-count": times, "cause-of-loss":"", "was-returned":true})
+            
     // }
 }
   function dateDelta(date1, date2){

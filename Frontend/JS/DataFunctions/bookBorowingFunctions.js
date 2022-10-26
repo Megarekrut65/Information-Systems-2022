@@ -223,7 +223,7 @@ function createBookBorrowingsSearch(recreateTable) {
         },
         "createTable": (item)=>recreateTable(getBookBorrowingsForTable(item)),
         "formCreate": createBookBorrowingFormCreate,
-        "title": "Book write-offs"
+        "title": "Book borrowings"
     }
 }
 

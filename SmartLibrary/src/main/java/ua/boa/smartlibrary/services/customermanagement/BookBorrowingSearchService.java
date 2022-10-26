@@ -43,9 +43,8 @@ public class BookBorrowingSearchService extends PageGetter<BookBorrowing> {
         return bookBorrowingRepository.findBookBorrowingByBookInAndCustomerIn(books, customers);
     }
     public List<BookBorrowing> getPage(int page, int perPage, List<BookBorrowing> bookBorrowings){
-        List<BookBorrowing> list = getPart(bookBorrowings, page, perPage,
-                Comparator.comparing(BookBorrowing::getDateOfBorrowing));
-        Collections.reverse(list);
-        return list;
+        return getPart(bookBorrowings, page, perPage,
+                (BookBorrowing bookBorrowing, BookBorrowing bookBorrowing1)->
+                        bookBorrowing1.getDateOfBorrowing().compareTo(bookBorrowing.getDateOfBorrowing()));
     }
 }
