@@ -24,4 +24,8 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
             "WHERE book_info.available_count != book_info.total_count;",
             nativeQuery = true)
     List<Book> findBooksToPurchase();
+    @Query(value = "SELECT * FROM book INNER JOIN book_info ON book.id = book_info.id " +
+            "WHERE (book_info.available_count != book_info.total_count AND book_info.total_count > 2);",
+            nativeQuery = true)
+    List<Book> findBooksToWriteOff();
 }

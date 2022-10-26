@@ -66,7 +66,21 @@ public class BookSearchService extends PageGetter<Book> {
         books = books.stream().filter((book) -> getPurchasingStatus(book) > 0).toList();
         return books.subList(0, Math.min(count, books.size()));
     }
-
+    private int getWriteOffStatus(Book book){
+        int status = 0;
+        BookInfo bookInfo = book.getBookInfo();
+        status += 25/(bookInfo.getTotalCount() - bookInfo.getAvailableCount() + 1);
+        if(bookInfo.getBorrowingCount() == 0) status += bookInfo.getTotalCount()/2;
+        status -= Math.min(bookInfo.getBorrowingCount(), 5);
+        return status;
+    }
+    public List<Book> getBooksToWriteOff(int count){
+        List<Book> books = bookService.getBookToWriteOff();
+        books.sort(Comparator.comparing(this::getWriteOffStatus));
+        Collections.reverse(books);
+        books = books.stream().filter((book) -> getWriteOffStatus(book) > 0).toList();
+        return books.subList(0, Math.min(count, books.size()));
+    }
     public List<Book> getPage(int page, int perPage, List<Book> books) {
         return getPart(books, page, perPage, Comparator.comparing(Book::getTitle));
     }

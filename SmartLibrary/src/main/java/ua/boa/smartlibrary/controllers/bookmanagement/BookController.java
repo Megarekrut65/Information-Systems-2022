@@ -45,6 +45,10 @@ public class BookController{
     public List<Book> getBooksToPurchase(@RequestParam("count") String count) {
         return bookSearchService.getBooksToPurchase(Integer.parseInt(count));
     }
+    @RequestMapping(value = "/books/to-write-off", method = RequestMethod.GET)
+    public List<Book> getBooksToWriteOff(@RequestParam("count") String count) {
+        return bookSearchService.getBooksToWriteOff(Integer.parseInt(count));
+    }
     @RequestMapping(value = "/book", method = RequestMethod.DELETE)
     public void remove(@RequestParam("id") String id) {
         service.remove(Integer.parseInt(id));

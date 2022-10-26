@@ -240,7 +240,8 @@ function createBookFunction(toSendData) {
             "Write-off book": createBookWriteOffFormCreate,
             "Add lost book": createBookLostFormCreate,
             "Borrow book": createBookBorrowingFormCreate,
-            "Books to purchase": ()=>openNewListPage('BookPurchase', 'BookPurchases')
+            "Books to purchase": ()=>openNewListPage('BookPurchase', 'BookPurchases'),
+            "Books to write-off": ()=>openNewListPage('BookWrite', 'BookWrites')
         },
         "toSendData": toSendData
     }
@@ -254,4 +255,14 @@ function getAllBookPurchasesForTable() {
 }
 function createBookPurchasesSearch(recreateTable) {
     return createTheBooksSearch("Books recommended to purchase", recreateTable, getAllBookPurchasesForTable)
+}
+function createBookWriteFunction() {
+    return null
+}
+function getAllBookWritesForTable() {
+    let books = get(URLS.booksToWriteOff, {"count": 20})
+    return booksToTableProperties((page, perPage)=>page == 1?books:[])
+}
+function createBookWritesSearch(recreateTable) {
+    return createTheBooksSearch("Books recommended to write-off", recreateTable, getAllBookWritesForTable)
 }

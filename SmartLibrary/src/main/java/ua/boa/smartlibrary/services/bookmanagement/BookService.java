@@ -32,6 +32,9 @@ public class BookService{
     public List<Book> getBookToPurchase(){
         return repository.findBooksToPurchase();
     }
+    public List<Book> getBookToWriteOff(){
+        return repository.findBooksToWriteOff();
+    }
     public Book update(Integer id, String title, Integer publishingHouseId, Integer publishYear, String comment) {
         PublishingHouse publishingHouse = publishingHouseService.get(publishingHouseId);
         Book book = get(id);

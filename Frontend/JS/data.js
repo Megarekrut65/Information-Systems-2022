@@ -18,6 +18,7 @@ const URLS = {
     booksByAll: SERVER_URL + "/books/by-all",
     booksByAllPage: SERVER_URL + "/books/by-all/page",
     booksToPurchase: SERVER_URL + "/books/to-purchase",
+    booksToWriteOff: SERVER_URL + "/books/to-write-off",
 
     publishingHouses: SERVER_URL + "/publishing-houses",
     publishingHousesByName: SERVER_URL + "/publishing-houses/by-name",
