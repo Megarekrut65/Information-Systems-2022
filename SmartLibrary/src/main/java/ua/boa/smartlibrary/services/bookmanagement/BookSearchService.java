@@ -53,16 +53,17 @@ public class BookSearchService extends PageGetter<Book> {
     private int getPurchasingStatus(Book book){
         int status = 0;
         BookInfo bookInfo = book.getBookInfo();
-        if(bookInfo.getTotalCount() == 0) status++;
-        else if(bookInfo.getAvailableCount() == 0) status += bookInfo.getTotalCount();
-        List<BookBorrowing> bookBorrowings = bookBorrowingService.findByBook(book.getId());
-        if(bookInfo.getTotalCount() != 0) status += bookBorrowings.size()/bookInfo.getTotalCount();
+        if(bookInfo.getTotalCount() == 0) status+=1;
+        else if(bookInfo.getAvailableCount() == 0) status+=1;
+        if(bookInfo.getBorrowingCount() - bookInfo.getReturnedCount() > bookInfo.getAvailableCount())
+            status += 20/(bookInfo.getAvailableCount()+1);
         return status;
     }
     public List<Book> getBooksToPurchase(int count){
         List<Book> books = bookService.getBookToPurchase();
         books.sort(Comparator.comparing(this::getPurchasingStatus));
         Collections.reverse(books);
+        books = books.stream().filter((book) -> getPurchasingStatus(book) > 0).toList();
         return books.subList(0, Math.min(count, books.size()));
     }
 

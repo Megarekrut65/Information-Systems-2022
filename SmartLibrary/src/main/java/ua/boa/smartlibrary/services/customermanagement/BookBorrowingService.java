@@ -121,7 +121,12 @@ public class BookBorrowingService {
         Book book = bookService.get(bookId);
         return repository.findBookBorrowingByBook(book);
     }
-
+    public List<BookBorrowing> findByBookReturned(Book book) {
+        return repository.findBookBorrowingByBookAndActualDateOfReturnNotNull(book);
+    }
+    public List<BookBorrowing> findByBookNotReturned(Book book) {
+        return repository.findBookBorrowingByBookAndActualDateOfReturnNull(book);
+    }
     public BookBorrowing get(Integer id) {
         Optional<BookBorrowing> optional = repository.findById(id);
         if (optional.isEmpty()) throw new BookBorrowingNotFoundException(id);

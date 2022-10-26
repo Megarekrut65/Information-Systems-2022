@@ -74,9 +74,9 @@ function generateData(){
     // let customers = getAll(URLS.customers)
     // for(let i in books){
     //     let delivery = get(URLS.bookDeliveriesByBook, {"book-id": books[i].id})
-    //     if(delivery.length == 0) continue
+    //     if(delivery.length == 0 || books[i].bookInfo.availableCount == 0) continue
     //     for(let j = 0; j < delivery[0].bookCount/2; j++){
-    //         if(Math.floor(Math.random() * 5) == 0) continue
+    //         if(Math.floor(Math.random() * 5) == 0 || books[i].bookInfo.availableCount - j == 0) continue
     //         let customer = pickRandom(customers)
     //         let dateOfBorrowing = getTextDate(randomDate(new Date(delivery[0].delivery.dateOfDelivery), new Date()))
     //         let dateOfActualReturn = new Date(dateOfBorrowing)
@@ -84,7 +84,7 @@ function generateData(){
     //         dateOfActualReturn.setDate(new Date(dateOfBorrowing).getDate())
     //         dateOfActualReturn = getTextDate(dateOfActualReturn)
     //         let dateOfReturn = dateDelta(new Date(dateOfBorrowing), new Date(dateOfActualReturn)) > 30?dateOfActualReturn:null
-    //         if(Math.floor(Math.random() * 40) == 0) dateOfReturn = null
+    //         if(Math.floor(Math.random() * 50) == 0) dateOfReturn = null
     //         create(URLS.bookBorrowing, {"book-id": books[i].id, "customer-id": customer.id, "date-of-borrowing": dateOfBorrowing,
     //     "estimated-date-of-return": dateOfActualReturn, "actual-date-of-return": dateOfReturn, "comment":""})
     //     }
