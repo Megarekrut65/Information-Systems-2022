@@ -8,9 +8,9 @@ import ua.boa.smartlibrary.dataclasses.customermanagement.Customer;
 import java.util.List;
 
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
-    @Query(value = "SELECT * FROM customer WHERE customer.name " +
-            "LIKE CONCAT('%', CONCAT(:name, '%')) OR :name " +
-            "LIKE CONCAT('%', CONCAT(customer.name, '%'))",
+    @Query(value = "SELECT * FROM customer WHERE LOWER(customer.name) " +
+            "LIKE CONCAT('%', CONCAT(LOWER(:name), '%')) OR LOWER(:name) " +
+            "LIKE CONCAT('%', CONCAT(LOWER(customer.name), '%'))",
             nativeQuery = true)
     List<Customer> findCustomersByNameAdvanced(@Param("name") String name);
 
@@ -20,18 +20,18 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
             nativeQuery = true)
     List<Customer> findCustomersByPhoneNumberAdvanced(@Param("phone_number") String phoneNumber);
 
-    @Query(value = "SELECT * FROM customer WHERE customer.email " +
-            "LIKE CONCAT('%', CONCAT(:email, '%')) OR :email " +
-            "LIKE CONCAT('%', CONCAT(customer.email, '%'))",
+    @Query(value = "SELECT * FROM customer WHERE LOWER(customer.email) " +
+            "LIKE CONCAT('%', CONCAT(LOWER(:email), '%')) OR LOWER(:email) " +
+            "LIKE CONCAT('%', CONCAT(LOWER(customer.email), '%'))",
             nativeQuery = true)
     List<Customer> findCustomersByEmailAdvanced(@Param("email") String email);
 
-    @Query(value = "SELECT * FROM customer WHERE (customer.email " +
-            "LIKE CONCAT('%', CONCAT(:email, '%')) OR :email " +
-            "LIKE CONCAT('%', CONCAT(customer.email, '%'))) AND" +
-            "(customer.name " +
-            "LIKE CONCAT('%', CONCAT(:name, '%')) OR :name " +
-            "LIKE CONCAT('%', CONCAT(customer.name, '%'))) AND" +
+    @Query(value = "SELECT * FROM customer WHERE (LOWER(customer.email) " +
+            "LIKE CONCAT('%', CONCAT(LOWER(:email), '%')) OR LOWER(:email) " +
+            "LIKE CONCAT('%', CONCAT(LOWER(customer.email), '%'))) AND" +
+            "(LOWER(customer.name) " +
+            "LIKE CONCAT('%', CONCAT(LOWER(:name), '%')) OR LOWER(:name) " +
+            "LIKE CONCAT('%', CONCAT(LOWER(customer.name), '%'))) AND" +
             "(customer.phone_number " +
             "LIKE CONCAT('%', CONCAT(:phone_number, '%')) OR :phone_number " +
             "LIKE CONCAT('%', CONCAT(customer.phone_number, '%')))",
